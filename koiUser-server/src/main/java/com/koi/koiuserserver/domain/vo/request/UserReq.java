@@ -1,4 +1,4 @@
-package com.koi.koiuserserver.model.vo.request;
+package com.koi.koiuserserver.domain.vo.request;
 
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 server:
-  port: 8202
+  port: 8302
 spring:
   application:
-    name: small-run-chat
+    name: koiUser
   profiles:
     active: dev
   # 数据库配置
@@ -34,3 +34,17 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
+
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.koi.koiuserserver.controller

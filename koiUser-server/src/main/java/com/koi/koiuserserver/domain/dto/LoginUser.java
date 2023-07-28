@@ -1,4 +1,4 @@
-package com.koi.koiuserserver.model.dto;
+package com.koi.koiuserserver.domain.dto;
 
 import lombok.Data;
 

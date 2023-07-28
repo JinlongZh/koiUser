@@ -1,6 +1,6 @@
 package com.koi.koiuserserver.utils;
 
-import com.koi.koiuserserver.model.dto.LoginUser;
+import com.koi.koiuserserver.domain.dto.LoginUser;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
