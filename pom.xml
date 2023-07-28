@@ -19,6 +19,7 @@
     <modules>
         <module>koiAuth-spring-boot-starter</module>
         <module>koiUser-common</module>
+        <module>koiUser-framework</module>
         <module>koiUser-server</module>
     </modules>
 
@@ -31,7 +32,9 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <fastjson.version>2.0.13</fastjson.version>
         <redis.version>2.4.1</redis.version>
+        <redisson.version>3.18.0</redisson.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <java-jwt.version>3.19.0</java-jwt.version>
         <validator.version>6.2.0.Final</validator.version>
         <hutool.version>5.8.8</hutool.version>
     </properties>
@@ -75,9 +78,21 @@
             </dependency>
 
             <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
             </dependency>
 
             <dependency>

@@ -1,0 +1,2 @@
+com.koi.framework.redis.config.CacheAutoConfiguration
+com.koi.framework.redis.config.RedisAutoConfiguration
