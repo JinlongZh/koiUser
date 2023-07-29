@@ -1,4 +1,4 @@
-package com.xp.common.core.utils;
+package com.koi.common.utils;
 
 import java.util.ArrayList;
 import java.util.List;

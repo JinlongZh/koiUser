@@ -26,7 +26,9 @@
     </description>
 
     <modules>
+        <module>koiUser-common</module>
         <module>koiUser-spring-boot-starter-redis</module>
+        <module>koiUser-spring-boot-starter-web</module>
     </modules>
 
 

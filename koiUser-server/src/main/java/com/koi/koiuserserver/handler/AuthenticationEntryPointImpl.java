@@ -1,6 +1,6 @@
 package com.koi.koiuserserver.handler;
 
-import com.koi.common.result.Result;
+import com.koi.common.pojo.CommonResult;
 import com.koi.koiuserserver.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,9 +26,9 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) {
         log.debug("[commence][访问 URL({}) 时，没有登录]", request.getRequestURI(), e);
         // 返回 401
-        Result<Object> result = new Result<>();
+        CommonResult<Object> result = new CommonResult<>();
         result.setCode(HttpStatus.UNAUTHORIZED.value());
-        result.setMessage("账号未登录");
+        result.setMsg("账号未登录");
         ServletUtils.writeJSON(response, result);
     }
 

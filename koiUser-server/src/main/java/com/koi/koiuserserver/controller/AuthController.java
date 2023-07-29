@@ -1,11 +1,10 @@
 package com.koi.koiuserserver.controller;
 
-import com.koi.common.result.Result;
-import com.koi.koiuserserver.domain.dto.LoginUser;
+import com.koi.common.exception.ServerException;
+import com.koi.common.pojo.CommonResult;
 import com.koi.koiuserserver.domain.vo.request.UserReq;
 import com.koi.koiuserserver.domain.vo.response.TokenResp;
 import com.koi.koiuserserver.service.AuthService;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import static com.koi.koiuserserver.utils.SecurityUtils.getLoginUser;
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
+
 
 /**
  * 权限控制器
@@ -28,9 +28,9 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public Result<TokenResp> login(@Valid @RequestBody UserReq userReq) {
+    public CommonResult<TokenResp> login(@Valid @RequestBody UserReq userReq) {
         TokenResp tokenResp = authService.login(userReq);
-        return Result.ok(tokenResp);
+        return CommonResult.success(tokenResp);
     }
 
 }

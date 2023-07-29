@@ -1,6 +1,6 @@
 package com.koi.koiuserserver.handler;
 
-import com.koi.common.result.Result;
+import com.koi.common.pojo.CommonResult;
 import com.koi.koiuserserver.utils.SecurityUtils;
 import com.koi.koiuserserver.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +32,9 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
         log.warn("[commence][访问 URL({}) 时，用户({}) 权限不够]", request.getRequestURI(),
                 SecurityUtils.getLoginUserId(), e);
         // 返回 403
-        Result<Object> result = new Result<>();
+        CommonResult<Object> result = new CommonResult<>();
         result.setCode(HttpStatus.FORBIDDEN.value());
-        result.setMessage("没有该操作权限");
+        result.setMsg("没有该操作权限");
         ServletUtils.writeJSON(response, result);
     }
 

@@ -20,6 +20,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <!-- Web 相关 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
