@@ -1,4 +1,4 @@
-package com.koi.koiuserserver;
+package com.koi.system;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan
-public class KoiUserServerApplication {
+public class KoiUserModuleSystemBizApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(KoiUserServerApplication.class, args);
+        SpringApplication.run(KoiUserModuleSystemBizApplication.class, args);
     }
 
 }

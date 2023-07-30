@@ -30,7 +30,6 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.*;
  * @Date 2023/7/29 16:48
  */
 @RestControllerAdvice
-@AllArgsConstructor
 @Slf4j
 public class GlobalExceptionHandler {
 

@@ -2,30 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <packaging>jar</packaging>
     <parent>
         <groupId>com.koi</groupId>
-        <artifactId>koiUser</artifactId>
+        <artifactId>koiUser-module-system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.koi</groupId>
-    <artifactId>koiUser-server</artifactId>
+    <artifactId>koiUser-module-system-biz</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>koiUser-server</name>
-    <description>koiUser-server</description>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <name>koiUser-module-system-biz</name>
+    <description>koiUser-module-system-biz</description>
 
     <dependencies>
         <!-- Web 相关 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -42,11 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
 
@@ -103,5 +89,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

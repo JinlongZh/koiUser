@@ -19,6 +19,7 @@
     <modules>
         <module>koiAuth-spring-boot-starter</module>
         <module>koiUser-framework</module>
+        <module>koiUser-module-system</module>
         <module>koiUser-server</module>
     </modules>
 
