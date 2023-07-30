@@ -8,6 +8,7 @@ import com.koi.common.utils.BeanCopyUtils;
 import com.koi.common.utils.http.HttpUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Client;
+import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenCheckTokenResp;
 import com.koi.system.oauth2.enums.OAuth2GrantTypeEnum;
 import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenAccessTokenResp;
 import com.koi.system.oauth2.service.Oauth2TokenService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
@@ -78,6 +80,25 @@ public class OAuth2OpenController {
         }
         Assert.notNull(oauth2accessToken, "访问令牌不能为空"); // 防御性检查
         return CommonResult.success(BeanCopyUtils.copyObject(oauth2accessToken, OAuth2OpenAccessTokenResp.class));
+    }
+
+    /**
+     * 校验访问令牌
+     */
+    @PostMapping("/check-token")
+    @Operation(summary = "校验访问令牌")
+    @Parameter(name = "token", required = true, description = "访问令牌", example = "biu")
+    public CommonResult<OAuth2OpenCheckTokenResp> checkToken(HttpServletRequest request,
+                                                             @RequestParam("token") String token) {
+        // 校验客户端
+        String[] clientIdAndSecret = HttpUtils.obtainBasicAuthorization(request);
+        oauth2ClientService.validOAuthClientFromCache(clientIdAndSecret[0], clientIdAndSecret[1],
+                null, null, null);
+
+        // 校验令牌
+        Oauth2AccessToken oauth2AccessToken = oauth2TokenService.checkAccessToken(token);
+        Assert.notNull(oauth2AccessToken, "访问令牌不能为空"); // 防御性检查
+        return CommonResult.success(BeanCopyUtils.copyObject(oauth2AccessToken, OAuth2OpenCheckTokenResp.class));
     }
 
 }

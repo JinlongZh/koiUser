@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 描述
+ * 访问令牌 Response VO
  *
  * @Author zjl
  * @Date 2023/7/30 15:59
  */
-@Schema(description = "管理后台 - 【开放接口】访问令牌 Response VO")
+@Schema(description = "访问令牌 Response VO")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

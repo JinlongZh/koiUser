@@ -1,6 +1,10 @@
 package com.koi.system.oauth2.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.koi.common.exception.ServiceException;
+import com.koi.common.exception.enums.GlobalErrorCodeConstants;
+import com.koi.common.utils.date.DateUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Client;
 import com.koi.system.oauth2.domain.entity.Oauth2RefreshToken;
@@ -13,6 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
 
 /**
  *
@@ -37,6 +43,36 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
         Oauth2RefreshToken refreshToken = createOAuth2RefreshToken(userId, userType, oauth2Client, scopes);
         // 创建访问令牌
         return createOAuth2AccessToken(refreshToken, oauth2Client);
+    }
+
+    @Override
+    public Oauth2AccessToken checkAccessToken(String accessToken) {
+        Oauth2AccessToken accessTokenDO = this.getAccessToken(accessToken);
+        if (accessTokenDO == null) {
+            throw new ServiceException(UNAUTHORIZED.getCode(), "访问令牌不存在");
+        }
+        if (DateUtils.isExpired(accessTokenDO.getExpiresTime())) {
+            throw new ServiceException(UNAUTHORIZED.getCode(), "访问令牌已过期");
+        }
+        return accessTokenDO;
+    }
+
+    @Override
+    public Oauth2AccessToken getAccessToken(String accessToken) {
+        // TODO 优先从 Redis 中获取
+        Oauth2AccessToken oauth2AccessToken = null;
+        if (oauth2AccessToken != null) {
+            return oauth2AccessToken;
+        }
+
+        // 获取不到，从 MySQL 中获取
+        oauth2AccessToken = oauth2AccessTokenMapper.selectOne(new LambdaQueryWrapper<Oauth2AccessToken>()
+                .eq(Oauth2AccessToken::getAccessToken, accessToken));
+        // TODO 如果在 MySQL 存在，则往 Redis 中写入
+        if (oauth2AccessToken != null && !DateUtils.isExpired(oauth2AccessToken.getExpiresTime())) {
+
+        }
+        return oauth2AccessToken;
     }
 
     private Oauth2AccessToken createOAuth2AccessToken(Oauth2RefreshToken Oauth2RefreshToken, Oauth2Client oauth2Client) {
