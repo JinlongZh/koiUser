@@ -1,4 +1,4 @@
-package com.koi.common.pojo;
+package com.koi.common.domain;
 
 import java.io.Serializable;
 

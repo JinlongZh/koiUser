@@ -1,4 +1,4 @@
-package com.koi.common.pojo;
+package com.koi.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koi.common.exception.ErrorCode;

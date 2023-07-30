@@ -1,6 +1,6 @@
 package com.koi.koiuserserver.handler;
 
-import com.koi.common.pojo.CommonResult;
+import com.koi.common.domain.CommonResult;
 import com.koi.koiuserserver.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.koi.common.pojo;
+package com.koi.common.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

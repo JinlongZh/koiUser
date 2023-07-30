@@ -1,6 +1,6 @@
 package com.koi.framework.web.core.utils;
 
-import com.koi.common.pojo.CommonResult;
+import com.koi.common.domain.CommonResult;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
