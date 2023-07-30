@@ -3,7 +3,6 @@ package com.koi.framework.web.core.handle;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.pojo.CommonResult;
 import com.koi.framework.web.core.utils.WebFrameworkUtils;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
