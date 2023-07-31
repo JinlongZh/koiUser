@@ -3,6 +3,7 @@ package com.koi.system.oauth2.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
 import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.collection.CollectionUtils;
@@ -71,15 +72,15 @@ public class Oauth2ClientServiceImpl implements Oauth2ClientService {
             throw new ServiceException(BAD_REQUEST.getCode(), "无效 client_secret");
         }
         // 校验授权方式
-        if (StrUtil.isNotEmpty(authorizedGrantType) && !CollUtil.contains(oauth2Client.getAuthorizedGrantTypes(), authorizedGrantType)) {
+        if (StrUtil.isNotEmpty(authorizedGrantType) && !CollUtil.contains(JSON.parseObject(oauth2Client.getAuthorizedGrantTypes(), List.class), authorizedGrantType)) {
             throw new ServiceException(BAD_REQUEST.getCode(), "不支持该授权类型");
         }
         // 校验授权范围
-        if (CollUtil.isNotEmpty(scopes) && !CollUtil.containsAll(oauth2Client.getScopes(), scopes)) {
+        if (CollUtil.isNotEmpty(scopes) && !CollUtil.containsAll(JSON.parseObject(oauth2Client.getScopes(), List.class), scopes)) {
             throw new ServiceException(BAD_REQUEST.getCode(), "授权范围过大");
         }
         // 校验回调地址
-        if (StrUtil.isNotEmpty(redirectUri) && !StrUtils.startWithAny(redirectUri, oauth2Client.getRedirectUris())) {
+        if (StrUtil.isNotEmpty(redirectUri) && !StrUtils.startWithAny(redirectUri, JSON.parseObject(oauth2Client.getRedirectUris(), List.class))) {
             throw new ServiceException(BAD_REQUEST.getCode(), "无效 redirect_uri");
         }
         return oauth2Client;

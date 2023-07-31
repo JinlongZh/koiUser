@@ -1,6 +1,7 @@
 package com.koi.system.oauth2.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.date.DateUtils;
@@ -92,16 +93,16 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     }
     
     private Oauth2RefreshToken createOAuth2RefreshToken(Long userId, Integer userType, Oauth2Client oauth2Client, List<String> scopes) {
-        Oauth2RefreshToken refreshToken = Oauth2RefreshToken.builder()
+        Oauth2RefreshToken oauth2RefreshToken = Oauth2RefreshToken.builder()
                 .refreshToken(generateRefreshToken())
                 .userId(userId)
                 .userType(userType)
                 .clientId(oauth2Client.getClientId())
-                .scopes(scopes)
+                .scopes(JSON.toJSONString(scopes))
                 .expiresTime(LocalDateTime.now().plusSeconds(oauth2Client.getRefreshTokenValiditySeconds()))
                 .build();
-        oauth2RefreshTokenMapper.insert(refreshToken);
-        return refreshToken;
+        oauth2RefreshTokenMapper.insert(oauth2RefreshToken);
+        return oauth2RefreshToken;
     }
 
     private static String generateAccessToken() {

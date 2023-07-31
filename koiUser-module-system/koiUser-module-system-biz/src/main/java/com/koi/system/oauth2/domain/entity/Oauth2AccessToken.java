@@ -15,7 +15,7 @@ import java.util.List;
  * @TableName system_oauth2_access_token
  */
 @Builder
-@TableName(value = "system_oauth2_access_token", autoResultMap = true)
+@TableName(value = "system_oauth2_access_token")
 @Data
 public class Oauth2AccessToken implements Serializable {
     /**
@@ -52,8 +52,7 @@ public class Oauth2AccessToken implements Serializable {
     /**
      * 授权范围
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> scopes;
+    private String scopes;
 
     /**
      * 过期时间

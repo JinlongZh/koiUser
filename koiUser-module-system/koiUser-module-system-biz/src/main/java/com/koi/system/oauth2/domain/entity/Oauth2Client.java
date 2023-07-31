@@ -13,7 +13,7 @@ import lombok.Data;
  * OAuth2 客户端表
  * @TableName system_oauth2_client
  */
-@TableName(value ="system_oauth2_client", autoResultMap = true)
+@TableName(value ="system_oauth2_client")
 @Data
 public class Oauth2Client implements Serializable {
     /**
@@ -65,39 +65,33 @@ public class Oauth2Client implements Serializable {
     /**
      * 可重定向的 URI 地址
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> redirectUris;
+    private String redirectUris;
 
     /**
      * 授权类型
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> authorizedGrantTypes;
+    private String authorizedGrantTypes;
 
     /**
      * 授权范围
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> scopes;
+    private String scopes;
 
     /**
      * 自动通过的授权范围
      * code 授权时，如果 scope 在这个范围内，则自动通过
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> autoApproveScopes;
+    private String autoApproveScopes;
 
     /**
      * 权限
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> authorities;
+    private String authorities;
 
     /**
      * 资源
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> resourceIds;
+    private String resourceIds;
 
     /**
      * 附加信息

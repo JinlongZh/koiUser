@@ -48,8 +48,7 @@ public class Oauth2Code implements Serializable {
     /**
      * 授权范围
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> scopes;
+    private String scopes;
 
     /**
      * 过期时间

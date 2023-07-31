@@ -40,7 +40,7 @@ public class Oauth2CodeServiceImpl implements Oauth2CodeService {
                 .userId(userId)
                 .userType(userType)
                 .clientId(clientId)
-                .scopes(scopes)
+                .scopes(JSON.toJSONString(scopes))
                 .expiresTime(LocalDateTime.now().plusSeconds(TIMEOUT))
                 .redirectUri(redirectUri)
                 .state(state)
@@ -60,7 +60,7 @@ public class Oauth2CodeServiceImpl implements Oauth2CodeService {
         if (DateUtils.isExpired(oauth2Code.getExpiresTime())) {
             throw new ServiceException(BAD_REQUEST.getCode(), "授权码已过期");
         }
-        // 使用过的授权码要删除
+        // TODO 使用过的授权码要删除
 //        oauth2CodeMapper.deleteById(oauth2Code.getId());
         return oauth2Code;
     }
