@@ -11,10 +11,11 @@ import java.util.List;
 
 /**
  * OAuth2 访问令牌
+ *
  * @TableName system_oauth2_access_token
  */
 @Builder
-@TableName(value ="system_oauth2_access_token")
+@TableName(value = "system_oauth2_access_token", autoResultMap = true)
 @Data
 public class Oauth2AccessToken implements Serializable {
     /**
@@ -74,6 +75,7 @@ public class Oauth2AccessToken implements Serializable {
     /**
      * 是否删除
      */
+    @TableLogic
     private Boolean deleted;
 
     @TableField(exist = false)

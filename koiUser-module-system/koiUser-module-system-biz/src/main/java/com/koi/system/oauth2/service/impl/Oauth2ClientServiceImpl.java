@@ -8,7 +8,7 @@ import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.collection.CollectionUtils;
 import com.koi.common.utils.string.StrUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2Client;
-import com.koi.system.oauth2.mapper.OAuth2ClientMapper;
+import com.koi.system.oauth2.mapper.Oauth2ClientMapper;
 import com.koi.system.oauth2.service.Oauth2ClientService;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +35,7 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUES
 public class Oauth2ClientServiceImpl implements Oauth2ClientService {
 
     @Resource
-    private OAuth2ClientMapper oauth2ClientMapper;
+    private Oauth2ClientMapper oauth2ClientMapper;
 
     /**
      * 客户端缓存, key：客户端编号, volatile 修饰的原因是，每次刷新时，直接修改指向

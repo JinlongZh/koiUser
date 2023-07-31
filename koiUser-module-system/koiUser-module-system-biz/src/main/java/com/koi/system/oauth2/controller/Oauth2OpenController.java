@@ -65,14 +65,17 @@ public class Oauth2OpenController {
         }
         // 校验客户端
         String[] clientIdAndSecret = HttpUtils.obtainBasicAuthorization(request);
-        Oauth2Client client = oauth2ClientService.validOAuthClientFromCache(clientIdAndSecret[0], clientIdAndSecret[1],
+        if (clientIdAndSecret == null) {
+            throw new ServiceException(BAD_REQUEST.getCode(), "clientId或clientSecret错误");
+        }
+        Oauth2Client oauth2Client = oauth2ClientService.validOAuthClientFromCache(clientIdAndSecret[0], clientIdAndSecret[1],
                 grantType, null, redirectUri);
 
         // 根据授权模式，获取访问令牌
         Oauth2AccessToken oauth2accessToken;
         switch (grantTypeEnum) {
             case AUTHORIZATION_CODE:
-                oauth2accessToken = oauth2GrantService.grantAuthorizationCodeForAccessToken(client.getClientId(), code, redirectUri, state);
+                oauth2accessToken = oauth2GrantService.grantAuthorizationCodeForAccessToken(oauth2Client.getClientId(), code, redirectUri, state);
                 break;
             default:
                 throw new ServiceException(BAD_REQUEST.getCode(), "未知授权类型");

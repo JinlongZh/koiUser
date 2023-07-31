@@ -12,10 +12,11 @@ import lombok.Data;
 
 /**
  * OAuth2 授权码表
+ *
  * @TableName system_oauth2_code
  */
 @Builder
-@TableName(value ="system_oauth2_code")
+@TableName(value = "system_oauth2_code", autoResultMap = true)
 @Data
 public class Oauth2Code implements Serializable {
     /**
@@ -80,6 +81,7 @@ public class Oauth2Code implements Serializable {
     /**
      * 是否删除
      */
+    @TableLogic
     private Boolean deleted;
 
     @TableField(exist = false)

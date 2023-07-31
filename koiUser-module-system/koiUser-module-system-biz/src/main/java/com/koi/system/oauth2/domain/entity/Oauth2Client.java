@@ -13,7 +13,7 @@ import lombok.Data;
  * OAuth2 客户端表
  * @TableName system_oauth2_client
  */
-@TableName(value ="system_oauth2_client")
+@TableName(value ="system_oauth2_client", autoResultMap = true)
 @Data
 public class Oauth2Client implements Serializable {
     /**
@@ -119,6 +119,7 @@ public class Oauth2Client implements Serializable {
     /**
      * 是否删除
      */
+    @TableLogic
     private Boolean deleted;
 
     @TableField(exist = false)

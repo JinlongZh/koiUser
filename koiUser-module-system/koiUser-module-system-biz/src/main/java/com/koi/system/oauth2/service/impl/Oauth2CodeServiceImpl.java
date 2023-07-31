@@ -1,11 +1,12 @@
 package com.koi.system.oauth2.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2Code;
-import com.koi.system.oauth2.mapper.OAuth2CodeMapper;
+import com.koi.system.oauth2.mapper.Oauth2CodeMapper;
 import com.koi.system.oauth2.service.Oauth2CodeService;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUES
 public class Oauth2CodeServiceImpl implements Oauth2CodeService {
 
     @Resource
-    private OAuth2CodeMapper oauth2CodeMapper;
+    private Oauth2CodeMapper oauth2CodeMapper;
 
     /**
      * 授权码的过期时间，默认 5 分钟
@@ -53,14 +54,14 @@ public class Oauth2CodeServiceImpl implements Oauth2CodeService {
     public Oauth2Code consumeAuthorizationCode(String code) {
         Oauth2Code oauth2Code = oauth2CodeMapper.selectOne(new LambdaQueryWrapper<Oauth2Code>()
                 .eq(Oauth2Code::getCode, code));
-        if (code == null) {
+        if (oauth2Code == null) {
             throw new ServiceException(BAD_REQUEST.getCode(), "授权码不存在");
         }
         if (DateUtils.isExpired(oauth2Code.getExpiresTime())) {
             throw new ServiceException(BAD_REQUEST.getCode(), "授权码已过期");
         }
         // 使用过的授权码要删除
-        oauth2CodeMapper.deleteById(oauth2Code.getId());
+//        oauth2CodeMapper.deleteById(oauth2Code.getId());
         return oauth2Code;
     }
 

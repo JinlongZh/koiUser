@@ -12,10 +12,11 @@ import lombok.Data;
 
 /**
  * OAuth2 刷新令牌
+ *
  * @TableName system_oauth2_refresh_token
  */
 @Builder
-@TableName(value ="system_oauth2_refresh_token")
+@TableName(value = "system_oauth2_refresh_token", autoResultMap = true)
 @Data
 public class Oauth2RefreshToken implements Serializable {
     /**
@@ -70,6 +71,7 @@ public class Oauth2RefreshToken implements Serializable {
     /**
      * 是否删除
      */
+    @TableLogic
     private Boolean deleted;
 
     @TableField(exist = false)

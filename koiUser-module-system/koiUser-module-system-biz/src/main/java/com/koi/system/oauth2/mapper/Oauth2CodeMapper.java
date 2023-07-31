@@ -1,7 +1,7 @@
 package com.koi.system.oauth2.mapper;
 
-import com.koi.system.oauth2.domain.entity.Oauth2Client;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.koi.system.oauth2.domain.entity.Oauth2Code;
 
 /**
  * 描述
@@ -9,10 +9,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Author zjl
  * @Date 2023/7/30 17:43
  */
-public interface OAuth2ClientMapper extends BaseMapper<Oauth2Client> {
-
+public interface Oauth2CodeMapper extends BaseMapper<Oauth2Code> {
 }
-
-
-
-

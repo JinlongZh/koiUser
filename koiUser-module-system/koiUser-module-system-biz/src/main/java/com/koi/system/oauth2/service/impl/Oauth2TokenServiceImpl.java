@@ -3,13 +3,12 @@ package com.koi.system.oauth2.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
-import com.koi.common.exception.enums.GlobalErrorCodeConstants;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Client;
 import com.koi.system.oauth2.domain.entity.Oauth2RefreshToken;
-import com.koi.system.oauth2.mapper.OAuth2AccessTokenMapper;
-import com.koi.system.oauth2.mapper.OAuth2RefreshTokenMapper;
+import com.koi.system.oauth2.mapper.Oauth2AccessTokenMapper;
+import com.koi.system.oauth2.mapper.Oauth2RefreshTokenMapper;
 import com.koi.system.oauth2.service.Oauth2ClientService;
 import com.koi.system.oauth2.service.Oauth2TokenService;
 import org.springframework.stereotype.Service;
@@ -32,9 +31,9 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     @Resource
     private Oauth2ClientService oauth2ClientService;
     @Resource
-    private OAuth2AccessTokenMapper oauth2AccessTokenMapper;
+    private Oauth2AccessTokenMapper oauth2AccessTokenMapper;
     @Resource
-    private OAuth2RefreshTokenMapper oauth2RefreshTokenMapper;
+    private Oauth2RefreshTokenMapper oauth2RefreshTokenMapper;
 
     @Override
     public Oauth2AccessToken createAccessToken(Long userId, Integer userType, String clientId, List<String> scopes) {
