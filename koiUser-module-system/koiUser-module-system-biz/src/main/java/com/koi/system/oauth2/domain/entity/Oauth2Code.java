@@ -16,7 +16,7 @@ import lombok.Data;
  * @TableName system_oauth2_code
  */
 @Builder
-@TableName(value = "system_oauth2_code", autoResultMap = true)
+@TableName(value = "system_oauth2_code")
 @Data
 public class Oauth2Code implements Serializable {
     /**
@@ -47,6 +47,7 @@ public class Oauth2Code implements Serializable {
 
     /**
      * 授权范围
+     * -----list类型：["aaa","bbb"]
      */
     private String scopes;
 

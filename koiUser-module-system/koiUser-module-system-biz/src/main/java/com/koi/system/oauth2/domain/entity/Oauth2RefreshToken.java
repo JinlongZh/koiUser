@@ -16,7 +16,7 @@ import lombok.Data;
  * @TableName system_oauth2_refresh_token
  */
 @Builder
-@TableName(value = "system_oauth2_refresh_token", autoResultMap = true)
+@TableName(value = "system_oauth2_refresh_token")
 @Data
 public class Oauth2RefreshToken implements Serializable {
     /**
@@ -47,6 +47,7 @@ public class Oauth2RefreshToken implements Serializable {
 
     /**
      * 授权范围
+     * -----list类型：["aaa","bbb"]
      */
     private String scopes;
 

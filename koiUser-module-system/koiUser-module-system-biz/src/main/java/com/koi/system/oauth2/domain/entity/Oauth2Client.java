@@ -64,37 +64,44 @@ public class Oauth2Client implements Serializable {
 
     /**
      * 可重定向的 URI 地址
+     * -----list类型：["aaa","bbb"]
      */
     private String redirectUris;
 
     /**
      * 授权类型
+     * -----list类型：["aaa","bbb"]
      */
     private String authorizedGrantTypes;
 
     /**
      * 授权范围
+     * -----list类型：["aaa","bbb"]
      */
     private String scopes;
 
     /**
      * 自动通过的授权范围
      * code 授权时，如果 scope 在这个范围内，则自动通过
+     * -----list类型：["aaa","bbb"]
      */
     private String autoApproveScopes;
 
     /**
      * 权限
+     * -----list类型：["aaa","bbb"]
      */
     private String authorities;
 
     /**
      * 资源
+     * -----list类型：["aaa","bbb"]
      */
     private String resourceIds;
 
     /**
      * 附加信息
+     * JSON 格式
      */
     private String additionalInformation;
 

@@ -51,6 +51,7 @@ public class Oauth2AccessToken implements Serializable {
 
     /**
      * 授权范围
+     * -----list类型：["aaa","bbb"]
      */
     private String scopes;
 
