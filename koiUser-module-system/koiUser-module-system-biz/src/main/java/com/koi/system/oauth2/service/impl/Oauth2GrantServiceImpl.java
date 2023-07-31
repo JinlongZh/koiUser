@@ -2,6 +2,7 @@ package com.koi.system.oauth2.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import com.koi.common.exception.ServiceException;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Code;
 import com.koi.system.oauth2.service.Oauth2CodeService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 
 /**
  * OAuth2 授予 Service 实现类
@@ -38,16 +41,16 @@ public class Oauth2GrantServiceImpl implements Oauth2GrantService {
         Assert.notNull(oauth2Code, "授权码不能为空"); // 防御性编程
         // 校验 clientId 是否匹配
         if (!StrUtil.equals(clientId, oauth2Code.getClientId())) {
-
+            throw new ServiceException(BAD_REQUEST.getCode(), "client_id 不匹配");
         }
         // 校验 redirectUri 是否匹配
         if (!StrUtil.equals(redirectUri, oauth2Code.getRedirectUri())) {
-
+            throw new ServiceException(BAD_REQUEST.getCode(), "redirect_uri 不匹配");
         }
         // 校验 state 是否匹配
         state = StrUtil.nullToDefault(state, ""); // 数据库 state 为 null 时，会设置为 "" 空串
         if (!StrUtil.equals(state, oauth2Code.getState())) {
-
+            throw new ServiceException(BAD_REQUEST.getCode(), "state 不匹配");
         }
 
         // 创建访问令牌

@@ -47,14 +47,14 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
 
     @Override
     public Oauth2AccessToken checkAccessToken(String accessToken) {
-        Oauth2AccessToken accessTokenDO = this.getAccessToken(accessToken);
-        if (accessTokenDO == null) {
+        Oauth2AccessToken oauth2AccessToken = this.getAccessToken(accessToken);
+        if (oauth2AccessToken == null) {
             throw new ServiceException(UNAUTHORIZED.getCode(), "访问令牌不存在");
         }
-        if (DateUtils.isExpired(accessTokenDO.getExpiresTime())) {
+        if (DateUtils.isExpired(oauth2AccessToken.getExpiresTime())) {
             throw new ServiceException(UNAUTHORIZED.getCode(), "访问令牌已过期");
         }
-        return accessTokenDO;
+        return oauth2AccessToken;
     }
 
     @Override

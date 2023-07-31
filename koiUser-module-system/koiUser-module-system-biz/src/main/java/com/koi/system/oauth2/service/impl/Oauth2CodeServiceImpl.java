@@ -2,6 +2,7 @@ package com.koi.system.oauth2.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2Code;
 import com.koi.system.oauth2.mapper.OAuth2CodeMapper;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 
 /**
  * OAuth2.0 授权码 Service 实现类
@@ -51,11 +54,12 @@ public class Oauth2CodeServiceImpl implements Oauth2CodeService {
         Oauth2Code oauth2Code = oauth2CodeMapper.selectOne(new LambdaQueryWrapper<Oauth2Code>()
                 .eq(Oauth2Code::getCode, code));
         if (code == null) {
-
+            throw new ServiceException(BAD_REQUEST.getCode(), "授权码不存在");
         }
         if (DateUtils.isExpired(oauth2Code.getExpiresTime())) {
-
+            throw new ServiceException(BAD_REQUEST.getCode(), "授权码已过期");
         }
+        // 使用过的授权码要删除
         oauth2CodeMapper.deleteById(oauth2Code.getId());
         return oauth2Code;
     }

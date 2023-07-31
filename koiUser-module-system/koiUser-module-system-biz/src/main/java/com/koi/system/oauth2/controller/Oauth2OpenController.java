@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
@@ -36,7 +35,7 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUES
  */
 @RestController
 @RequestMapping("/system/oauth2")
-public class OAuth2OpenController {
+public class Oauth2OpenController {
 
     @Resource
     private Oauth2ClientService oauth2ClientService;
@@ -48,9 +47,9 @@ public class OAuth2OpenController {
     @PostMapping("/token")
     @Operation(summary = "获得访问令牌", description = "适合 code 授权码模式")
     @Parameters({
-            @Parameter(name = "grant_type", required = true, description = "授权类型", example = "code"),
-            @Parameter(name = "code", description = "授权码", example = "userinfo.read"),
-            @Parameter(name = "redirect_uri", description = "重定向 URI", example = "https://www.iocoder.cn"),
+            @Parameter(name = "grant_type", required = true, description = "授权类型", example = "authorization_code"),
+            @Parameter(name = "code", description = "授权码", example = "userinfo"),
+            @Parameter(name = "redirect_uri", description = "重定向 URI", example = "https://127.0.0.1:18080"),
             @Parameter(name = "state", description = "状态", example = "1")
     })
     public CommonResult<OAuth2OpenAccessTokenResp> postAccessToken(HttpServletRequest request,
