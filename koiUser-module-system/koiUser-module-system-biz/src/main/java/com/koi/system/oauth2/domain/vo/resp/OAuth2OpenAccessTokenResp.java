@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 访问令牌 Response VO
  *
@@ -36,5 +38,8 @@ public class OAuth2OpenAccessTokenResp {
 
     @Schema(description = "授权范围,如果多个授权范围，使用空格分隔", example = "user_info")
     private String scope;
+
+//    @Schema(description = "授权范围", example = "user_info")
+//    private List<String> scope;
 
 }

@@ -2,7 +2,6 @@ package com.koi.system.oauth2.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
 import com.koi.common.exception.ServiceException;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Code;
@@ -15,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
+import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
 
 /**
  * OAuth2 授予 Service 实现类
@@ -56,6 +56,6 @@ public class Oauth2GrantServiceImpl implements Oauth2GrantService {
 
         // 创建访问令牌
         return oauth2TokenService.createAccessToken(oauth2Code.getUserId(), oauth2Code.getUserType(),
-                oauth2Code.getClientId(), JSON.parseObject(oauth2Code.getScopes(), List.class));
+                oauth2Code.getClientId(), stringListFromJson(oauth2Code.getScopes()));
     }
 }

@@ -171,4 +171,14 @@ public class DateUtils {
         return LocalDateTimeUtil.isSameDay(date, LocalDateTime.now());
     }
 
+    /**
+     * 将LocalDateTime 转为秒级时间戳
+     *
+     * @param localDateTime
+     * @Return Long
+     */
+    public static Long toSecond(LocalDateTime localDateTime) {
+        return localDateTime.toEpochSecond(ZoneOffset.ofHours(8));
+    }
+
 }

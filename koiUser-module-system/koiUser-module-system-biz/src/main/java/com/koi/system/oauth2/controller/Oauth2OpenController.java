@@ -2,18 +2,20 @@ package com.koi.system.oauth2.controller;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import com.koi.common.exception.ServiceException;
 import com.koi.common.domain.CommonResult;
+import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.BeanCopyUtils;
+import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.http.HttpUtils;
+import com.koi.system.oauth2.convert.Oauth2OpenConvert;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Client;
+import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenAccessTokenResp;
 import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenCheckTokenResp;
 import com.koi.system.oauth2.enums.OAuth2GrantTypeEnum;
-import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenAccessTokenResp;
-import com.koi.system.oauth2.service.Oauth2TokenService;
 import com.koi.system.oauth2.service.Oauth2ClientService;
 import com.koi.system.oauth2.service.Oauth2GrantService;
+import com.koi.system.oauth2.service.Oauth2TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -26,6 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
+import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
 
 /**
  * 主要提供给外部应用调用
@@ -37,6 +40,8 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUES
 @RequestMapping("/system/oauth2")
 public class Oauth2OpenController {
 
+    @Resource
+    Oauth2OpenConvert oauth2OpenConvert;
     @Resource
     private Oauth2ClientService oauth2ClientService;
     @Resource
@@ -81,7 +86,8 @@ public class Oauth2OpenController {
                 throw new ServiceException(BAD_REQUEST.getCode(), "未知授权类型");
         }
         Assert.notNull(oauth2accessToken, "访问令牌不能为空"); // 防御性检查
-        return CommonResult.success(BeanCopyUtils.copyObject(oauth2accessToken, OAuth2OpenAccessTokenResp.class));
+
+        return CommonResult.success(oauth2OpenConvert.convertAccessToken(oauth2accessToken));
     }
 
     /**
@@ -100,7 +106,12 @@ public class Oauth2OpenController {
         // 校验令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.checkAccessToken(token);
         Assert.notNull(oauth2AccessToken, "访问令牌不能为空"); // 防御性检查
-        return CommonResult.success(BeanCopyUtils.copyObject(oauth2AccessToken, OAuth2OpenCheckTokenResp.class));
+        // 封装
+        OAuth2OpenCheckTokenResp oAuth2OpenCheckTokenResp = BeanCopyUtils.copyObject(oauth2AccessToken, OAuth2OpenCheckTokenResp.class);
+        oAuth2OpenCheckTokenResp.setScopes(stringListFromJson(oauth2AccessToken.getScopes()));
+        oAuth2OpenCheckTokenResp.setExp(DateUtils.toSecond(oauth2AccessToken.getExpiresTime()));
+
+        return CommonResult.success(oauth2OpenConvert.convertCheckToken(oauth2AccessToken));
     }
 
 }
