@@ -1,4 +1,4 @@
-package com.koi.common.utils;
+package com.koi.common.utils.bean;
 
 import java.util.ArrayList;
 import java.util.List;

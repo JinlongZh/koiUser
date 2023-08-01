@@ -16,6 +16,16 @@
     <description>koiUser-module-system-biz</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-module-system-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-security</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <!-- Web 相关 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

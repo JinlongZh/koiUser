@@ -4,7 +4,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.koi.common.domain.CommonResult;
 import com.koi.common.exception.ServiceException;
-import com.koi.common.utils.BeanCopyUtils;
+import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.http.HttpUtils;
 import com.koi.system.oauth2.convert.Oauth2OpenConvert;

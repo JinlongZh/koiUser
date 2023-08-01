@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koi.system.oauth2.mapper.Oauth2ApproveMapper">
+
+    <resultMap id="BaseResultMap" type="com.koi.system.oauth2.domain.entity.Oauth2Approve">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="userType" column="user_type" jdbcType="TINYINT"/>
+            <result property="clientId" column="client_id" jdbcType="VARCHAR"/>
+            <result property="scope" column="scope" jdbcType="VARCHAR"/>
+            <result property="approved" column="approved" jdbcType="BIT"/>
+            <result property="expiresTime" column="expires_time" jdbcType="TIMESTAMP"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="BIT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,user_type,
+        client_id,scope,approved,
+        expires_time,create_time,update_time,
+        deleted
+    </sql>
+</mapper>
