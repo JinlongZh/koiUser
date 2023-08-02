@@ -18,7 +18,7 @@ public class SecurityProperties {
      * HTTP 请求时，访问令牌的请求 Header
      */
     @NotEmpty(message = "Token Header 不能为空")
-    private String tokenHeader = "Authorization";
+    private String tokenHeader = "AccessToken";
 
     /**
      * mock 模式的开关

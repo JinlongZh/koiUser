@@ -7,6 +7,9 @@ import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.http.HttpUtils;
+import com.koi.framework.security.core.LoginUser;
+import com.koi.framework.security.core.annotations.PreAuthenticated;
+import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
 import com.koi.system.oauth2.convert.Oauth2OpenConvert;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
 import com.koi.system.oauth2.domain.entity.Oauth2Client;
@@ -19,12 +22,10 @@ import com.koi.system.oauth2.service.Oauth2TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
@@ -49,6 +50,10 @@ public class Oauth2OpenController {
     @Resource
     private Oauth2GrantService oauth2GrantService;
 
+    /**
+     * 获得访问令牌
+     */
+    @PermitAll
     @PostMapping("/token")
     @Operation(summary = "获得访问令牌", description = "适合 code 授权码模式")
     @Parameters({
@@ -93,6 +98,7 @@ public class Oauth2OpenController {
     /**
      * 校验访问令牌
      */
+    @PermitAll
     @PostMapping("/check-token")
     @Operation(summary = "校验访问令牌")
     @Parameter(name = "token", required = true, description = "访问令牌", example = "biu")

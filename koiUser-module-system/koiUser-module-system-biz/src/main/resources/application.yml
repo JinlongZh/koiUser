@@ -56,3 +56,7 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.koi.system
+
+koiuser:
+  security:
+    mock-enable: true
