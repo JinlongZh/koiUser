@@ -1,12 +1,18 @@
 package com.koi.system.permission.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ArrayUtil;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
+import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.utils.collection.CollectionUtils;
+import com.koi.system.permission.domain.entity.Role;
 import com.koi.system.permission.domain.entity.UserRole;
 import com.koi.system.permission.mapper.UserRoleMapper;
 import com.koi.system.permission.service.PermissionService;
+import com.koi.system.permission.service.RoleService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +20,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import static com.koi.common.utils.collection.CollectionUtils.convertSet;
+import static java.util.Collections.singleton;
 
 /**
  * 权限 Service 实现类
@@ -30,6 +37,8 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Resource
     private UserRoleMapper userRoleMapper;
+    @Resource
+    private RoleService roleService;
     
 
     /**
@@ -50,13 +59,48 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    public Set<Long> getUserRoleIdsFromCache(Long userId, Collection<Integer> roleStatuses) {
+        Set<Long> cacheRoleIds = userRoleCache.get(userId);
+        // 创建用户的时候没有分配角色，会存在空指针异常
+        if (CollUtil.isEmpty(cacheRoleIds)) {
+            return Collections.emptySet();
+        }
+        Set<Long> roleIds = new HashSet<>(cacheRoleIds);
+        // 过滤角色状态
+        if (CollectionUtil.isNotEmpty(roleStatuses)) {
+            roleIds.removeIf(roleId -> {
+                Role role = roleService.getRoleFromCache(roleId);
+                return role == null || !roleStatuses.contains(role.getStatus());
+            });
+        }
+        return roleIds;
+    }
+
+    @Override
     public boolean hasAnyPermissions(Long userId, String... permissions) {
-        return false;
+        // TODO 判断菜单权限
+        return true;
     }
 
     @Override
     public boolean hasAnyRoles(Long userId, String... roles) {
-        return false;
+        // 如果为空，说明已经有权限
+        if (ArrayUtil.isEmpty(roles)) {
+            return true;
+        }
+
+        // 获得当前登录的角色。如果为空，说明没有权限
+        Set<Long> roleIds = getUserRoleIdsFromCache(userId, singleton(CommonStatusEnum.ENABLE.getStatus()));
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        // 判断是否是超管。如果是，当然符合条件
+        if (roleService.hasAnySuperAdmin(roleIds)) {
+            return true;
+        }
+        Set<String> userRoles = convertSet(roleService.getRoleListFromCache(roleIds),
+                Role::getCode);
+        return CollUtil.containsAny(userRoles, Sets.newHashSet(roles));
     }
 
     /**
