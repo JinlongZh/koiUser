@@ -4,8 +4,8 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.system.oauth2.domain.entity.Oauth2AccessToken;
-import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenAccessTokenResp;
-import com.koi.system.oauth2.domain.vo.resp.OAuth2OpenCheckTokenResp;
+import com.koi.system.oauth2.domain.vo.response.OAuth2OpenAccessTokenResp;
+import com.koi.system.oauth2.domain.vo.response.OAuth2OpenCheckTokenResp;
 import com.koi.system.oauth2.utils.OAuth2Utils;
 import org.springframework.stereotype.Component;
 

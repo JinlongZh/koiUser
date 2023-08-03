@@ -5,8 +5,10 @@ import com.koi.framework.security.core.filter.TokenAuthenticationFilter;
 import com.koi.framework.security.core.handler.AccessDeniedHandlerImpl;
 import com.koi.framework.security.core.handler.AuthenticationEntryPointImpl;
 import com.koi.framework.security.core.service.SecurityFrameworkService;
+import com.koi.framework.security.core.service.SecurityFrameworkServiceImpl;
 import com.koi.framework.web.core.handle.GlobalExceptionHandler;
 import com.koi.system.api.oauth2.OAuth2TokenApi;
+import com.koi.system.api.permission.PermissionApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -74,9 +76,9 @@ public class SecurityAutoConfiguration {
         return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oauth2TokenApi);
     }
 
-//    @Bean("ss") // 使用 Spring Security 的缩写，方便使用
-//    public SecurityFrameworkService securityFrameworkService(PermissionApi permissionApi) {
-//        return new SecurityFrameworkServiceImpl(permissionApi);
-//    }
+    @Bean("ss") // 使用 Spring Security 的缩写，方便使用
+    public SecurityFrameworkService securityFrameworkService(PermissionApi permissionApi) {
+        return new SecurityFrameworkServiceImpl(permissionApi);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.koi.system.oauth2.domain.vo.resp;
+package com.koi.system.oauth2.domain.vo.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
