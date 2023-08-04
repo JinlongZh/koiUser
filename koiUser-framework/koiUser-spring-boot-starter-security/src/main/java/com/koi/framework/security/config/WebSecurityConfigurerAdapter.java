@@ -94,6 +94,8 @@ public class WebSecurityConfigurerAdapter {
         httpSecurity
                 // 全局共享规则
                 .authorizeRequests()
+                // 静态资源，可匿名访问
+                .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
                 // 设置 @PermitAll 无需认证
                 .antMatchers(HttpMethod.GET, permitAllUrls.get(HttpMethod.GET).toArray(new String[0])).permitAll()
                 .antMatchers(HttpMethod.POST, permitAllUrls.get(HttpMethod.POST).toArray(new String[0])).permitAll()
