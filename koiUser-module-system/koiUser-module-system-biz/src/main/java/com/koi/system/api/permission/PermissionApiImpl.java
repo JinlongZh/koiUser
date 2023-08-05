@@ -1,6 +1,6 @@
 package com.koi.system.api.permission;
 
-import com.koi.system.permission.service.PermissionService;
+import com.koi.system.service.permission.PermissionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

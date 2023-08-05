@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.koi.system.oauth2.mapper.Oauth2ApproveMapper">
+<mapper namespace="com.koi.system.mapper.oauth2.Oauth2ApproveMapper">
 
-    <resultMap id="BaseResultMap" type="com.koi.system.oauth2.domain.entity.Oauth2Approve">
+    <resultMap id="BaseResultMap" type="com.koi.system.domain.oauth2.entity.Oauth2Approve">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="userType" column="user_type" jdbcType="TINYINT"/>

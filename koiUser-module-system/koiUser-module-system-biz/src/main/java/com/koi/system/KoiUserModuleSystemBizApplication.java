@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.koi.system.*.mapper")
+@MapperScan("com.koi.system.mapper")
 public class KoiUserModuleSystemBizApplication {
 
     public static void main(String[] args) {

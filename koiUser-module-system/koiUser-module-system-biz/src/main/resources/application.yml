@@ -62,4 +62,5 @@ koiuser:
     mock-enable: true
     permit-all-urls:
       - /v3/api-docs/*
-      - /swagger-resources/**
+
+
