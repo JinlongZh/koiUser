@@ -1,2 +1,3 @@
 com.koi.framework.security.config.SecurityAutoConfiguration
 com.koi.framework.security.config.WebSecurityConfigurerAdapter
+com.koi.framework.security.config.SecurityRpcAutoConfiguration

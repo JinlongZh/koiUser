@@ -1,7 +1,7 @@
 package com.koi.system.service.auth;
 
-import com.koi.system.domain.auth.vo.request.AuthLoginReqVO;
-import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
+import com.koi.system.domain.auth.vo.request.AuthLoginReq;
+import com.koi.system.domain.auth.vo.response.AuthLoginResp;
 import com.koi.system.domain.user.entity.AdminUser;
 
 import javax.validation.Valid;
@@ -27,5 +27,5 @@ public interface AuthService {
      * @param reqVO 登录信息
      * @return 登录结果
      */
-    AuthLoginRespVO login(@Valid AuthLoginReqVO reqVO);
+    AuthLoginResp login(@Valid AuthLoginReq reqVO);
 }

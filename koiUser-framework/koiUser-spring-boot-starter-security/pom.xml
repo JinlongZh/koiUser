@@ -59,6 +59,13 @@
 			<artifactId>koiUser-module-system-api</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+
+		<!-- RPC 远程调用相关 -->
+		<dependency>
+			<groupId>com.koi</groupId>
+			<artifactId>koiUser-spring-boot-starter-rpc</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 

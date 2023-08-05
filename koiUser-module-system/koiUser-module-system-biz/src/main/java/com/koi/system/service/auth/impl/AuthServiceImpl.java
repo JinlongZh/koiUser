@@ -5,8 +5,8 @@ import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.exception.ServiceException;
 import com.koi.system.convert.auth.AuthConvert;
-import com.koi.system.domain.auth.vo.request.AuthLoginReqVO;
-import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
+import com.koi.system.domain.auth.vo.request.AuthLoginReq;
+import com.koi.system.domain.auth.vo.response.AuthLoginResp;
 import com.koi.system.service.auth.AuthService;
 import com.koi.system.enums.common.LoginLogTypeEnum;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
@@ -30,8 +30,6 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUES
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Resource
-    private AuthConvert authConvert;
     @Resource
     private AdminUserService adminUserService;
     @Resource
@@ -62,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
+    public AuthLoginResp login(AuthLoginReq reqVO) {
         // 使用账号密码，进行登录
         AdminUser user = authenticate(reqVO.getUsername(), reqVO.getPassword());
 
@@ -70,12 +68,12 @@ public class AuthServiceImpl implements AuthService {
         return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
-    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+    private AuthLoginResp createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
         // 创建访问令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
-        return authConvert.convertAuthLogin(oauth2AccessToken);
+        return AuthConvert.convertAuthLogin(oauth2AccessToken);
     }
 
 

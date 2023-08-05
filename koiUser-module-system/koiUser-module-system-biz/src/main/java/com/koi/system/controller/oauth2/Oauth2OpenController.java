@@ -39,8 +39,6 @@ import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
 public class Oauth2OpenController {
 
     @Resource
-    Oauth2OpenConvert oauth2OpenConvert;
-    @Resource
     private Oauth2ClientService oauth2ClientService;
     @Resource
     private Oauth2TokenService oauth2TokenService;
@@ -89,7 +87,7 @@ public class Oauth2OpenController {
         }
         Assert.notNull(oauth2accessToken, "访问令牌不能为空"); // 防御性检查
 
-        return CommonResult.success(oauth2OpenConvert.convertAccessToken(oauth2accessToken));
+        return CommonResult.success(Oauth2OpenConvert.convertAccessToken(oauth2accessToken));
     }
 
     /**
@@ -117,7 +115,7 @@ public class Oauth2OpenController {
         oAuth2OpenCheckTokenResp.setScopes(stringListFromJson(oauth2AccessToken.getScopes()));
         oAuth2OpenCheckTokenResp.setExp(DateUtils.toSecond(oauth2AccessToken.getExpiresTime()));
 
-        return CommonResult.success(oauth2OpenConvert.convertCheckToken(oauth2AccessToken));
+        return CommonResult.success(Oauth2OpenConvert.convertCheckToken(oauth2AccessToken));
     }
 
 }
