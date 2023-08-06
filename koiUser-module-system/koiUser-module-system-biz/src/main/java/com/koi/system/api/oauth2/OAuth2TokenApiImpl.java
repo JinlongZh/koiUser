@@ -8,16 +8,17 @@ import com.koi.system.convert.auth.Oauth2TokenConvert;
 import com.koi.system.service.oauth2.Oauth2TokenService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
 /**
- * OAuth2.0 Token API 实现类
+ * 提供 RESTful API 接口，给 Feign 调用
  *
  * @Author zjl
  * @Date 2023/8/1 21:30
  */
-@Service
+@RestController
 @Validated
 public class OAuth2TokenApiImpl implements OAuth2TokenApi{
 

@@ -19,6 +19,7 @@ import com.koi.system.service.oauth2.Oauth2TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,6 +35,7 @@ import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
  * @Author zjl
  * @Date 2023/7/30 15:49
  */
+@Tag(name = "管理后台 - OAuth2.0 授权")
 @RestController
 @RequestMapping("/system/oauth2")
 public class Oauth2OpenController {

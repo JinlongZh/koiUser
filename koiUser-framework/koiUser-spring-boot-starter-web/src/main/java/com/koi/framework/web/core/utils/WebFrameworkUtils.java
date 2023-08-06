@@ -9,7 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 描述
+ * web 包的工具类
  *
  * @Author zjl
  * @Date 2023/7/29 17:17
