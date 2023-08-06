@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("/test")
+    @GetMapping("/app-api/test")
     public String test() {
         System.out.println(SecurityFrameworkUtils.getLoginUserId());
         return "test";

@@ -1,6 +1,8 @@
 package com.koi.framework.web.core.utils;
 
 import com.koi.common.domain.CommonResult;
+import com.koi.common.enums.UserTypeEnum;
+import com.koi.framework.web.config.WebProperties;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -22,6 +24,11 @@ public class WebFrameworkUtils {
     private static final String REQUEST_ATTRIBUTE_COMMON_RESULT = "common_result";
 
 
+    private static WebProperties properties;
+
+    public WebFrameworkUtils(WebProperties webProperties) {
+        WebFrameworkUtils.properties = webProperties;
+    }
 
     public static void setLoginUserId(ServletRequest request, Long userId) {
         request.setAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_ID, userId);
@@ -62,8 +69,19 @@ public class WebFrameworkUtils {
         if (request == null) {
             return null;
         }
-        // 从 Attribute 中获取
-        return (Integer) request.getAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_TYPE);
+        // 1. 优先，从 Attribute 中获取
+        Integer userType = (Integer) request.getAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_TYPE);
+        if (userType != null) {
+            return userType;
+        }
+        // 2. 其次，基于 URL 前缀的约定
+        if (request.getRequestURI().startsWith(properties.getAdminApi().getPrefix())) {
+            return UserTypeEnum.ADMIN.getValue();
+        }
+        if (request.getRequestURI().startsWith(properties.getAppApi().getPrefix())) {
+            return UserTypeEnum.MEMBER.getValue();
+        }
+        return null;
     }
 
     public static Integer getLoginUserType() {

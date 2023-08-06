@@ -1,4 +1,4 @@
-package com.koi.system.controller.oauth2;
+package com.koi.system.controller.admin.oauth2;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;

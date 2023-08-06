@@ -1,4 +1,4 @@
-package com.koi.system.controller.auth;
+package com.koi.system.controller.admin.auth;
 
 import com.koi.common.domain.CommonResult;
 import com.koi.system.domain.auth.vo.request.AuthLoginReq;
