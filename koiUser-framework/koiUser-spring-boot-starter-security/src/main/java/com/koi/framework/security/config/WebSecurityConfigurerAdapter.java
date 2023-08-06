@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,6 +52,12 @@ public class WebSecurityConfigurerAdapter {
      */
     @Resource
     private TokenAuthenticationFilter tokenAuthenticationFilter;
+
+    /**
+     * 注意：引入模块中一定要配置 authorizeRequestsCustomizer，否则会报错
+     */
+    @Resource
+    private List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -92,7 +99,7 @@ public class WebSecurityConfigurerAdapter {
 
         // 设置每个请求的权限
         httpSecurity
-                // 全局共享规则
+                // ①：全局共享规则
                 .authorizeRequests()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
@@ -103,8 +110,11 @@ public class WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, permitAllUrls.get(HttpMethod.DELETE).toArray(new String[0])).permitAll()
                 // 基于配置的 permit-all-urls 无需认证
                 .antMatchers(securityProperties.getPermitAllUrls().toArray(new String[0])).permitAll()
-                // 兜底规则，必须认证
-                .and().authorizeRequests()
+                // ②：每个项目的自定义规则
+                .and().authorizeRequests(registry -> // 下面，循环设置自定义规则
+                        authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
+                // ③：兜底规则，必须认证
+                .authorizeRequests()
                 .anyRequest().authenticated();
 
         // 添加 Token Filter

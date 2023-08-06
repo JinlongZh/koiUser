@@ -1,7 +1,6 @@
 package com.koi.framework.web.core.utils;
 
 import com.koi.common.domain.CommonResult;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -22,12 +21,6 @@ public class WebFrameworkUtils {
 
     private static final String REQUEST_ATTRIBUTE_COMMON_RESULT = "common_result";
 
-
-    private static WebProperties properties;
-
-    public WebFrameworkUtils(WebProperties webProperties) {
-        WebFrameworkUtils.properties = webProperties;
-    }
 
 
     public static void setLoginUserId(ServletRequest request, Long userId) {

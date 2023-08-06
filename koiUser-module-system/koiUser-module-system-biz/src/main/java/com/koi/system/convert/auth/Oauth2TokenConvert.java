@@ -3,8 +3,6 @@ package com.koi.system.convert.auth;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.system.api.oauth2.dto.response.OAuth2AccessTokenCheckRespDTO;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
 

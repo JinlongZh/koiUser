@@ -69,5 +69,3 @@ springdoc:
 koiuser:
   security:
     mock-enable: true
-    permit-all-urls:
-      - /v3/api-docs/*
