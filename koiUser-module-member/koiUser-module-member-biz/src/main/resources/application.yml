@@ -6,7 +6,7 @@ spring:
     allow-bean-definition-overriding: true # ?? Bean ?????? Feign ???????????
 
   application:
-    name: member-service
+    name: member-server
 
   profiles:
     active: dev
