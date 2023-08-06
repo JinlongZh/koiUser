@@ -14,9 +14,9 @@ spring:
   # ?????
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${koiUser.mysql.ip}:${koiUser.mysql.port}/${koiUser.mysql.db}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: ${koiUser.mysql.username}
-    password: ${koiUser.mysql.password}
+    url: jdbc:mysql://${koiuser.mysql.ip}:${koiuser.mysql.port}/${koiuser.mysql.db}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: ${koiuser.mysql.username}
+    password: ${koiuser.mysql.password}
     hikari:
       minimum-idle: 3
       maximum-pool-size: 10
@@ -28,11 +28,11 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 
   redis:
-    host: ${koiUser.redis.host}
-    port: ${koiUser.redis.port}
+    host: ${koiuser.redis.host}
+    port: ${koiuser.redis.port}
     database: 0
     timeout: 1800000
-    password: ${koiUser.redis.password}
+    password: ${koiuser.redis.password}
     lettuce:
       pool:
         max-wait: -1
@@ -50,7 +50,7 @@ spring:
 cloud:
   nacos:
     discovery:
-      server-addr: ${xiaopao.nacos.addr}
+      server-addr: ${koiuser.nacos.addr}
 
 
 # springdoc-openapi????
