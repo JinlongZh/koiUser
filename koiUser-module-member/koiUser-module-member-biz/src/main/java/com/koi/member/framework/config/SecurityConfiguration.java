@@ -1,7 +1,7 @@
 package com.koi.member.framework.config;
 
 import com.koi.framework.security.config.AuthorizeRequestsCustomizer;
-import com.koi.system.enums.ApiConstants;
+import com.koi.member.enums.ApiConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 registry.antMatchers("/v3/api-docs/**").permitAll() // 元数据
                         .antMatchers("/swagger-ui.html").permitAll(); // Swagger UI
                 // RPC 服务的安全配置
-//                registry.antMatchers(ApiConstants.PREFIX + "/**").permitAll();
+                registry.antMatchers(ApiConstants.PREFIX + "/**").permitAll();
             }
 
         };

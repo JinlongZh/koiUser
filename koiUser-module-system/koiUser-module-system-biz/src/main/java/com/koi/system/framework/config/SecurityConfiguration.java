@@ -1,7 +1,7 @@
 package com.koi.system.framework.config;
 
 import com.koi.framework.security.config.AuthorizeRequestsCustomizer;
-import com.koi.system.enums.ApiConstants;
+import com.koi.system.enums.common.ApiConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

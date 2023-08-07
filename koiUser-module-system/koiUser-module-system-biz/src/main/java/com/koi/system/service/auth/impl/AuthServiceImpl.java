@@ -7,14 +7,12 @@ import com.koi.common.exception.ServiceException;
 import com.koi.system.convert.auth.AuthConvert;
 import com.koi.system.domain.auth.vo.request.AuthLoginReq;
 import com.koi.system.domain.auth.vo.response.AuthLoginResp;
-import com.koi.system.service.auth.AuthService;
-import com.koi.system.enums.common.LoginLogTypeEnum;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
-import com.koi.system.enums.oauth2.OAuth2ClientConstants;
-import com.koi.system.service.oauth2.Oauth2TokenService;
 import com.koi.system.domain.user.entity.AdminUser;
+import com.koi.system.enums.oauth2.OAuth2ClientConstants;
+import com.koi.system.service.auth.AuthService;
+import com.koi.system.service.oauth2.Oauth2TokenService;
 import com.koi.system.service.user.AdminUserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,12 +32,6 @@ public class AuthServiceImpl implements AuthService {
     private AdminUserService adminUserService;
     @Resource
     private Oauth2TokenService oauth2TokenService;
-
-    /**
-     * 验证码的开关，默认为 true
-     */
-    @Value("${koiuser.captcha.enable:true}")
-    private Boolean captchaEnable;
 
 
     @Override
@@ -64,11 +56,11 @@ public class AuthServiceImpl implements AuthService {
         // 使用账号密码，进行登录
         AdminUser user = authenticate(reqVO.getUsername(), reqVO.getPassword());
 
-        // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
+        // 创建 Token 令牌
+        return createTokenAfterLoginSuccess(user.getId());
     }
 
-    private AuthLoginResp createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+    private AuthLoginResp createTokenAfterLoginSuccess(Long userId) {
         // 创建访问令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);

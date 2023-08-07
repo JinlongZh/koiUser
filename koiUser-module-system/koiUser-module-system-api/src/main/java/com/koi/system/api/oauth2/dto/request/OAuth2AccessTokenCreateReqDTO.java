@@ -4,6 +4,7 @@ package com.koi.system.api.oauth2.dto.request;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.validation.InEnum;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Author zjl
  * @Date 2023/8/1 21:06
  */
+@Accessors(chain = true)
 @Data
 public class OAuth2AccessTokenCreateReqDTO implements Serializable {
 

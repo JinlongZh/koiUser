@@ -1,7 +1,7 @@
 package com.koi.system.api.permission;
 
 import com.koi.common.domain.CommonResult;
-import com.koi.system.enums.ApiConstants;
+import com.koi.system.enums.common.ApiConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

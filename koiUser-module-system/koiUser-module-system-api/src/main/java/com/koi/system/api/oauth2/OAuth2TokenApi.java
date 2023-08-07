@@ -4,7 +4,7 @@ import com.koi.common.domain.CommonResult;
 import com.koi.system.api.oauth2.dto.response.OAuth2AccessTokenCheckRespDTO;
 import com.koi.system.api.oauth2.dto.request.OAuth2AccessTokenCreateReqDTO;
 import com.koi.system.api.oauth2.dto.response.OAuth2AccessTokenRespDTO;
-import com.koi.system.enums.ApiConstants;
+import com.koi.system.enums.common.ApiConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

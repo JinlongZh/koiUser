@@ -1,4 +1,4 @@
-package com.koi.system.enums;
+package com.koi.member.enums;
 
 import com.koi.common.enums.RpcConstants;
 
@@ -15,9 +15,9 @@ public class ApiConstants {
      *
      * 注意，需要保证和 spring.application.name 保持一致
      */
-    public static final String NAME = "system-server";
+    public static final String NAME = "member-server";
 
-    public static final String PREFIX = RpcConstants.RPC_API_PREFIX +  "/system";
+    public static final String PREFIX = RpcConstants.RPC_API_PREFIX +  "/member";
 
 
 }
