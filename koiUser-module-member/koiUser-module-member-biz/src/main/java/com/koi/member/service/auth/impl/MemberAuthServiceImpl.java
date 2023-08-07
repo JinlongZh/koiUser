@@ -54,6 +54,12 @@ public class MemberAuthServiceImpl implements MemberAuthService {
         return createTokenAfterLoginSuccess(user);
     }
 
+    @Override
+    public void logout(String token) {
+        // 删除访问令牌
+        oauth2TokenApi.removeAccessToken(token);
+    }
+
     private AppAuthLoginRespVO createTokenAfterLoginSuccess(MemberUser user) {
 
         // 创建 Token 令牌

@@ -75,6 +75,21 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
         return oauth2AccessToken;
     }
 
+    @Override
+    public Oauth2AccessToken removeAccessToken(String accessToken) {
+        // 删除访问令牌
+        Oauth2AccessToken accessTokenDO = oauth2AccessTokenMapper.selectByAccessToken(accessToken);
+        if (accessTokenDO == null) {
+            return null;
+        }
+        oauth2AccessTokenMapper.deleteById(accessTokenDO.getId());
+        // TODO 删除redis中的accessToken
+
+        // 删除刷新令牌
+        oauth2RefreshTokenMapper.deleteByRefreshToken(accessTokenDO.getRefreshToken());
+        return accessTokenDO;
+    }
+
     private Oauth2AccessToken createOAuth2AccessToken(Oauth2RefreshToken Oauth2RefreshToken, Oauth2Client oauth2Client) {
         Oauth2AccessToken accessToken = Oauth2AccessToken.builder()
                 .accessToken(generateAccessToken())

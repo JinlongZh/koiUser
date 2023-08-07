@@ -52,7 +52,7 @@ public interface OAuth2TokenApi {
      * @return 访问令牌的信息
      */
     @DeleteMapping(PREFIX + "/remove")
-    OAuth2AccessTokenRespDTO removeAccessToken(@RequestParam("accessToken") String accessToken);
+    CommonResult<OAuth2AccessTokenRespDTO> removeAccessToken(@RequestParam("accessToken") String accessToken);
 
     /**
      * 刷新访问令牌

@@ -6,7 +6,6 @@ import com.koi.system.api.oauth2.dto.response.OAuth2AccessTokenCheckRespDTO;
 import com.koi.system.api.oauth2.dto.response.OAuth2AccessTokenRespDTO;
 import com.koi.system.convert.auth.Oauth2TokenConvert;
 import com.koi.system.service.oauth2.Oauth2TokenService;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,8 +35,8 @@ public class OAuth2TokenApiImpl implements OAuth2TokenApi{
     }
 
     @Override
-    public OAuth2AccessTokenRespDTO removeAccessToken(String accessToken) {
-        return null;
+    public CommonResult<OAuth2AccessTokenRespDTO> removeAccessToken(String accessToken) {
+        return CommonResult.success(Oauth2TokenConvert.convertAccessToken(oauth2TokenService.removeAccessToken(accessToken)));
     }
 
     @Override

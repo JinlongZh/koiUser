@@ -20,4 +20,11 @@ public interface MemberAuthService {
      * @return 登录结果
      */
     AppAuthLoginRespVO login(@Valid AppAuthLoginReqVO reqVO);
+
+    /**
+     * 基于 token 退出登录
+     *
+     * @param token token
+     */
+    void logout(String token);
 }

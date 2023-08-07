@@ -34,11 +34,18 @@ public interface Oauth2TokenService {
     /**
      * 获得访问令牌
      *
-     * 参考 DefaultTokenServices 的 getAccessToken 方法
-     *
      * @param accessToken 访问令牌
      * @return 访问令牌的信息
      */
     Oauth2AccessToken getAccessToken(String accessToken);
+
+    /**
+     * 移除访问令牌
+     * 注意：该流程中，会移除相关的刷新令牌
+     *
+     * @param accessToken 刷新令牌
+     * @return 访问令牌的信息
+     */
+    Oauth2AccessToken removeAccessToken(String accessToken);
 
 }
