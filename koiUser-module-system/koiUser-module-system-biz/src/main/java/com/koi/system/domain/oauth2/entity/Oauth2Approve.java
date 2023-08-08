@@ -3,6 +3,7 @@ package com.koi.system.domain.oauth2.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  * OAuth2 批准表
  * @TableName system_oauth2_approve
  */
-@Builder
+@Accessors(chain = true)
 @TableName(value ="system_oauth2_approve")
 @Data
 public class Oauth2Approve implements Serializable {

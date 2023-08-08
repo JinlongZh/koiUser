@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * JSON 工具类
@@ -68,6 +70,24 @@ public class JsonUtils {
             return objectMapper.readValue(text, clazz);
         } catch (IOException e) {
             log.error("json parse err,json:{}", text, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 JSON 转为 Map<String,Boolean>
+     *
+     * @param json
+     * @Return Map<String,Boolean>
+     */
+    public static Map<String, Boolean> convertToMap(String json) {
+        if (StrUtil.isEmpty(json)) {
+            return Collections.emptyMap();
+        }
+        try {
+            return objectMapper.readValue(json, new TypeReference<Map<String, Boolean>>() {});
+        } catch (IOException e) {
+            log.error("JSON parse error. JSON: {}", json, e);
             throw new RuntimeException(e);
         }
     }

@@ -7,10 +7,12 @@ import com.alibaba.fastjson2.JSON;
 import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.collection.CollectionUtils;
+import com.koi.common.utils.json.JsonUtils;
 import com.koi.common.utils.string.StrUtils;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
 import com.koi.system.mapper.oauth2.Oauth2ClientMapper;
 import com.koi.system.service.oauth2.Oauth2ClientService;
+import io.swagger.v3.core.util.Json;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +82,7 @@ public class Oauth2ClientServiceImpl implements Oauth2ClientService {
             throw new ServiceException(BAD_REQUEST.getCode(), "授权范围过大");
         }
         // 校验回调地址
-        if (StrUtil.isNotEmpty(redirectUri) && !StrUtils.startWithAny(redirectUri, JSON.parseObject(oauth2Client.getRedirectUris(), List.class))) {
+        if (StrUtil.isNotEmpty(redirectUri) && !StrUtils.startWithAny(redirectUri, JsonUtils.stringListFromJson(oauth2Client.getRedirectUris()))) {
             throw new ServiceException(BAD_REQUEST.getCode(), "无效 redirect_uri");
         }
         return oauth2Client;
