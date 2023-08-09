@@ -14,8 +14,10 @@ import com.koi.common.utils.json.JsonUtils;
 import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
 import com.koi.system.convert.oauth2.Oauth2OpenConvert;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
+import com.koi.system.domain.oauth2.entity.Oauth2Approve;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
 import com.koi.system.domain.oauth2.vo.response.OAuth2OpenAccessTokenResp;
+import com.koi.system.domain.oauth2.vo.response.OAuth2OpenAuthorizeInfoRespVO;
 import com.koi.system.domain.oauth2.vo.response.OAuth2OpenCheckTokenResp;
 import com.koi.system.enums.oauth2.OAuth2GrantTypeEnum;
 import com.koi.system.service.oauth2.Oauth2ApproveService;
@@ -190,6 +192,24 @@ public class Oauth2OpenController {
             return CommonResult.success(getAuthorizationCodeRedirect(SecurityFrameworkUtils.getLoginUserId(), client, approveScopes, redirectUri, state));
         }
         return null;
+    }
+
+    /**
+     * 获得授权信息
+     */
+    @GetMapping("/authorize")
+    @Operation(summary = "获得授权信息", description = "适合 code 授权码模式；在 sso.vue 单点登录界面被【获取】调用")
+    @Parameter(name = "clientId", required = true, description = "客户端编号", example = "koiuser-sso-demo-by-code")
+    public CommonResult<OAuth2OpenAuthorizeInfoRespVO> authorize(@RequestParam("clientId") String clientId) {
+        // 校验用户已经登录。通过 Spring Security 实现
+
+        // 获得 Client 客户端的信息
+        Oauth2Client oauth2Client = oauth2ClientService.validOAuthClientFromCache(clientId);
+        // 获得用户已经授权的信息
+        List<Oauth2Approve> oauth2ApproveList = oauth2ApproveService.getApproveList(SecurityFrameworkUtils.getLoginUserId(), getUserType(), clientId);
+
+        // 封装返回
+        return CommonResult.success(Oauth2OpenConvert.convertOpenAuthorizeInfo(oauth2Client, oauth2ApproveList));
     }
 
 
