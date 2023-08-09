@@ -1,4 +1,4 @@
-package com.koi.system.controller.admin.oauth2;
+package com.koi.system.controller.app.oauth2;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
@@ -49,7 +49,7 @@ import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
  * @Author zjl
  * @Date 2023/7/30 15:49
  */
-@Tag(name = "管理后台 - OAuth2.0 授权")
+@Tag(name = "OAuth2.0 授权")
 @RestController
 @RequestMapping("/system/oauth2")
 public class Oauth2OpenController {

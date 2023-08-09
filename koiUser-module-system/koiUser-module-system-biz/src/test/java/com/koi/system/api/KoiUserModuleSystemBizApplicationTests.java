@@ -16,7 +16,7 @@ class KoiUserModuleSystemBizApplicationTests {
     }
 
     public static void main(String[] args) {
-
+        clientAndSecretTest();
     }
     public static void clientAndSecretTest() {
         String client = "koiuser-sso-demo-by-code" + ":" + "test";
