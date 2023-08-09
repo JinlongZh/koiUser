@@ -2,8 +2,11 @@ package com.koi.system.domain.oauth2.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,6 +20,8 @@ import java.util.List;
 @Builder
 @TableName(value = "system_oauth2_access_token")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Oauth2AccessToken implements Serializable {
     /**
      * 编号

@@ -41,7 +41,7 @@ public interface Oauth2OpenConvert {
         OAuth2OpenCheckTokenResp respVO = BeanCopyUtils.copyObject(bean, OAuth2OpenCheckTokenResp.class);
         respVO.setScopes(stringListFromJson(bean.getScopes()));
         respVO.setExp(LocalDateTimeUtil.toEpochMilli(bean.getExpiresTime()) / 1000L);
-        respVO.setUserType(UserTypeEnum.ADMIN.getValue());
+        respVO.setUserType(UserTypeEnum.MEMBER.getValue());
         return respVO;
     }
 

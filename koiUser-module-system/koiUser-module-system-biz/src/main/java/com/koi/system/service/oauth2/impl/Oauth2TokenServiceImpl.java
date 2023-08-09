@@ -1,10 +1,14 @@
 package com.koi.system.service.oauth2.impl;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.date.DateUtils;
+import com.koi.common.utils.json.JsonUtils;
+import com.koi.framework.redis.core.utils.RedisUtils;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
 import com.koi.system.domain.oauth2.entity.Oauth2RefreshToken;
@@ -16,13 +20,16 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import static com.baomidou.mybatisplus.core.toolkit.LambdaUtils.formatKey;
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
+import static com.koi.system.constants.RedisKeyConstants.OAUTH2_ACCESS_TOKEN;
+import static com.koi.system.constants.RedisKeyConstants.formatAccessTokenKey;
 
 /**
- *
- *
  * @Author zjl
  * @Date 2023/7/30 16:43
  */
@@ -59,8 +66,9 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
 
     @Override
     public Oauth2AccessToken getAccessToken(String accessToken) {
-        // TODO 优先从 Redis 中获取
-        Oauth2AccessToken oauth2AccessToken = null;
+        // 优先从 Redis 中获取
+        String redisKey = formatAccessTokenKey(accessToken);
+        Oauth2AccessToken oauth2AccessToken = JsonUtils.parseObject(RedisUtils.getStr(redisKey), Oauth2AccessToken.class);
         if (oauth2AccessToken != null) {
             return oauth2AccessToken;
         }
@@ -68,9 +76,16 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
         // 获取不到，从 MySQL 中获取
         oauth2AccessToken = oauth2AccessTokenMapper.selectOne(new LambdaQueryWrapper<Oauth2AccessToken>()
                 .eq(Oauth2AccessToken::getAccessToken, accessToken));
-        // TODO 如果在 MySQL 存在，则往 Redis 中写入
+        // 如果在 MySQL 存在，则往 Redis 中写入
         if (oauth2AccessToken != null && !DateUtils.isExpired(oauth2AccessToken.getExpiresTime())) {
-
+            // 清理多余字段，避免缓存
+            oauth2AccessToken.setUpdateTime(null);
+            oauth2AccessToken.setCreateTime(null);
+            oauth2AccessToken.setDeleted(null);
+            long time = LocalDateTimeUtil.between(LocalDateTime.now(), oauth2AccessToken.getExpiresTime(), ChronoUnit.SECONDS);
+            if (time > 0) {
+                RedisUtils.set(redisKey, JsonUtils.toJsonString(oauth2AccessToken), time, TimeUnit.SECONDS);
+            }
         }
         return oauth2AccessToken;
     }
@@ -106,7 +121,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
 
         return accessToken;
     }
-    
+
     private Oauth2RefreshToken createOAuth2RefreshToken(Long userId, Integer userType, Oauth2Client oauth2Client, List<String> scopes) {
         Oauth2RefreshToken oauth2RefreshToken = Oauth2RefreshToken.builder()
                 .refreshToken(generateRefreshToken())

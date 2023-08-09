@@ -128,10 +128,6 @@ public class Oauth2OpenController {
         // 校验令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.checkAccessToken(token);
         Assert.notNull(oauth2AccessToken, "访问令牌不能为空"); // 防御性检查
-        // 封装
-        OAuth2OpenCheckTokenResp oAuth2OpenCheckTokenResp = BeanCopyUtils.copyObject(oauth2AccessToken, OAuth2OpenCheckTokenResp.class);
-        oAuth2OpenCheckTokenResp.setScopes(stringListFromJson(oauth2AccessToken.getScopes()));
-        oAuth2OpenCheckTokenResp.setExp(DateUtils.toSecond(oauth2AccessToken.getExpiresTime()));
 
         return CommonResult.success(Oauth2OpenConvert.convertCheckToken(oauth2AccessToken));
     }
