@@ -49,6 +49,9 @@ public class JsonUtils {
 
     @SneakyThrows
     public static String toJsonString(Object object) {
+        if (object == null) {
+            return null;
+        }
         return objectMapper.writeValueAsString(object);
     }
 
@@ -171,6 +174,9 @@ public class JsonUtils {
      * @return List<String>
      */
     public static List<String> stringListFromJson(String jsonStr) {
+        if (StrUtil.isEmpty(jsonStr)) {
+            return new ArrayList<>();
+        }
         JSONArray jsonArray = JSONUtil.parseArray(jsonStr);
         List<String> stringList = new ArrayList<>();
         for (Object obj : jsonArray) {

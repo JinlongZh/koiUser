@@ -6,6 +6,8 @@ import com.koi.member.api.user.MemberUserApi;
 import com.koi.member.api.user.dto.response.OAuth2UserInfoRespDTO;
 import com.koi.system.convert.oauth2.Oauth2UserConvert;
 import com.koi.system.domain.oauth2.vo.response.OAuth2UserInfoRespVO;
+import com.koi.system.domain.user.entity.User;
+import com.koi.system.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +31,7 @@ import javax.annotation.Resource;
 public class Oauth2UserController {
 
     @Resource
-    private MemberUserApi memberUserApi;
+    private UserService userService;
 
     /**
      * 获得用户基本信息
@@ -41,9 +43,9 @@ public class Oauth2UserController {
     @Operation(summary = "获得用户基本信息")
     @PreAuthorize("@ss.hasScope('user.read')")
     public CommonResult<OAuth2UserInfoRespVO> getUserInfo() {
-        OAuth2UserInfoRespDTO oauth2UserInfo = memberUserApi.getMemberUser(SecurityFrameworkUtils.getLoginUserId()).getCheckedData();
+        User user = userService.getUserById(SecurityFrameworkUtils.getLoginUserId());
 
-        return CommonResult.success(Oauth2UserConvert.convertOAuth2UserInfo(oauth2UserInfo));
+        return CommonResult.success(Oauth2UserConvert.convertOAuth2UserInfo(user));
     }
 
 }

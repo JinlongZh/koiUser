@@ -3,7 +3,7 @@ package com.koi.system.controller.admin.auth;
 import com.koi.common.domain.CommonResult;
 import com.koi.system.domain.auth.vo.request.AuthLoginReq;
 import com.koi.system.domain.auth.vo.response.AuthLoginResp;
-import com.koi.system.service.auth.AuthService;
+import com.koi.system.service.auth.AdminAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -24,16 +24,16 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/system/auth")
 @Slf4j
-public class AuthController {
+public class AdminAuthController {
 
     @Resource
-    private AuthService authService;
+    private AdminAuthService adminAuthService;
 
     @PostMapping("/login")
     @PermitAll
     @Operation(summary = "使用账号密码登录")
     public CommonResult<AuthLoginResp> login(@RequestBody @Valid AuthLoginReq reqVO) {
-        return CommonResult.success(authService.login(reqVO));
+        return CommonResult.success(adminAuthService.login(reqVO));
     }
 
 }

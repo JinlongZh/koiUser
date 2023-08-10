@@ -2,7 +2,7 @@ package com.koi.system.service.auth;
 
 import com.koi.system.domain.auth.vo.request.AuthLoginReq;
 import com.koi.system.domain.auth.vo.response.AuthLoginResp;
-import com.koi.system.domain.user.entity.AdminUser;
+import com.koi.system.domain.user.entity.User;
 
 import javax.validation.Valid;
 
@@ -10,7 +10,7 @@ import javax.validation.Valid;
  * @Author zjl
  * @Date 2023/8/4 21:12
  */
-public interface AuthService {
+public interface AdminAuthService {
 
     /**
      * 验证账号 + 密码。如果通过，则返回用户
@@ -19,7 +19,7 @@ public interface AuthService {
      * @param password 密码
      * @return 用户
      */
-    AdminUser authenticate(String username, String password);
+    User authenticate(String username, String password);
 
     /**
      * 账号登录

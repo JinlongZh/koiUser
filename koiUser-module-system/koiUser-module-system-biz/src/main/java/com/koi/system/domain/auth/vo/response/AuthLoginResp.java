@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @Author zjl
  * @Date 2023/8/4 21:10
  */
-@Schema(description = "管理后台 - 登录 Response VO")
+@Schema(description = "登录 Response VO")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
