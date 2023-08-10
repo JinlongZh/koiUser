@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OAuth2OpenAccessTokenResp {
+public class OAuth2OpenAccessTokenRespVO {
 
     @Schema(description = "访问令牌", requiredMode = Schema.RequiredMode.REQUIRED, example = "tudou")
     @JsonProperty("access_token")

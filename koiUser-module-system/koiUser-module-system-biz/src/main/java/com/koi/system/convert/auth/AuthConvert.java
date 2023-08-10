@@ -1,7 +1,7 @@
 package com.koi.system.convert.auth;
 
 import com.koi.common.utils.bean.BeanCopyUtils;
-import com.koi.system.domain.auth.vo.response.AuthLoginResp;
+import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 
 /**
@@ -12,8 +12,8 @@ import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
  */
 public interface AuthConvert {
 
-    static AuthLoginResp convertAuthLogin(Oauth2AccessToken bean) {
-        return BeanCopyUtils.copyObject(bean, AuthLoginResp.class);
+    static AuthLoginRespVO convertAuthLogin(Oauth2AccessToken bean) {
+        return BeanCopyUtils.copyObject(bean, AuthLoginRespVO.class);
     }
 
 

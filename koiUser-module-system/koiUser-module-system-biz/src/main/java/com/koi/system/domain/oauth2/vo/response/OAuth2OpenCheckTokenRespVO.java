@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OAuth2OpenCheckTokenResp {
+public class OAuth2OpenCheckTokenRespVO {
 
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "666")
     @JsonProperty("user_id")

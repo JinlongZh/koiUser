@@ -6,9 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.koi.common.domain.CommonResult;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.exception.ServiceException;
-import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.common.utils.collection.CollectionUtils;
-import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.http.HttpUtils;
 import com.koi.common.utils.json.JsonUtils;
 import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
@@ -16,9 +14,9 @@ import com.koi.system.convert.oauth2.Oauth2OpenConvert;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 import com.koi.system.domain.oauth2.entity.Oauth2Approve;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
-import com.koi.system.domain.oauth2.vo.response.OAuth2OpenAccessTokenResp;
+import com.koi.system.domain.oauth2.vo.response.OAuth2OpenAccessTokenRespVO;
 import com.koi.system.domain.oauth2.vo.response.OAuth2OpenAuthorizeInfoRespVO;
-import com.koi.system.domain.oauth2.vo.response.OAuth2OpenCheckTokenResp;
+import com.koi.system.domain.oauth2.vo.response.OAuth2OpenCheckTokenRespVO;
 import com.koi.system.enums.oauth2.OAuth2GrantTypeEnum;
 import com.koi.system.service.oauth2.Oauth2ApproveService;
 import com.koi.system.service.oauth2.Oauth2ClientService;
@@ -41,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
-import static com.koi.common.utils.json.JsonUtils.stringListFromJson;
 
 /**
  * 主要提供给外部应用调用
@@ -75,11 +72,11 @@ public class Oauth2OpenController {
             @Parameter(name = "redirect_uri", description = "重定向 URI", example = "https://127.0.0.1:18080"),
             @Parameter(name = "state", description = "状态", example = "1")
     })
-    public CommonResult<OAuth2OpenAccessTokenResp> postAccessToken(HttpServletRequest request,
-                                                                   @RequestParam("grant_type") String grantType,
-                                                                   @RequestParam(value = "code", required = false) String code, // 授权码模式
-                                                                   @RequestParam(value = "redirect_uri", required = false) String redirectUri, // 授权码模式
-                                                                   @RequestParam(value = "state", required = false) String state // 授权码模式
+    public CommonResult<OAuth2OpenAccessTokenRespVO> postAccessToken(HttpServletRequest request,
+                                                                     @RequestParam("grant_type") String grantType,
+                                                                     @RequestParam(value = "code", required = false) String code, // 授权码模式
+                                                                     @RequestParam(value = "redirect_uri", required = false) String redirectUri, // 授权码模式
+                                                                     @RequestParam(value = "state", required = false) String state // 授权码模式
     ) {
         // 校验授权类型
         OAuth2GrantTypeEnum grantTypeEnum = OAuth2GrantTypeEnum.getByGranType(grantType);
@@ -115,8 +112,8 @@ public class Oauth2OpenController {
     @PostMapping("/check-token")
     @Operation(summary = "校验访问令牌")
     @Parameter(name = "token", required = true, description = "访问令牌", example = "biu")
-    public CommonResult<OAuth2OpenCheckTokenResp> checkToken(HttpServletRequest request,
-                                                             @RequestParam("token") String token) {
+    public CommonResult<OAuth2OpenCheckTokenRespVO> checkToken(HttpServletRequest request,
+                                                               @RequestParam("token") String token) {
         // 校验客户端
         String[] clientIdAndSecret = HttpUtils.obtainBasicAuthorization(request);
         if (clientIdAndSecret == null) {

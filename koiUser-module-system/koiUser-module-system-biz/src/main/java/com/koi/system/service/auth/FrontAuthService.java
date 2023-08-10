@@ -1,7 +1,7 @@
 package com.koi.system.service.auth;
 
 import com.koi.system.domain.auth.vo.request.FrontAuthLoginReqVO;
-import com.koi.system.domain.auth.vo.response.AuthLoginResp;
+import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
 
 import javax.validation.Valid;
 
@@ -19,7 +19,7 @@ public interface FrontAuthService {
      * @param reqVO 登录信息
      * @return 登录结果
      */
-    AuthLoginResp login(@Valid FrontAuthLoginReqVO reqVO);
+    AuthLoginRespVO login(@Valid FrontAuthLoginReqVO reqVO);
 
     /**
      * 基于 token 退出登录

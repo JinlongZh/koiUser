@@ -5,7 +5,7 @@ import com.koi.common.domain.CommonResult;
 import com.koi.framework.security.config.SecurityProperties;
 import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
 import com.koi.system.domain.auth.vo.request.FrontAuthLoginReqVO;
-import com.koi.system.domain.auth.vo.response.AuthLoginResp;
+import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
 import com.koi.system.service.auth.FrontAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,7 +47,7 @@ public class FrontAuthController {
     @PermitAll
     @PostMapping("/login")
     @Operation(summary = "使用手机 + 密码登录")
-    public CommonResult<AuthLoginResp> login(@RequestBody @Valid FrontAuthLoginReqVO reqVO) {
+    public CommonResult<AuthLoginRespVO> login(@RequestBody @Valid FrontAuthLoginReqVO reqVO) {
         return CommonResult.success(frontAuthService.login(reqVO));
     }
 

@@ -5,8 +5,8 @@ import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.exception.ServiceException;
 import com.koi.system.convert.auth.AuthConvert;
-import com.koi.system.domain.auth.vo.request.AuthLoginReq;
-import com.koi.system.domain.auth.vo.response.AuthLoginResp;
+import com.koi.system.domain.auth.vo.request.AuthLoginReqVO;
+import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 import com.koi.system.domain.user.entity.User;
 import com.koi.system.enums.oauth2.OAuth2ClientConstants;
@@ -52,7 +52,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     }
 
     @Override
-    public AuthLoginResp login(AuthLoginReq reqVO) {
+    public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
         // 使用账号密码，进行登录
         User user = authenticate(reqVO.getUsername(), reqVO.getPassword());
 
@@ -60,7 +60,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return createTokenAfterLoginSuccess(user.getId());
     }
 
-    private AuthLoginResp createTokenAfterLoginSuccess(Long userId) {
+    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId) {
         // 创建访问令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);

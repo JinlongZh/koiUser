@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthLoginReq {
+public class AuthLoginReqVO {
 
     @Schema(description = "账号", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudaoyuanma")
     @NotEmpty(message = "登录账号不能为空")

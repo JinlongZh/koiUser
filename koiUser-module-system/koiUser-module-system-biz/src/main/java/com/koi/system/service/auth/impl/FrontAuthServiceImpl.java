@@ -4,11 +4,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.exception.ServiceException;
-import com.koi.system.api.oauth2.dto.request.OAuth2AccessTokenCreateReqDTO;
-import com.koi.system.api.oauth2.dto.response.OAuth2AccessTokenRespDTO;
 import com.koi.system.convert.auth.AuthConvert;
 import com.koi.system.domain.auth.vo.request.FrontAuthLoginReqVO;
-import com.koi.system.domain.auth.vo.response.AuthLoginResp;
+import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 import com.koi.system.domain.user.entity.User;
 import com.koi.system.enums.oauth2.OAuth2ClientConstants;
@@ -37,7 +35,7 @@ public class FrontAuthServiceImpl implements FrontAuthService {
 
 
     @Override
-    public AuthLoginResp login(FrontAuthLoginReqVO reqVO) {
+    public AuthLoginRespVO login(FrontAuthLoginReqVO reqVO) {
         // 使用手机 + 密码，进行登录。
         // 校验账号是否存在
         User user = userService.getUserByMobile(reqVO.getMobile());
@@ -60,7 +58,7 @@ public class FrontAuthServiceImpl implements FrontAuthService {
         oauth2TokenService.removeAccessToken(token);
     }
 
-    private AuthLoginResp createTokenAfterLoginSuccess(Long userId) {
+    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId) {
         // 创建访问令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
