@@ -1,4 +1,4 @@
-package com.koi.system.mapper.oauth2;
+package com.koi.system.mapper.mysql.oauth2;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.koi.system.domain.oauth2.entity.Oauth2Code;

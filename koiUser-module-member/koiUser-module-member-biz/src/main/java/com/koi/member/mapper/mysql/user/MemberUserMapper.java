@@ -1,4 +1,4 @@
-package com.koi.member.mapper.user;
+package com.koi.member.mapper.mysql.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.member.domain.user.entity.MemberUser;

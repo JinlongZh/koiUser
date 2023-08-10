@@ -1,7 +1,7 @@
 package com.koi.system.service.user.impl;
 
 import com.koi.system.domain.user.entity.AdminUser;
-import com.koi.system.mapper.user.AdminUserMapper;
+import com.koi.system.mapper.mysql.user.AdminUserMapper;
 import com.koi.system.service.user.AdminUserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

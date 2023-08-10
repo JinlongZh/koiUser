@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.system.domain.oauth2.entity.Oauth2Code;
-import com.koi.system.mapper.oauth2.Oauth2CodeMapper;
+import com.koi.system.mapper.mysql.oauth2.Oauth2CodeMapper;
 import com.koi.system.service.oauth2.Oauth2CodeService;
 import org.springframework.stereotype.Service;
 

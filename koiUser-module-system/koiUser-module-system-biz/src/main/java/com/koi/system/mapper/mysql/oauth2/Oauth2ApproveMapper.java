@@ -1,4 +1,4 @@
-package com.koi.system.mapper.oauth2;
+package com.koi.system.mapper.mysql.oauth2;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

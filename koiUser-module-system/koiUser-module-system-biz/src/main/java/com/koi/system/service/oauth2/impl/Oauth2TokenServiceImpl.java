@@ -3,17 +3,18 @@ package com.koi.system.service.oauth2.impl;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.json.JsonUtils;
 import com.koi.framework.redis.core.utils.RedisUtils;
+import com.koi.system.constants.RedisKeyConstants;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
 import com.koi.system.domain.oauth2.entity.Oauth2RefreshToken;
-import com.koi.system.mapper.oauth2.Oauth2AccessTokenMapper;
-import com.koi.system.mapper.oauth2.Oauth2RefreshTokenMapper;
+import com.koi.system.mapper.mysql.oauth2.Oauth2AccessTokenMapper;
+import com.koi.system.mapper.mysql.oauth2.Oauth2RefreshTokenMapper;
+import com.koi.system.mapper.redis.oauth2.Oauth2AccessTokenRedisDAO;
 import com.koi.system.service.oauth2.Oauth2ClientService;
 import com.koi.system.service.oauth2.Oauth2TokenService;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.baomidou.mybatisplus.core.toolkit.LambdaUtils.formatKey;
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
-import static com.koi.system.constants.RedisKeyConstants.OAUTH2_ACCESS_TOKEN;
 import static com.koi.system.constants.RedisKeyConstants.formatAccessTokenKey;
 
 /**
@@ -36,6 +35,8 @@ import static com.koi.system.constants.RedisKeyConstants.formatAccessTokenKey;
 @Service
 public class Oauth2TokenServiceImpl implements Oauth2TokenService {
 
+    @Resource
+    private Oauth2AccessTokenRedisDAO oauth2AccessTokenRedisDAO;
     @Resource
     private Oauth2ClientService oauth2ClientService;
     @Resource
@@ -67,8 +68,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     @Override
     public Oauth2AccessToken getAccessToken(String accessToken) {
         // 优先从 Redis 中获取
-        String redisKey = formatAccessTokenKey(accessToken);
-        Oauth2AccessToken oauth2AccessToken = JsonUtils.parseObject(RedisUtils.getStr(redisKey), Oauth2AccessToken.class);
+        Oauth2AccessToken oauth2AccessToken = oauth2AccessTokenRedisDAO.getAccessToken(accessToken);
         if (oauth2AccessToken != null) {
             return oauth2AccessToken;
         }
@@ -78,14 +78,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                 .eq(Oauth2AccessToken::getAccessToken, accessToken));
         // 如果在 MySQL 存在，则往 Redis 中写入
         if (oauth2AccessToken != null && !DateUtils.isExpired(oauth2AccessToken.getExpiresTime())) {
-            // 清理多余字段，避免缓存
-            oauth2AccessToken.setUpdateTime(null);
-            oauth2AccessToken.setCreateTime(null);
-            oauth2AccessToken.setDeleted(null);
-            long time = LocalDateTimeUtil.between(LocalDateTime.now(), oauth2AccessToken.getExpiresTime(), ChronoUnit.SECONDS);
-            if (time > 0) {
-                RedisUtils.set(redisKey, JsonUtils.toJsonString(oauth2AccessToken), time, TimeUnit.SECONDS);
-            }
+            oauth2AccessTokenRedisDAO.setAccessToken(oauth2AccessToken);
         }
         return oauth2AccessToken;
     }
@@ -93,20 +86,20 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     @Override
     public Oauth2AccessToken removeAccessToken(String accessToken) {
         // 删除访问令牌
-        Oauth2AccessToken accessTokenDO = oauth2AccessTokenMapper.selectByAccessToken(accessToken);
-        if (accessTokenDO == null) {
+        Oauth2AccessToken oauth2AccessToken = oauth2AccessTokenMapper.selectByAccessToken(accessToken);
+        if (oauth2AccessToken == null) {
             return null;
         }
-        oauth2AccessTokenMapper.deleteById(accessTokenDO.getId());
-        // TODO 删除redis中的accessToken
-
+        oauth2AccessTokenMapper.deleteById(oauth2AccessToken.getId());
+        // 删除redis中的accessToken
+        oauth2AccessTokenRedisDAO.deleteAccessToken(accessToken);
         // 删除刷新令牌
-        oauth2RefreshTokenMapper.deleteByRefreshToken(accessTokenDO.getRefreshToken());
-        return accessTokenDO;
+        oauth2RefreshTokenMapper.deleteByRefreshToken(oauth2AccessToken.getRefreshToken());
+        return oauth2AccessToken;
     }
 
     private Oauth2AccessToken createOAuth2AccessToken(Oauth2RefreshToken Oauth2RefreshToken, Oauth2Client oauth2Client) {
-        Oauth2AccessToken accessToken = Oauth2AccessToken.builder()
+        Oauth2AccessToken oauth2AccessToken = Oauth2AccessToken.builder()
                 .accessToken(generateAccessToken())
                 .userId(Oauth2RefreshToken.getUserId())
                 .userType(Oauth2RefreshToken.getUserType())
@@ -116,10 +109,10 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                 .expiresTime(LocalDateTime.now().plusSeconds(oauth2Client.getAccessTokenValiditySeconds()))
                 .build();
 
-        oauth2AccessTokenMapper.insert(accessToken);
-        // TODO accessToken 记录到 Redis 中
-
-        return accessToken;
+        oauth2AccessTokenMapper.insert(oauth2AccessToken);
+        // accessToken 记录到 Redis 中
+        oauth2AccessTokenRedisDAO.setAccessToken(oauth2AccessToken);
+        return oauth2AccessToken;
     }
 
     private Oauth2RefreshToken createOAuth2RefreshToken(Long userId, Integer userType, Oauth2Client oauth2Client, List<String> scopes) {

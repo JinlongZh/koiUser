@@ -10,7 +10,7 @@ import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.utils.collection.CollectionUtils;
 import com.koi.system.domain.permission.entity.Role;
 import com.koi.system.domain.permission.entity.UserRole;
-import com.koi.system.mapper.permission.UserRoleMapper;
+import com.koi.system.mapper.mysql.permission.UserRoleMapper;
 import com.koi.system.service.permission.PermissionService;
 import com.koi.system.service.permission.RoleService;
 import lombok.Getter;

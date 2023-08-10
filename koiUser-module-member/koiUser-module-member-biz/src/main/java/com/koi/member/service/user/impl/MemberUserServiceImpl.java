@@ -1,7 +1,7 @@
 package com.koi.member.service.user.impl;
 
 import com.koi.member.domain.user.entity.MemberUser;
-import com.koi.member.mapper.user.MemberUserMapper;
+import com.koi.member.mapper.mysql.user.MemberUserMapper;
 import com.koi.member.service.user.MemberUserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

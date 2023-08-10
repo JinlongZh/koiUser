@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.koi.common.utils.collection.CollectionUtils;
 import com.koi.system.domain.permission.entity.Role;
 import com.koi.system.enums.permission.RoleCodeEnum;
-import com.koi.system.mapper.permission.RoleMapper;
+import com.koi.system.mapper.mysql.permission.RoleMapper;
 import com.koi.system.service.permission.RoleService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

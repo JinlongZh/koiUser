@@ -9,7 +9,7 @@ import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.json.JsonUtils;
 import com.koi.system.domain.oauth2.entity.Oauth2Approve;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
-import com.koi.system.mapper.oauth2.Oauth2ApproveMapper;
+import com.koi.system.mapper.mysql.oauth2.Oauth2ApproveMapper;
 import com.koi.system.service.oauth2.Oauth2ApproveService;
 import com.koi.system.service.oauth2.Oauth2ClientService;
 import org.springframework.stereotype.Service;
