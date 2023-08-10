@@ -58,7 +58,7 @@ public class AppAuthController {
      * @Return CommonResult<Boolean>
      */
     @PostMapping("/logout")
-//    @PermitAll
+    @PermitAll
     @Operation(summary = "退出登录")
     public CommonResult<Boolean> logout(HttpServletRequest request) {
         String token = SecurityFrameworkUtils.obtainAuthorization(request, securityProperties.getTokenHeader());

@@ -27,4 +27,12 @@ public interface MemberUserService {
      */
     boolean isPasswordMatch(String rawPassword, String encodedPassword);
 
+    /**
+     * 通过用户 ID 查询用户
+     *
+     * @param id 用户ID
+     * @return 用户对象信息
+     */
+    MemberUser getUser(Long id);
+
 }

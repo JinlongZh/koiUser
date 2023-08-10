@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.koi.common.enums.CommonStatusEnum;
 import com.koi.common.enums.UserTypeEnum;
 import com.koi.common.exception.ServiceException;
+import com.koi.member.api.user.MemberUserApi;
 import com.koi.system.convert.auth.AuthConvert;
 import com.koi.system.domain.auth.vo.request.AuthLoginReq;
 import com.koi.system.domain.auth.vo.response.AuthLoginResp;

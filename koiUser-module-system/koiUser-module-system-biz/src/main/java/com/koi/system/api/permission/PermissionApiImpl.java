@@ -3,6 +3,7 @@ package com.koi.system.api.permission;
 import com.koi.common.domain.CommonResult;
 import com.koi.system.service.permission.PermissionService;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -14,7 +15,7 @@ import javax.annotation.Resource;
  * @Date 2023/8/3 11:06
  */
 @RestController
-@Service
+@Validated
 public class PermissionApiImpl implements PermissionApi{
 
     @Resource

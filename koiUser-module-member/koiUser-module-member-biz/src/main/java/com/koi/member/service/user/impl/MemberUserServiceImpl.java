@@ -32,4 +32,9 @@ public class MemberUserServiceImpl implements MemberUserService {
     public boolean isPasswordMatch(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
+    @Override
+    public MemberUser getUser(Long id) {
+        return memberUserMapper.selectById(id);
+    }
 }

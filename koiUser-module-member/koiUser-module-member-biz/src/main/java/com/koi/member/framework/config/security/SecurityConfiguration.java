@@ -1,7 +1,7 @@
-package com.koi.system.framework.config;
+package com.koi.member.framework.config.security;
 
 import com.koi.framework.security.config.AuthorizeRequestsCustomizer;
-import com.koi.system.enums.common.ApiConstants;
+import com.koi.member.enums.ApiConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,10 +13,10 @@ import org.springframework.security.config.annotation.web.configurers.Expression
  * @Author zjl
  * @Date 2023/8/6 11:14
  */
-@Configuration(proxyBeanMethods = false, value = "systemSecurityConfiguration")
+@Configuration(proxyBeanMethods = false, value = "memberSecurityConfiguration")
 public class SecurityConfiguration {
 
-    @Bean("systemAuthorizeRequestsCustomizer")
+    @Bean("memberAuthorizeRequestsCustomizer")
     public AuthorizeRequestsCustomizer authorizeRequestsCustomizer() {
         return new AuthorizeRequestsCustomizer() {
 
