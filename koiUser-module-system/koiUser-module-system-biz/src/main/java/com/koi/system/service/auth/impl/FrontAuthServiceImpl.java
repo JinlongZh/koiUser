@@ -58,6 +58,12 @@ public class FrontAuthServiceImpl implements FrontAuthService {
         oauth2TokenService.removeAccessToken(token);
     }
 
+    @Override
+    public AuthLoginRespVO refreshToken(String refreshToken) {
+        Oauth2AccessToken oauth2AccessToken = oauth2TokenService.refreshAccessToken(refreshToken, OAuth2ClientConstants.CLIENT_ID_DEFAULT);
+        return AuthConvert.convertAuthLogin(oauth2AccessToken);
+    }
+
     private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId) {
         // 创建访问令牌
         Oauth2AccessToken oauth2AccessToken = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),

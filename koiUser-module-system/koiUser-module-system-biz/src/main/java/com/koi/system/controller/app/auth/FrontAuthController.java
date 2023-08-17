@@ -8,12 +8,10 @@ import com.koi.system.domain.auth.vo.request.FrontAuthLoginReqVO;
 import com.koi.system.domain.auth.vo.response.AuthLoginRespVO;
 import com.koi.system.service.auth.FrontAuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
@@ -67,5 +65,20 @@ public class FrontAuthController {
         }
         return CommonResult.success(true);
     }
+
+    /**
+     * 刷新令牌
+     *
+     * @param refreshToken
+     * @Return CommonResult<AuthLoginRespVO>
+     */
+    @PermitAll
+    @PostMapping("/refresh-token")
+    @Operation(summary = "刷新令牌")
+    @Parameter(name = "refreshToken", description = "刷新令牌", required = true)
+    public CommonResult<AuthLoginRespVO> refreshToken(@RequestParam("refreshToken") String refreshToken) {
+        return CommonResult.success(frontAuthService.refreshToken(refreshToken));
+    }
+
 
 }

@@ -28,4 +28,11 @@ public interface FrontAuthService {
      */
     void logout(String token);
 
+    /**
+     * 刷新访问令牌
+     *
+     * @param refreshToken 刷新令牌
+     * @return 登录结果
+     */
+    AuthLoginRespVO refreshToken(String refreshToken);
 }
