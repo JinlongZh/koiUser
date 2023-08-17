@@ -58,4 +58,9 @@ public class Oauth2GrantServiceImpl implements Oauth2GrantService {
         return oauth2TokenService.createAccessToken(oauth2Code.getUserId(), oauth2Code.getUserType(),
                 oauth2Code.getClientId(), stringListFromJson(oauth2Code.getScopes()));
     }
+
+    @Override
+    public Oauth2AccessToken grantRefreshToken(String refreshToken, String clientId) {
+        return oauth2TokenService.refreshAccessToken(refreshToken, clientId);
+    }
 }

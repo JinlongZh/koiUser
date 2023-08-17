@@ -1,6 +1,7 @@
 package com.koi.system.mapper.redis.oauth2;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
+import com.koi.common.utils.collection.CollectionUtils;
 import com.koi.common.utils.json.JsonUtils;
 import com.koi.framework.redis.core.utils.RedisUtils;
 import com.koi.system.constants.RedisKeyConstants;
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static com.koi.system.constants.RedisKeyConstants.formatAccessTokenKey;
@@ -42,6 +47,11 @@ public class Oauth2AccessTokenRedisDAO {
     public void deleteAccessToken(String accessToken) {
         String redisKey = RedisKeyConstants.formatAccessTokenKey(accessToken);
         RedisUtils.del(redisKey);
+    }
+
+    public void deleteList(Set<String> accessTokens) {
+        List<String> redisKeys = CollectionUtils.convertList(accessTokens, RedisKeyConstants::formatAccessTokenKey);
+        RedisUtils.del(redisKeys.toArray(new String[0]));
     }
 
 }

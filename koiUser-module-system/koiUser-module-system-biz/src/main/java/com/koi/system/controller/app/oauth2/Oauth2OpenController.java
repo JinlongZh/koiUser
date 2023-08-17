@@ -70,13 +70,15 @@ public class Oauth2OpenController {
             @Parameter(name = "grant_type", required = true, description = "授权类型", example = "authorization_code"),
             @Parameter(name = "code", description = "授权码", example = "userinfo"),
             @Parameter(name = "redirect_uri", description = "重定向 URI", example = "https://127.0.0.1:18080"),
-            @Parameter(name = "state", description = "状态", example = "1")
+            @Parameter(name = "state", description = "状态", example = "1"),
+            @Parameter(name = "refresh_token", example = "123424233")
     })
     public CommonResult<OAuth2OpenAccessTokenRespVO> postAccessToken(HttpServletRequest request,
                                                                      @RequestParam("grant_type") String grantType,
                                                                      @RequestParam(value = "code", required = false) String code, // 授权码模式
                                                                      @RequestParam(value = "redirect_uri", required = false) String redirectUri, // 授权码模式
-                                                                     @RequestParam(value = "state", required = false) String state // 授权码模式
+                                                                     @RequestParam(value = "state", required = false) String state, // 授权码模式
+                                                                     @RequestParam(value = "refresh_token", required = false) String refreshToken // 刷新模式
     ) {
         // 校验授权类型
         OAuth2GrantTypeEnum grantTypeEnum = OAuth2GrantTypeEnum.getByGranType(grantType);
@@ -96,6 +98,9 @@ public class Oauth2OpenController {
         switch (grantTypeEnum) {
             case AUTHORIZATION_CODE:
                 oauth2accessToken = oauth2GrantService.grantAuthorizationCodeForAccessToken(oauth2Client.getClientId(), code, redirectUri, state);
+                break;
+            case REFRESH_TOKEN:
+                oauth2accessToken = oauth2GrantService.grantRefreshToken(refreshToken, oauth2Client.getClientId());
                 break;
             default:
                 throw new ServiceException(BAD_REQUEST.getCode(), StrUtil.format("未知授权类型({})", grantType));

@@ -1,14 +1,13 @@
 package com.koi.system.service.oauth2.impl;
 
-import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
-import com.alibaba.fastjson2.JSON;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.common.exception.ServiceException;
+import com.koi.common.exception.enums.GlobalErrorCodeConstants;
 import com.koi.common.utils.date.DateUtils;
 import com.koi.common.utils.json.JsonUtils;
-import com.koi.framework.redis.core.utils.RedisUtils;
-import com.koi.system.constants.RedisKeyConstants;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
 import com.koi.system.domain.oauth2.entity.Oauth2Client;
 import com.koi.system.domain.oauth2.entity.Oauth2RefreshToken;
@@ -21,12 +20,11 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
-import static com.koi.system.constants.RedisKeyConstants.formatAccessTokenKey;
+import static com.koi.common.utils.collection.CollectionUtils.convertSet;
 
 /**
  * @Author zjl
@@ -96,6 +94,38 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
         // 删除刷新令牌
         oauth2RefreshTokenMapper.deleteByRefreshToken(oauth2AccessToken.getRefreshToken());
         return oauth2AccessToken;
+    }
+
+    @Override
+    public Oauth2AccessToken refreshAccessToken(String refreshToken, String clientId) {
+        // 查询访问令牌
+        Oauth2RefreshToken oauth2RefreshToken = oauth2RefreshTokenMapper.selectByRefreshToken(refreshToken);
+        if (oauth2RefreshToken == null) {
+            throw new ServiceException(BAD_REQUEST.getCode(), "无效的刷新令牌");
+        }
+
+        // 校验 Client 匹配
+        Oauth2Client oauth2Client = oauth2ClientService.validOAuthClientFromCache(clientId);
+        if (ObjectUtil.notEqual(clientId, oauth2RefreshToken.getClientId())) {
+            throw new ServiceException(BAD_REQUEST.getCode(), "刷新令牌的客户端编号不正确");
+        }
+
+        // 移除相关的访问令牌
+        List<Oauth2AccessToken> oauth2AccessTokenList = oauth2AccessTokenMapper.selectListByRefreshToken(refreshToken);
+        if (CollUtil.isNotEmpty(oauth2AccessTokenList)) {
+            oauth2AccessTokenMapper.deleteBatchIds(convertSet(oauth2AccessTokenList, Oauth2AccessToken::getId));
+            // 批量删除redis中的accessToken
+            oauth2AccessTokenRedisDAO.deleteList(convertSet(oauth2AccessTokenList, Oauth2AccessToken::getAccessToken));
+        }
+
+        // 已过期的情况下，删除刷新令牌
+        if (DateUtils.isExpired(oauth2RefreshToken.getExpiresTime())) {
+            oauth2RefreshTokenMapper.deleteById(oauth2RefreshToken.getId());
+            throw new ServiceException(BAD_REQUEST.getCode(), "刷新令牌已过期");
+        }
+
+        // 创建访问令牌
+        return createOAuth2AccessToken(oauth2RefreshToken, oauth2Client);
     }
 
     private Oauth2AccessToken createOAuth2AccessToken(Oauth2RefreshToken Oauth2RefreshToken, Oauth2Client oauth2Client) {
