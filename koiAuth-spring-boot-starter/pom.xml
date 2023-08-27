@@ -19,6 +19,11 @@
         <!--web相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
@@ -28,13 +33,18 @@
             <optional>true</optional>
         </dependency>
 
+        <!--工具相关-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
 
         <!--自定义jar-->
-
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
     </dependencies>
 
