@@ -36,12 +36,23 @@ public class KoiAuthSecurityUtils {
     }
 
     /**
-     * 获取当前用户
+     * 获取当前用户, 从上下文中
      *
      * @return 当前用户
      */
     @Nullable
     public static LoginUser getLoginUser() {
         return RequestHolder.get();
+    }
+
+    /**
+     * 获得当前用户的编号，从上下文中
+     *
+     * @return 用户编号
+     */
+    @Nullable
+    public static Long getLoginUserId() {
+        LoginUser loginUser = getLoginUser();
+        return loginUser != null ? loginUser.getId() : null;
     }
 }

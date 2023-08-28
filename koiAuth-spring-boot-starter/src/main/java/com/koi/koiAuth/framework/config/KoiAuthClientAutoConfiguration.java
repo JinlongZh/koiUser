@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(KoiAuthProperties.class)
-public class KoiAuthAutoConfiguration {
+public class KoiAuthClientAutoConfiguration {
 
     @Resource
     private KoiAuthProperties koiAuthProperties;

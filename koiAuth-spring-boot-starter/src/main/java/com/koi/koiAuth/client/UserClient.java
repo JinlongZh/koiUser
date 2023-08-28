@@ -1,15 +1,12 @@
 package com.koi.koiAuth.client;
 
 import com.koi.common.domain.CommonResult;
-import com.koi.koiAuth.framework.config.KoiAuthProperties;
 import com.koi.koiAuth.framework.core.dto.LoginUser;
 import com.koi.koiAuth.framework.core.dto.user.UserInfoRespDTO;
 import com.koi.koiAuth.framework.core.dto.user.UserUpdateReqDTO;
 import com.koi.koiAuth.framework.core.utils.KoiAuthSecurityUtils;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

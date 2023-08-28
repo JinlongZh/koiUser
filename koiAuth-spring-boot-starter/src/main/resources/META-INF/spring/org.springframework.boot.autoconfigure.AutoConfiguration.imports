@@ -1,1 +1,2 @@
-com.koi.koiAuth.framework.config.InterceptorConfig
+com.koi.koiAuth.framework.config.KoiAuthWebAutoConfiguration
+com.koi.koiAuth.framework.config.KoiAuthClientAutoConfiguration

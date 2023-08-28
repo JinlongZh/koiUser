@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * -
+ * oauth2 应用配置
  *
  * @Author zjl
  * @Date 2023/8/27 20:30
@@ -20,13 +20,13 @@ public class KoiAuthProperties {
     /**
      * 应用id
      */
-    @NotEmpty(message = "Token Header 不能为空")
-    private String clientId = "";
+    @NotEmpty(message = "clientId 不能为空")
+    private String clientId = "testId";
 
     /**
      * 应用秘钥
      */
-    @NotEmpty(message = "Token Header 不能为空")
-    private String clientSecret = "";
+    @NotEmpty(message = "clientSecret 不能为空")
+    private String clientSecret = "testSecret";
 
 }
