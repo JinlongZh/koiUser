@@ -17,6 +17,7 @@
     <modules>
         <module>koiUser-module-interfacer-biz</module>
         <module>koiUser-module-interfacer-provider</module>
+        <module>koiUser-spring-boot-starter-interfacer</module>
     </modules>
 
 </project>
