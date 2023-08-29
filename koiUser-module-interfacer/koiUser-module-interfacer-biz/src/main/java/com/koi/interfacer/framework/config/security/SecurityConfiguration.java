@@ -1,4 +1,4 @@
-package com.example.interfacer.framework.config.security;
+package com.koi.interfacer.framework.config.security;
 
 import com.koi.framework.security.config.AuthorizeRequestsCustomizer;
 import org.springframework.context.annotation.Bean;

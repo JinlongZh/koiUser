@@ -1,4 +1,4 @@
-package com.example.interfacer.framework.config.rpc;
+package com.koi.interfacer.framework.config.rpc;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;

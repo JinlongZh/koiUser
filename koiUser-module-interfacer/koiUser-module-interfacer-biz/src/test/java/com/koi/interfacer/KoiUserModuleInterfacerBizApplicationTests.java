@@ -1,4 +1,4 @@
-package com.example.interfacer;
+package com.koi.interfacer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

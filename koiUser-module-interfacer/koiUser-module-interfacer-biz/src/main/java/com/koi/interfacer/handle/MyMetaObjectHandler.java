@@ -1,4 +1,4 @@
-package com.example.interfacer.handle;
+package com.koi.interfacer.handle;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
