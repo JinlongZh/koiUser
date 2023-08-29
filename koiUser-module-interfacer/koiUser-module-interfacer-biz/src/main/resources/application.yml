@@ -1,0 +1,71 @@
+server:
+  port: 8503
+spring:
+  main:
+    allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
+    allow-bean-definition-overriding: true # 允许 Bean 覆盖，例如说 Feign 等会存在重复定义的服务
+
+  application:
+    name: interfacer-server
+
+  profiles:
+    active: dev
+
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${koiuser.mysql.ip}:${koiuser.mysql.port}/${koiuser.mysql.db}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: ${koiuser.mysql.username}
+    password: ${koiuser.mysql.password}
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000   #不能小于30秒，否则默认回到1800秒
+      connection-test-query: SELECT 1
+
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+  redis:
+    host: ${koiuser.redis.host}
+    port: ${koiuser.redis.port}
+    database: 0
+    timeout: 1800000
+    password: ${koiuser.redis.password}
+    lettuce:
+      pool:
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+        max-active: 20
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false # 设置 Date 的格式，使用时间戳
+      write-date-timestamps-as-nanoseconds: false # 设置不使用 nanoseconds 的格式。例如说 1611460870.401，而是直接 1611460870401
+      write-durations-as-timestamps: true # 设置 Duration 的格式，使用时间戳
+      fail-on-empty-beans: false # 允许序列化无属性的 Bean
+
+cloud:
+  nacos:
+    discovery:
+      server-addr: ${koiuser.nacos.addr}
+
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.koi.interfacer
+
+koiuser:
+  security:
+    mock-enable: true
