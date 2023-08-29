@@ -34,7 +34,7 @@
         <springdoc.version>1.6.15</springdoc.version>
 
         <!-- DB 相关 -->
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mysql-connector.version>8.0.29</mysql-connector.version>
         <redis.version>2.4.1</redis.version>
         <redisson.version>3.18.0</redisson.version>

@@ -64,7 +64,7 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.koi.interfacer
+      packages-to-scan: com.koi.interfacer.controller
 
 koiuser:
   security:
