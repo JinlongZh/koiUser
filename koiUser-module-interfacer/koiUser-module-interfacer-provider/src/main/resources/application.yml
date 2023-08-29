@@ -1,0 +1,5 @@
+server:
+  port: 8513
+
+  application:
+    name: interfacer-provider

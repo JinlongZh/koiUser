@@ -49,6 +49,12 @@
 			<artifactId>spring-security-core</artifactId>
 <!--			<scope>provided</scope> &lt;!&ndash; 设置为 provided，主要是 GlobalExceptionHandler 使用 &ndash;&gt;-->
 		</dependency>
+
+		<!--工具-->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

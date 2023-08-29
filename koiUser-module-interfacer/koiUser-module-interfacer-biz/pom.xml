@@ -29,11 +29,6 @@
         </dependency>
         <dependency>
             <groupId>com.koi</groupId>
-            <artifactId>koiUser-spring-boot-starter-web</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.koi</groupId>
             <artifactId>koiUser-spring-boot-starter-security</artifactId>
             <version>0.0.1</version>
         </dependency>
@@ -42,8 +37,9 @@
 
         <!-- Web 相关 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>

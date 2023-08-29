@@ -16,6 +16,28 @@
     <description>koiUser-module-system-biz</description>
 
     <dependencies>
+        <!--自定义jar-->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-redis</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-security</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
         <!-- 业务组件 -->
         <dependency>
             <groupId>com.koi</groupId>
@@ -71,27 +93,6 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <!--自定义jar-->
-        <dependency>
-            <groupId>com.koi</groupId>
-            <artifactId>koiUser-common</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.koi</groupId>
-            <artifactId>koiUser-spring-boot-starter-redis</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.koi</groupId>
-            <artifactId>koiUser-spring-boot-starter-web</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.koi</groupId>
-            <artifactId>koiUser-spring-boot-starter-security</artifactId>
-            <version>0.0.1</version>
-        </dependency>
     </dependencies>
 
     <build>

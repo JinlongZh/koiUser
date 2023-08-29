@@ -16,6 +16,7 @@
 
     <modules>
         <module>koiUser-module-interfacer-biz</module>
+        <module>koiUser-module-interfacer-provider</module>
     </modules>
 
 </project>
