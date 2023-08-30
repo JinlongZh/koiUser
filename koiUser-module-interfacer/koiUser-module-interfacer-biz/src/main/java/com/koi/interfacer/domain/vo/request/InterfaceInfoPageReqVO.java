@@ -12,6 +12,7 @@ import lombok.ToString;
  * @Author zjl
  * @Date 2023/8/29 21:12
  */
+@Schema(description="接口信息分页 request vo")
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class InterfaceInfoPageReqVO extends PageParam {

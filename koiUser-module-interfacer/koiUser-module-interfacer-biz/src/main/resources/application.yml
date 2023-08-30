@@ -64,7 +64,12 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.koi.interfacer.controller
+      packages-to-scan: com.koi.interfacer.controller.app
+  default-flat-param-object: true
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
 
 koiuser:
   security:

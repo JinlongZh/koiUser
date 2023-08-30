@@ -29,11 +29,6 @@
         </dependency>
         <dependency>
             <groupId>com.koi</groupId>
-            <artifactId>koiUser-spring-boot-starter-web</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.koi</groupId>
             <artifactId>koiUser-spring-boot-starter-security</artifactId>
             <version>0.0.1</version>
         </dependency>
@@ -70,8 +65,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
 
