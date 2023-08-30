@@ -1,6 +1,7 @@
 package com.koi.interfacer.service;
 
 import com.koi.common.domain.PageResult;
+import com.koi.interfacer.domain.entity.InterfaceInfo;
 import com.koi.interfacer.domain.vo.request.InterfaceInfoPageReqVO;
 import com.koi.interfacer.domain.vo.response.InterfaceInfoRespVO;
 
@@ -19,4 +20,12 @@ public interface InterfaceInfoService {
      * @Return PageResult<InterfaceInfoRespVO>
      */
     PageResult<InterfaceInfoRespVO> getInterfaceInfoPage(InterfaceInfoPageReqVO pageReqVO);
+
+    /**
+     * 根据id获取接口信息
+     *
+     * @param id
+     * @Return InterfaceInfo
+     */
+    InterfaceInfo getInterfaceInfoById(Long id);
 }

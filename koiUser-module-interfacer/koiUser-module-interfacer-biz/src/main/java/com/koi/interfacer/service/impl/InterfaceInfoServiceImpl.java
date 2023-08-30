@@ -35,4 +35,9 @@ public class InterfaceInfoServiceImpl implements InterfaceInfoService {
         return new PageResult<>(interfaceInfoRespVOList, pageResult.getTotal());
 
     }
+
+    @Override
+    public InterfaceInfo getInterfaceInfoById(Long id) {
+        return interfaceInfoMapper.selectById(id);
+    }
 }
