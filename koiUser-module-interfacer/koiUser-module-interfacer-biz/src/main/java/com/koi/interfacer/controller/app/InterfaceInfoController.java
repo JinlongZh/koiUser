@@ -37,7 +37,7 @@ public class InterfaceInfoController {
     @PermitAll
     @GetMapping("/page")
     @Operation(summary = "获得接口信息分页")
-    public CommonResult<PageResult<InterfaceInfoRespVO>> getInterfaceInfoPage(@ParameterObject @Valid InterfaceInfoPageReqVO pageReqVO) {
+    public CommonResult<PageResult<InterfaceInfoRespVO>> getInterfaceInfoPage(@Valid InterfaceInfoPageReqVO pageReqVO) {
         return CommonResult.success(interfaceInfoService.getInterfaceInfoPage(pageReqVO));
     }
 
