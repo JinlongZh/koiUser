@@ -2,7 +2,7 @@ package com.koi.interfacer.api;
 
 import com.koi.common.domain.CommonResult;
 import com.koi.common.utils.bean.BeanCopyUtils;
-import com.koi.interfacer.api.dto.response.UserKeyPairRespVO;
+import com.koi.interfacer.api.dto.response.UserKeyPairRespDTO;
 import com.koi.interfacer.domain.entity.UserKeyPair;
 import com.koi.interfacer.service.UserKeyPairService;
 import org.springframework.validation.annotation.Validated;
@@ -24,8 +24,8 @@ public class UserKeyPairApiImpl implements UserKeyPairApi{
     private UserKeyPairService userKeyPairService;
 
     @Override
-    public CommonResult<UserKeyPairRespVO> getUserKeyPairByAccessKey(String accessKey) {
+    public CommonResult<UserKeyPairRespDTO> getUserKeyPairByAccessKey(String accessKey) {
         UserKeyPair userKeyPair = userKeyPairService.getUserKeyPairByAccessKey(accessKey);
-        return CommonResult.success(BeanCopyUtils.copyObject(userKeyPair, UserKeyPairRespVO.class));
+        return CommonResult.success(BeanCopyUtils.copyObject(userKeyPair, UserKeyPairRespDTO.class));
     }
 }

@@ -1,8 +1,28 @@
 server:
   port: 8513
+spring:
+  main:
+    allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
+    allow-bean-definition-overriding: true # 允许 Bean 覆盖，例如说 Feign 等会存在重复定义的服务
 
   application:
     name: interfacer-provider
+
+  profiles:
+    active: dev
+
+  redis:
+    host: ${koiuser.redis.host}
+    port: ${koiuser.redis.port}
+    database: 0
+    timeout: 1800000
+    password: ${koiuser.redis.password}
+    lettuce:
+      pool:
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+        max-active: 20
 
 cloud:
   nacos:

@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.koi.interfacer.framework.core.utils.SignUtils.genSign;
+import static com.koi.common.utils.sign.SignUtils.genSign;
 
 /**
  * -

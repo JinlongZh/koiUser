@@ -1,8 +1,7 @@
-package com.koi.interfacer.framework.core.utils;
+package com.koi.common.utils.sign;
 
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
-
 
 /**
  * 签名生成工具类

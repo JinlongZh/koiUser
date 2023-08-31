@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @Date 2023/8/31 15:19
  */
 @Data
-public class UserKeyPairRespVO {
+public class UserKeyPairRespDTO {
 
     /**
      * id
