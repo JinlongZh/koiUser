@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.koi</groupId>
-		<artifactId>koiUser-module-interfacer</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<groupId>com.koi</groupId>
-	<artifactId>koiUser-module-interfacer-provider</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>koiUser-module-interfacer-provider</name>
-	<description>koiUser-module-interfacer-provider</description>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.koi</groupId>
+        <artifactId>koiUser-module-interfacer</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <groupId>com.koi</groupId>
+    <artifactId>koiUser-module-interfacer-provider</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>koiUser-module-interfacer-provider</name>
+    <description>koiUser-module-interfacer-provider</description>
 
-	<dependencies>
-		<!--自定义jar-->
-		<dependency>
-			<groupId>com.koi</groupId>
-			<artifactId>koiUser-common</artifactId>
-			<version>0.0.1</version>
-		</dependency>
+    <dependencies>
+        <!--自定义jar-->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
-		<!-- Web 相关 -->
-		<dependency>
-			<groupId>com.koi</groupId>
-			<artifactId>koiUser-spring-boot-starter-web</artifactId>
-			<version>0.0.1</version>
-		</dependency>
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--业务组件-->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-module-interfacer-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

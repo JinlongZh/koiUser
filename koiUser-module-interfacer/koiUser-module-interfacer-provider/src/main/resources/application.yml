@@ -3,3 +3,8 @@ server:
 
   application:
     name: interfacer-provider
+
+cloud:
+  nacos:
+    discovery:
+      server-addr: ${koiuser.nacos.addr}

@@ -39,6 +39,11 @@
             <artifactId>koiUser-spring-boot-starter-interfacer</artifactId>
             <version>0.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-module-interfacer-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <!-- Web 相关 -->
         <dependency>
             <groupId>com.koi</groupId>

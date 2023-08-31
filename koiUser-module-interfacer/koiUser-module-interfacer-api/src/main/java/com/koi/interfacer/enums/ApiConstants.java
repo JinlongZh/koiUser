@@ -17,6 +17,6 @@ public class ApiConstants {
      */
     public static final String NAME = "interfacer-server";
 
-    public static final String PREFIX = RpcConstants.RPC_API_PREFIX +  "/interfacer";
+    public static final String PREFIX = RpcConstants.RPC_API_PREFIX +  "/interface";
 
 }
