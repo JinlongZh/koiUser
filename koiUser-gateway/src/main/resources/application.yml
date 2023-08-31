@@ -33,18 +33,24 @@ spring:
             - RewritePath=/app-api/system/v3/api-docs, /v3/api-docs
 
         ## interfacer-server 服务
-        - id: interface-admin-api
+        - id: interfacer-admin-api
           uri: lb://interfacer-server
           predicates:
             - Path=/admin-api/interface/**
           filters:
             - RewritePath=/admin-api/system/v3/api-docs, /v3/api-docs
-        - id: interface-app-api
+        - id: interfacer-app-api
           uri: lb://interfacer-server
           predicates:
             - Path=/app-api/interface/**
           filters:
             - RewritePath=/app-api/system/v3/api-docs, /v3/api-docs
+        - id: interfacer-provider
+          uri: lb://interfacer-provider
+          predicates:
+            - Path=/k/**
+          filters:
+            - name: Interfacer
 
 
   redis:

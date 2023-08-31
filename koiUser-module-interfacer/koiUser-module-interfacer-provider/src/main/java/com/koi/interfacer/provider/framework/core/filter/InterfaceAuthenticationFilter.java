@@ -45,49 +45,49 @@ public class InterfaceAuthenticationFilter extends OncePerRequestFilter {
 
 
         // 3. 用户鉴权 （判断 accessKey 和 secretKey 是否合法）
-        String accessKey = request.getHeader("accessKey");
-        String timestamp = request.getHeader("timestamp");
-        String nonce = request.getHeader("nonce");
-        String sign = request.getHeader("sign");
-        String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
-        String method = request.getHeader("method");
-
-        if (StringUtils.isEmpty(nonce)
-                || StringUtils.isEmpty(sign)
-                || StringUtils.isEmpty(timestamp)
-                || StringUtils.isEmpty(method)) {
-            throw new ServiceException(BAD_REQUEST.getCode(), "请求头参数不完整！");
-        }
-        // 通过 accessKey 查询是否存在该用户秘钥对
-        UserKeyPairRespDTO userKeyPairResp = null;
-        try {
-            userKeyPairResp = userKeyPairApi.getUserKeyPairByAccessKey(accessKey).getData();
-        } catch (Exception e) {
-            globalExceptionHandler.serviceExceptionHandler(new ServiceException(INTERNAL_SERVER_ERROR));
-        }
-        if (userKeyPairResp == null) {
-            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "公钥或秘钥错误"));
-        }
-
-        // 判断随机数是否存在，防止重放攻击
-        String existNonce = RedisUtils.getStr(nonce);
-        if (StringUtils.isNotBlank(existNonce)) {
-            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "请求重复"));
-        }
-
-        // 时间戳 和 当前时间不能超过 5 分钟 (300000毫秒)
-        long currentTimeMillis = System.currentTimeMillis() / 1000;
-        long difference = currentTimeMillis - Long.parseLong(timestamp);
-        if (Math.abs(difference) > 300000) {
-            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "请求超时"));
-        }
-
-        // 校验签名
-        assert userKeyPairResp != null;
-        String serverSign = SignUtils.genSign(body, userKeyPairResp.getSecretKey());
-        if (!sign.equals(serverSign)) {
-            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "公钥或秘钥错误"));
-        }
+//        String accessKey = request.getHeader("accessKey");
+//        String timestamp = request.getHeader("timestamp");
+//        String nonce = request.getHeader("nonce");
+//        String sign = request.getHeader("sign");
+//        String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
+//        String method = request.getHeader("method");
+//
+//        if (StringUtils.isEmpty(nonce)
+//                || StringUtils.isEmpty(sign)
+//                || StringUtils.isEmpty(timestamp)
+//                || StringUtils.isEmpty(method)) {
+//            throw new ServiceException(BAD_REQUEST.getCode(), "请求头参数不完整！");
+//        }
+//        // 通过 accessKey 查询是否存在该用户秘钥对
+//        UserKeyPairRespDTO userKeyPairResp = null;
+//        try {
+//            userKeyPairResp = userKeyPairApi.getUserKeyPairByAccessKey(accessKey).getData();
+//        } catch (Exception e) {
+//            globalExceptionHandler.serviceExceptionHandler(new ServiceException(INTERNAL_SERVER_ERROR));
+//        }
+//        if (userKeyPairResp == null) {
+//            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "公钥或秘钥错误"));
+//        }
+//
+//        // 判断随机数是否存在，防止重放攻击
+//        String existNonce = RedisUtils.getStr(nonce);
+//        if (StringUtils.isNotBlank(existNonce)) {
+//            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "请求重复"));
+//        }
+//
+//        // 时间戳 和 当前时间不能超过 5 分钟 (300000毫秒)
+//        long currentTimeMillis = System.currentTimeMillis() / 1000;
+//        long difference = currentTimeMillis - Long.parseLong(timestamp);
+//        if (Math.abs(difference) > 300000) {
+//            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "请求超时"));
+//        }
+//
+//        // 校验签名
+//        assert userKeyPairResp != null;
+//        String serverSign = SignUtils.genSign(body, userKeyPairResp.getSecretKey());
+//        if (!sign.equals(serverSign)) {
+//            globalExceptionHandler.serviceExceptionHandler(new ServiceException(BAD_REQUEST.getCode(), "公钥或秘钥错误"));
+//        }
 
         // 4. 判断请求的模拟接口是否存在
 
