@@ -65,7 +65,7 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.koi.interfacer.controller.app
-  default-flat-param-object: true
+  default-flat-param-object: false
 knife4j:
   enable: true
   setting:

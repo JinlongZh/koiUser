@@ -21,11 +21,12 @@ public class InterestingController {
 
     @PostMapping("/api/rand.avatar")
     public String randAvatar(HttpServletRequest request) {
-        String url = "https://api.uomg.com/api/rand.avatar";
-        String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
-        HttpResponse httpResponse = HttpRequest.get(url + "?" + body)
-                .execute();
-        return httpResponse.body();
+//        String url = "https://api.uomg.com/api/rand.avatar";
+//        String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
+//        HttpResponse httpResponse = HttpRequest.get(url + "?" + body)
+//                .execute();
+//        return httpResponse.body();
+        return "调用成功";
     }
 
 }
