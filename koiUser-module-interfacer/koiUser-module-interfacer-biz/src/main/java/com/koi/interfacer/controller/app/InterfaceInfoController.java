@@ -30,7 +30,8 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.*;
  * @Date 2023/8/29 20:54
  */
 @Tag(name = "前台 接口信息")
-@RestController("/interface")
+@RestController
+@RequestMapping("/interface")
 public class InterfaceInfoController {
 
     @Resource

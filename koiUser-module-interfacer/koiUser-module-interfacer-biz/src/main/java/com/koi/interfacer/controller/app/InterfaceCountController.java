@@ -1,7 +1,7 @@
 package com.koi.interfacer.controller.app;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户调用接口关系Controller
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author zjl
  * @date 2023-08-31
  */
-@Controller
+@RestController
 @RequestMapping("/interface/count")
 public class InterfaceCountController {
 
