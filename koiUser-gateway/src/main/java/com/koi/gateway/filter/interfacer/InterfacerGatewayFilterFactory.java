@@ -1,11 +1,10 @@
 package com.koi.gateway.filter.interfacer;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * -
@@ -16,19 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class InterfacerGatewayFilterFactory extends AbstractGatewayFilterFactory<Object> {
 
-//    public InterfacerGatewayFilterFactory() {
-//        super(Config.class);
-//    }
+    @Resource
+    InterfacerGatewayFilter interfacerGatewayFilter;
 
     @Override
     public GatewayFilter apply(Object config) {
-        return new InterfacerGatewayFilter();
+        return interfacerGatewayFilter;
     }
 
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class Config {
-//        private String message;
-//    }
 }

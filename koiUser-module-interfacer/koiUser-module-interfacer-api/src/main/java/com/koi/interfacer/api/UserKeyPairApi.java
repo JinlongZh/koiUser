@@ -16,7 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = ApiConstants.NAME)
 public interface UserKeyPairApi {
 
-    String PREFIX = ApiConstants.PREFIX + "/interface/keyPair";
+    String PREFIX = ApiConstants.PREFIX + "/keyPair";
+
+    /**
+     * 主要是提供给 Gateway 使用
+     */
+    @SuppressWarnings("HttpUrlsUsage")
+    String URL_KEYPAIR = "http://" + ApiConstants.NAME + PREFIX + "/getByKeyPair";
 
     @GetMapping(PREFIX + "/getByKeyPair")
     CommonResult<UserKeyPairRespDTO> getUserKeyPairByAccessKey(@RequestParam("accessKey") String accessKey);

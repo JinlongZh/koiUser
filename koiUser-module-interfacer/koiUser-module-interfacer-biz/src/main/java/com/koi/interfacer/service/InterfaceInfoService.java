@@ -28,4 +28,13 @@ public interface InterfaceInfoService {
      * @Return InterfaceInfo
      */
     InterfaceInfo getInterfaceInfoById(Long id);
+
+    /**
+     * 查询接口是否存在（请求路径、请求方法、请求参数）
+     *
+     * @param path
+     * @param method
+     * @Return InterfaceInfo
+     */
+    InterfaceInfo getInterfaceInfo(String path, String method);
 }

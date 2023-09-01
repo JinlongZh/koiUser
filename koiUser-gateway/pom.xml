@@ -22,6 +22,24 @@
             <version>0.0.1</version>
         </dependency>
 
+        <!-- 业务组件 -->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-module-interfacer-api</artifactId>
+            <version>0.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springdoc</groupId>
+                    <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
         <!-- Gateway 网关相关 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -32,6 +50,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
         <!-- Registry 注册中心相关 -->

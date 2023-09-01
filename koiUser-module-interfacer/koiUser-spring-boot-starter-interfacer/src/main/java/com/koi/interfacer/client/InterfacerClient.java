@@ -31,7 +31,7 @@ public class InterfacerClient {
      *
      * @param body
      * @param method
-     * @Return Map<String,String>
+     * @Return Map<String, String>
      */
     private Map<String, String> getHeaderMap(String body, String method) throws UnsupportedEncodingException {
         HashMap<String, String> map = new HashMap<>();
@@ -46,7 +46,20 @@ public class InterfacerClient {
     }
 
     public String invokeInterface(String params, String host, String url, String method) throws UnsupportedEncodingException {
-        HttpResponse httpResponse = HttpRequest.post(host + url)
+        HttpRequest request;
+        if ("GET".equalsIgnoreCase(method)) {
+            request = HttpRequest.get(host + url);
+        } else if ("POST".equalsIgnoreCase(method)) {
+            request = HttpRequest.post(host + url);
+        } else if ("PUT".equalsIgnoreCase(method)) {
+            request = HttpRequest.put(host + url);
+        } else if ("DELETE".equalsIgnoreCase(method)) {
+            request = HttpRequest.delete(host + url);
+        } else {
+            throw new IllegalArgumentException("Unsupported method: " + method);
+        }
+
+        HttpResponse httpResponse = request
                 .header("Accept-Charset", CharsetUtil.UTF_8)
                 .addHeaders(getHeaderMap(params, method))
                 .body(params)

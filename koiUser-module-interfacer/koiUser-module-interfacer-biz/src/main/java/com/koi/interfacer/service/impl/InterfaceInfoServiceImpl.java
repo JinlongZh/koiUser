@@ -40,4 +40,9 @@ public class InterfaceInfoServiceImpl implements InterfaceInfoService {
     public InterfaceInfo getInterfaceInfoById(Long id) {
         return interfaceInfoMapper.selectById(id);
     }
+
+    @Override
+    public InterfaceInfo getInterfaceInfo(String path, String method) {
+        return interfaceInfoMapper.selectInterfaceInfo(path, method);
+    }
 }

@@ -19,6 +19,12 @@ public interface InterfaceInfoMapper extends BaseMapperX<InterfaceInfo> {
                 .likeIfPresent(InterfaceInfo::getName, pageReqVO.getName())
                 .orderByDesc(InterfaceInfo::getId));
     }
+
+    default InterfaceInfo selectInterfaceInfo(String path, String method) {
+        return selectOne(new LambdaQueryWrapperX<InterfaceInfo>()
+                .eq(InterfaceInfo::getUrl, path)
+                .eq(InterfaceInfo::getMethod, method));
+    }
 }
 
 
