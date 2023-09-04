@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.koi.interfacer.domain.dto.RequestParamDTO;
+import com.koi.interfacer.domain.dto.ResponseParamDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 接口信息 Response VO
@@ -47,7 +50,12 @@ public class InterfaceInfoRespVO {
     /**
      * 请求参数
      */
-    private String requestParams;
+    private List<RequestParamDTO> requestParamList;
+
+    /**
+     * 响应参数
+     */
+    private List<ResponseParamDTO> responseParamList;
 
     /**
      * 请求头
@@ -68,11 +76,6 @@ public class InterfaceInfoRespVO {
      * 请求类型
      */
     private String method;
-
-    /**
-     * 创建人
-     */
-    private Long userId;
 
     /**
      * 创建时间

@@ -77,6 +77,19 @@ public class JsonUtils {
         }
     }
 
+    public static <T> List<T> parseList(String text, Class<T> clazz) {
+        if (StrUtil.isEmpty(text)) {
+            return new ArrayList<>();
+        }
+        try {
+            return objectMapper.readValue(text, new TypeReference<List<T>>() {});
+        } catch (IOException e) {
+            log.error("JSON parse error. JSON: {}", text, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+
     /**
      * 将 JSON 转为 Map<String,Boolean>
      *

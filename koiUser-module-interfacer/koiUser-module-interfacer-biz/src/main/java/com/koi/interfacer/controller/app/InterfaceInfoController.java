@@ -22,6 +22,7 @@ import java.util.Objects;
 
 import static com.koi.common.enums.CommonStatusEnum.DISABLE;
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.*;
+import static com.koi.interfacer.convert.InterfaceInfoConvert.convertInterfaceInfo;
 
 /**
  * 接口信息
@@ -63,7 +64,7 @@ public class InterfaceInfoController {
     @Operation(summary = "根据id获取接口信息")
     public CommonResult<InterfaceInfoRespVO> getInterfaceInfo(@RequestParam("id") Long id) {
         InterfaceInfo interfaceInfo = interfaceInfoService.getInterfaceInfoById(id);
-        return CommonResult.success(BeanCopyUtils.copyObject(interfaceInfo, InterfaceInfoRespVO.class));
+        return CommonResult.success(convertInterfaceInfo(interfaceInfo));
     }
 
     /**

@@ -113,7 +113,7 @@ public class InterfacerGatewayFilter implements GatewayFilter, Ordered {
     }
 
     private Mono<Void> processInterface(ServerWebExchange exchange, GatewayFilterChain chain, String path, String method, UserKeyPairRespDTO userKeyPairResp) {
-        // 4. 判断请求的模拟接口是否存在
+        // 4. 判断请求的接口是否存在
         return getInterfaceInfo(path, method).flatMap(interfaceInfoResult -> {
             CommonResult<InterfaceInfoRespDTO> result = JsonUtils.parseObject(interfaceInfoResult, INTERFACE_INFO_DTO);
             if (result.isError()) {
