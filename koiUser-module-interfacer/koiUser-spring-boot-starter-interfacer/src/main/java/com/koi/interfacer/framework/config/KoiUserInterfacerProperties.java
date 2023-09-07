@@ -29,4 +29,8 @@ public class KoiUserInterfacerProperties {
     @NotEmpty(message = "secretKey 不能为空")
     private String secretKey = "test";
 
+    /**
+     * 设置超时，单位：毫秒
+     */
+    private Integer timeout = 3000;
 }

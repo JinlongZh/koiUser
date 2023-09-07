@@ -13,6 +13,7 @@ import com.koi.interfacer.domain.vo.response.InterfaceInfoRespVO;
 import com.koi.interfacer.service.InterfaceInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -88,7 +89,7 @@ public class InterfaceInfoController {
         // 开始调用
         String invokeResult;
         try {
-            invokeResult = interfacerClient.invokeInterface(interfaceInfoInvokeReq.getRequestParams(), interfaceInfo.getHost(), interfaceInfo.getUrl(), interfaceInfo.getMethod());
+            invokeResult = interfacerClient.invokeInterface(interfaceInfoInvokeReq.getRequestParams(), interfaceInfo.getHost(), interfaceInfo.getUrl(), HttpMethod.valueOf(interfaceInfo.getMethod()));
             if (StringUtils.isBlank(invokeResult)) {
                 throw new ServiceException(INTERNAL_SERVER_ERROR.getCode(), "接口数据为空");
             }

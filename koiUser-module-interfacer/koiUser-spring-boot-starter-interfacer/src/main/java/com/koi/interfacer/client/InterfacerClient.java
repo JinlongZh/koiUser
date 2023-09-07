@@ -7,8 +7,11 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.koi.interfacer.framework.config.KoiUserInterfacerProperties;
+import com.koi.interfacer.framework.exception.InterfacerClientException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,47 +27,57 @@ import static com.koi.common.utils.sign.SignUtils.genSign;
 @RequiredArgsConstructor
 public class InterfacerClient {
 
-    private final KoiUserInterfacerProperties koiUserInterfacerProperties;
+    private final KoiUserInterfacerProperties properties;
 
-    /**
-     * 生成请求头
-     *
-     * @param body
-     * @param method
-     * @Return Map<String, String>
-     */
-    private Map<String, String> getHeaderMap(String body, String method) throws UnsupportedEncodingException {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("accessKey", koiUserInterfacerProperties.getAccessKey());
-        map.put("nonce", RandomUtil.randomNumbers(10));
-        map.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
-        map.put("sign", genSign(body, koiUserInterfacerProperties.getSecretKey()));
-        body = URLUtil.encode(body, CharsetUtil.CHARSET_UTF_8);
-        map.put("body", body);
-        map.put("method", method);
-        return map;
+    public String invokeInterface(String params, String host, String url, HttpMethod method) throws InterfacerClientException {
+        HttpRequest request = createHttpRequest(host, url, method);
+
+        try {
+            addRequestHeaders(request, params, method);
+            HttpResponse httpResponse = request
+                    .header("Accept-Charset", CharsetUtil.UTF_8)
+                    .timeout(properties.getTimeout())
+                    .execute();
+            return JSONUtil.formatJsonStr(httpResponse.body());
+        } catch (IOException e) {
+            throw new InterfacerClientException("Failed to invoke interface", e);
+        }
     }
 
-    public String invokeInterface(String params, String host, String url, String method) throws UnsupportedEncodingException {
-        HttpRequest request;
-        if ("GET".equalsIgnoreCase(method)) {
-            request = HttpRequest.get(host + url);
-        } else if ("POST".equalsIgnoreCase(method)) {
-            request = HttpRequest.post(host + url);
-        } else if ("PUT".equalsIgnoreCase(method)) {
-            request = HttpRequest.put(host + url);
-        } else if ("DELETE".equalsIgnoreCase(method)) {
-            request = HttpRequest.delete(host + url);
-        } else {
-            throw new IllegalArgumentException("Unsupported method: " + method);
-        }
+    private HttpRequest createHttpRequest(String host, String url, HttpMethod method) {
+        String fullUrl = host + url;
 
-        HttpResponse httpResponse = request
-                .header("Accept-Charset", CharsetUtil.UTF_8)
-                .addHeaders(getHeaderMap(params, method))
-                .body(params)
-                .execute();
-        return JSONUtil.formatJsonStr(httpResponse.body());
+        switch (method) {
+            case GET:
+                return HttpRequest.get(fullUrl);
+            case POST:
+                return HttpRequest.post(fullUrl);
+            case PUT:
+                return HttpRequest.put(fullUrl);
+            case DELETE:
+                return HttpRequest.delete(fullUrl);
+            default:
+                throw new IllegalArgumentException("Unsupported method: " + method);
+        }
+    }
+
+    private void addRequestHeaders(HttpRequest request, String params, HttpMethod method) throws UnsupportedEncodingException {
+        Map<String, String> headers = generateRequestHeaders(params, method.name());
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            request.header(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private Map<String, String> generateRequestHeaders(String body, String method) throws UnsupportedEncodingException {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("accessKey", properties.getAccessKey());
+        headers.put("nonce", RandomUtil.randomNumbers(10));
+        headers.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
+        headers.put("sign", genSign(body, properties.getSecretKey()));
+        body = URLUtil.encode(body, CharsetUtil.CHARSET_UTF_8);
+        headers.put("body", body);
+        headers.put("method", method);
+        return headers;
     }
 
 }
