@@ -70,7 +70,7 @@ public class InterfacerGatewayFilter implements GatewayFilter, Ordered {
         String timestamp = headers.getFirst("timestamp");
         String nonce = headers.getFirst("nonce");
         String sign = headers.getFirst("sign");
-        String body = URLUtil.decode(headers.getFirst("body"), CharsetUtil.CHARSET_UTF_8);
+        String params = URLUtil.decode(headers.getFirst("params"), CharsetUtil.CHARSET_UTF_8);
         String method = headers.getFirst("method");
 
         if (StringUtils.isEmpty(nonce)
@@ -104,7 +104,7 @@ public class InterfacerGatewayFilter implements GatewayFilter, Ordered {
             }
 
             // 校验签名
-            String serverSign = SignUtils.genSign(body, userKeyPairResp.getSecretKey());
+            String serverSign = SignUtils.genSign(params, userKeyPairResp.getSecretKey());
             if (!sign.equals(serverSign)) {
                 return Mono.error(new ServiceException(BAD_REQUEST.getCode(), "公钥或秘钥错误"));
             }
