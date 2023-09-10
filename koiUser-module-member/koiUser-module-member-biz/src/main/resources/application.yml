@@ -47,10 +47,10 @@ spring:
       write-durations-as-timestamps: true # ?? Duration ?????????
       fail-on-empty-beans: false # ????????? Bean
 
-cloud:
-  nacos:
-    discovery:
-      server-addr: ${koiuser.nacos.addr}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${koiuser.nacos.addr}
 
 
 # springdoc-openapi????

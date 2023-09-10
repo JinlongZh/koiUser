@@ -47,10 +47,10 @@ spring:
       write-durations-as-timestamps: true # 设置 Duration 的格式，使用时间戳
       fail-on-empty-beans: false # 允许序列化无属性的 Bean
 
-cloud:
-  nacos:
-    discovery:
-      server-addr: ${koiuser.nacos.addr}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${koiuser.nacos.addr}
 
 
 # springdoc-openapi项目配置

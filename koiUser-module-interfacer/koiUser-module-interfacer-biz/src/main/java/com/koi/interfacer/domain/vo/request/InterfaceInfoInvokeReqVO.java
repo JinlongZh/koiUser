@@ -16,13 +16,7 @@ public class InterfaceInfoInvokeReqVO {
     @Schema(description = "id", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     private Long id;
 
-    @Schema(description = "请求方法", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "1")
-    private String method;
-
     @Schema(description = "请求参数", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "1")
     private String requestParams;
-
-    @Schema(description = "主机号", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "1")
-    private String host;
 
 }
