@@ -2,6 +2,7 @@ package com.koi.member.controller.app.auth;
 
 import cn.hutool.core.util.StrUtil;
 import com.koi.common.domain.CommonResult;
+import com.koi.framework.limitrate.core.annotation.LimitRate;
 import com.koi.framework.security.config.SecurityProperties;
 import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
 import com.koi.member.domain.auth.vo.request.AppAuthLoginReqVO;
@@ -10,10 +11,7 @@ import com.koi.member.service.auth.MemberAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
@@ -66,6 +64,13 @@ public class AppAuthController {
             authService.logout(token);
         }
         return CommonResult.success(true);
+    }
+
+    @PermitAll
+    @LimitRate(rate = 1, capacity = 5)
+    @GetMapping("/test")
+    public CommonResult<String> test() {
+        return CommonResult.success("test");
     }
 
 }
