@@ -21,9 +21,8 @@
         <module>koiUser-framework</module>
         <module>koiUser-gateway</module>
         <module>koiUser-module-interfacer</module>
-        <module>koiUser-module-member</module>
+        <module>koiUser-module-blog</module>
         <module>koiUser-module-system</module>
-        <module>koiUser-server</module>
     </modules>
 
     <properties>

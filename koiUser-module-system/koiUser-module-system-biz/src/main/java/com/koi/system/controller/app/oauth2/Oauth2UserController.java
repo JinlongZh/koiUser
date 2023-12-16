@@ -2,8 +2,6 @@ package com.koi.system.controller.app.oauth2;
 
 import com.koi.common.domain.CommonResult;
 import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
-import com.koi.member.api.user.MemberUserApi;
-import com.koi.member.api.user.dto.response.OAuth2UserInfoRespDTO;
 import com.koi.system.convert.oauth2.Oauth2UserConvert;
 import com.koi.system.domain.oauth2.vo.response.OAuth2UserInfoRespVO;
 import com.koi.system.domain.user.entity.User;
