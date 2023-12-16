@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koi.blog.mapper.mysql.TalkMapper">
+
+    <resultMap id="BaseResultMap" type="com.koi.blog.domain.entity.Talk">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="images" column="images" jdbcType="VARCHAR"/>
+            <result property="talkTop" column="talk_top" jdbcType="TINYINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="BIT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,content,images,
+        is_top,status,create_time,
+        update_time,deleted
+    </sql>
+</mapper>
