@@ -66,4 +66,23 @@
             AND a.`status` = 0
         </where>
     </select>
+
+    <select id="getArticleDetailByIdList" resultType="com.koi.blog.domain.vo.response.ArticleRespVO">
+        SELECT a.id,
+        a.article_cover,
+        a.article_title,
+        SUBSTR(a.article_content, 1, 500) AS article_content,
+        a.article_top,
+        c.id as category_id,
+        c.category_name,
+        a.view_count,
+        a.create_time,
+        a.update_time
+        FROM (SELECT * FROM blog_article WHERE id IN
+        <foreach item="item" collection="idList" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND `status` = 0 AND deleted = 0) a
+        LEFT JOIN blog_category c ON c.id = a.category_id
+    </select>
 </mapper>

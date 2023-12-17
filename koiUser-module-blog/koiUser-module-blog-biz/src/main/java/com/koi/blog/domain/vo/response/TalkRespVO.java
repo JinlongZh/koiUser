@@ -1,5 +1,6 @@
 package com.koi.blog.domain.vo.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koi.blog.domain.dto.HomeListDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,56 +8,53 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
- * 文章 resp-vo
+ * 说说 resp-vo
  *
  * @Author zjl
- * @Date 2023/12/17 11:03
+ * @Date 2023/12/17 13:05
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleRespVO implements HomeListDTO {
+public class TalkRespVO implements HomeListDTO {
 
     /**
-     * id
+     * 说说id
      */
     private Long id;
 
     /**
-     * 文章缩略图
+     * 说说内容
      */
-    private String articleCover;
+    private String content;
 
     /**
-     * 标题
+     * 图片
      */
-    private String articleTitle;
+    @JsonIgnore
+    private String images;
 
     /**
-     * 文章内容
+     * 图片列表
      */
-    private String articleContent;
+    private List<String> imageList;
 
     /**
      * 是否置顶
      */
-    private Integer articleTop;
+    private Integer talkTop;
 
     /**
-     * 文章分类id
+     * 状态 0公开 1关闭
      */
-    private Long categoryId;
+    private Integer status;
 
     /**
-     * 文章分类名
-     */
-    private String categoryName;
-
-    /**
-     * 浏览量
+     * 阅读量
      */
     private Integer viewCount;
 

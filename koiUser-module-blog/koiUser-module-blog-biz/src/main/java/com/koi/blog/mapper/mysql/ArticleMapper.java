@@ -14,6 +14,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleRespVO> pageArticle(@Param("req") ArticlePageQueryReqVO req, @Param("current") Integer current, @Param("pageSize") Integer pageSize);
 
     Long getArticleNum(@Param("req") ArticlePageQueryReqVO req);
+
+    List<ArticleRespVO> getArticleDetailByIdList(@Param("idList") List<Long> idList);
 }
 
 

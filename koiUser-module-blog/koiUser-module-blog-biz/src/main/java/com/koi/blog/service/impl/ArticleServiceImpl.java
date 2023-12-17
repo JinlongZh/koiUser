@@ -43,4 +43,9 @@ public class ArticleServiceImpl implements ArticleService {
         articleRespVO.setCategoryName(category.getCategoryName());
         return articleRespVO;
     }
+
+    @Override
+    public List<ArticleRespVO> getArticleDetailByIdList(List<Long> idList) {
+        return articleMapper.getArticleDetailByIdList(idList);
+    }
 }

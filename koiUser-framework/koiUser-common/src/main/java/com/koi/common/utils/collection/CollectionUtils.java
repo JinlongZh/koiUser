@@ -61,6 +61,24 @@ public class CollectionUtils {
         return from.stream().filter(filter).map(func).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
+    /**
+     * 转换List
+     *
+     * @param obj   obj
+     * @param clazz clazz
+     * @return {@link List<T>}
+     */
+    public static <T> List<T> castList(Object obj, Class<T> clazz) {
+        List<T> result = new ArrayList<T>();
+        if (obj instanceof List<?>) {
+            for (Object o : (List<?>) obj) {
+                result.add(clazz.cast(o));
+            }
+            return result;
+        }
+        return result;
+    }
+
     public static <T, U> Set<U> convertSet(Collection<T> from, Function<T, U> func) {
         if (CollUtil.isEmpty(from)) {
             return new HashSet<>();
@@ -73,6 +91,24 @@ public class CollectionUtils {
             return new HashSet<>();
         }
         return from.stream().filter(filter).map(func).filter(Objects::nonNull).collect(Collectors.toSet());
+    }
+
+    /**
+     * 转换set
+     *
+     * @param obj   obj
+     * @param clazz clazz
+     * @return {@link Set<T>}
+     */
+    public static <T> Set<T> castSet(Object obj, Class<T> clazz) {
+        Set<T> result = new HashSet<>();
+        if (obj instanceof Set<?>) {
+            for (Object o : (Set<?>) obj) {
+                result.add(clazz.cast(o));
+            }
+            return result;
+        }
+        return result;
     }
 
     public static <T, K> Map<K, T> convertMap(Collection<T> from, Function<T, K> keyFunc) {

@@ -1,10 +1,7 @@
 package com.koi.blog.domain.vo.request;
 
 import com.koi.common.domain.PageParam;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 文章查询 req-vo
@@ -12,6 +9,7 @@ import lombok.NoArgsConstructor;
  * @Author zjl
  * @Date 2023/12/17 11:19
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @AllArgsConstructor
