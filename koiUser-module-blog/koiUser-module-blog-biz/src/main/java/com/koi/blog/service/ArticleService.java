@@ -17,4 +17,12 @@ public interface ArticleService {
      * @return {@link PageResult}<{@link ArticleRespVO}>
      */
     PageResult<ArticleRespVO> pageHomeArticle(ArticlePageQueryReqVO reqVO);
+
+    /**
+     * 获取文章详情
+     *
+     * @param id
+     * @return {@link ArticleRespVO}
+     */
+    ArticleRespVO getArticleDetail(Long id);
 }

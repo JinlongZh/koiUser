@@ -22,7 +22,7 @@ public class ArticleRespVO {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 文章缩略图
@@ -47,7 +47,7 @@ public class ArticleRespVO {
     /**
      * 文章分类id
      */
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 文章分类名

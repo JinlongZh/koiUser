@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -34,6 +35,13 @@ public class ArticleController {
     public CommonResult<PageResult<ArticleRespVO>> pageHomeArticle(ArticlePageQueryReqVO reqVO) {
         PageResult<ArticleRespVO> articleRespVOPageResult = articleService.pageHomeArticle(reqVO);
         return CommonResult.success(articleRespVOPageResult);
+    }
+
+    @PermitAll
+    @Operation(summary = "获取文章详情")
+    @GetMapping("/detail")
+    public CommonResult<ArticleRespVO> getArticleDetail(@RequestParam("id") Long id) {
+        return CommonResult.success(articleService.getArticleDetail(id));
     }
 
 
