@@ -40,6 +40,11 @@ public class Talk implements Serializable {
     private Integer status;
 
     /**
+     * 阅读量
+     */
+    private Integer viewCount;
+
+    /**
      * 发表时间
      */
     @TableField(fill = FieldFill.INSERT)

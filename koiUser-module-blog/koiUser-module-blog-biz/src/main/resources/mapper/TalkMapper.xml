@@ -10,6 +10,7 @@
             <result property="images" column="images" jdbcType="VARCHAR"/>
             <result property="talkTop" column="talk_top" jdbcType="TINYINT"/>
             <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="deleted" column="deleted" jdbcType="BIT"/>

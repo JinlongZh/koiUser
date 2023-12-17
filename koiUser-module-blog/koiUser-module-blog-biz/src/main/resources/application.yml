@@ -65,6 +65,7 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.koi.blog
+  default-flat-param-object: true
 
 koiuser:
   security:

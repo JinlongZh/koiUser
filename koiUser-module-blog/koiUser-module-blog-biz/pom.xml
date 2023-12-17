@@ -77,9 +77,9 @@
 
         <!-- DB 相关 -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-database</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
 

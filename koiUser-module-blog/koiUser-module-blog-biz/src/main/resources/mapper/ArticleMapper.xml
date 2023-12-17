@@ -12,6 +12,7 @@
             <result property="articleContent" column="article_content" jdbcType="VARCHAR"/>
             <result property="articleTop" column="article_top" jdbcType="TINYINT"/>
             <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="deleted" column="deleted" jdbcType="BIT"/>
@@ -23,4 +24,46 @@
         status,create_time,update_time,
         deleted
     </sql>
+
+    <select id="pageArticle" resultType="com.koi.blog.domain.vo.response.ArticleRespVO">
+        SELECT
+            a.id,
+            a.article_cover,
+            a.article_title,
+            SUBSTR(a.article_content, 1, 500) AS article_content,
+            a.article_top,
+            c.id as category_id,
+            c.category_name,
+            a.view_count,
+            a.create_time,
+            a.update_time
+        FROM
+            blog_article a
+                LEFT JOIN
+            blog_category c ON c.id = a.category_id
+        <where>
+            <if test="req.categoryId != null">
+                a.category_id = #{req.categoryId}
+            </if>
+            AND a.deleted = 0
+            AND a.`status` = 0
+        </where>
+        ORDER BY a.article_top Desc, a.id DESC
+            LIMIT #{current}, #{pageSize}
+    </select>
+    <select id="getArticleNum" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM
+        blog_article a
+        LEFT JOIN
+        blog_category c ON c.id = a.category_id
+        <where>
+            <if test="req.categoryId != null">
+                a.category_id = #{req.categoryId}
+            </if>
+            AND a.deleted = 0
+            AND a.`status` = 0
+        </where>
+    </select>
 </mapper>
