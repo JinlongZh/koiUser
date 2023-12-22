@@ -1,6 +1,8 @@
 package com.koi.blog.service;
 
+import com.koi.blog.domain.vo.request.TalkPageQueryReqVO;
 import com.koi.blog.domain.vo.response.TalkRespVO;
+import com.koi.common.domain.PageResult;
 
 import java.util.List;
 
@@ -26,4 +28,11 @@ public interface TalkService {
      */
     List<TalkRespVO> getTalkDetailByIdList(List<Long> idList);
 
+    /**
+     * 分页请求说说
+     *
+     * @param req
+     * @return {@link PageResult}<{@link TalkRespVO}>
+     */
+    PageResult<TalkRespVO> pageTalk(TalkPageQueryReqVO req);
 }

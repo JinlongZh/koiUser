@@ -1,8 +1,10 @@
 package com.koi.blog.controller.app;
 
+import com.koi.blog.domain.vo.request.TalkPageQueryReqVO;
 import com.koi.blog.domain.vo.response.TalkRespVO;
 import com.koi.blog.service.TalkService;
 import com.koi.common.domain.CommonResult;
+import com.koi.common.domain.PageResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,13 @@ public class TalkController {
 
     @Resource
     private TalkService talkService;
+
+    @PermitAll
+    @Operation(summary = "获取说说列表")
+    @GetMapping("/list")
+    public CommonResult<PageResult<TalkRespVO>> pageTalk(TalkPageQueryReqVO req) {
+        return CommonResult.success(talkService.pageTalk(req));
+    }
 
     @PermitAll
     @Operation(summary = "获取说说详情")

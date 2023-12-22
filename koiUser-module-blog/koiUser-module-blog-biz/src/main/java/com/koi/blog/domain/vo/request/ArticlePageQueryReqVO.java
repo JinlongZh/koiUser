@@ -19,6 +19,6 @@ public class ArticlePageQueryReqVO extends PageParam {
     /**
      * 分类id
      */
-    private String CategoryId;
+    private Integer categoryId;
 
 }

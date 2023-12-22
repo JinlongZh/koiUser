@@ -1,9 +1,12 @@
 package com.koi.blog.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.koi.blog.domain.entity.Talk;
+import com.koi.blog.domain.vo.request.TalkPageQueryReqVO;
 import com.koi.blog.domain.vo.response.TalkRespVO;
 import com.koi.blog.mapper.mysql.TalkMapper;
 import com.koi.blog.service.TalkService;
+import com.koi.common.domain.PageResult;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.common.utils.collection.CollectionUtils;
 import com.koi.common.utils.json.JsonUtils;
@@ -41,6 +44,16 @@ public class TalkServiceImpl implements TalkService {
         }
 
         return talkRespVOList;
+    }
+
+    @Override
+    public PageResult<TalkRespVO> pageTalk(TalkPageQueryReqVO req) {
+        Page<Talk> talkPage = talkMapper.pageTalk(req);
+        List<TalkRespVO> talkRespVOList = BeanCopyUtils.copyList(talkPage.getRecords(), TalkRespVO.class);
+        for (TalkRespVO item : talkRespVOList) {
+            talkPictureConvert(item);
+        }
+        return new PageResult<>(talkRespVOList, talkPage.getTotal());
     }
 
     /**

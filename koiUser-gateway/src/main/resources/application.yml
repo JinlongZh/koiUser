@@ -32,19 +32,33 @@ spring:
           filters:
             - RewritePath=/app-api/system/v3/api-docs, /v3/api-docs
 
+        ## blog-server 服务
+        - id: blog-admin-api
+          uri: lb://blog-server
+          predicates:
+            - Path=/admin-api/blog/**
+          filters:
+            - RewritePath=/admin-api/blog/v3/api-docs, /v3/api-docs
+        - id: blog-app-api
+          uri: lb://blog-server
+          predicates:
+            - Path=/app-api/blog/**
+          filters:
+            - RewritePath=/app-api/blog/v3/api-docs, /v3/api-docs
+
         ## interfacer-server 服务
         - id: interfacer-admin-api
           uri: lb://interfacer-server
           predicates:
             - Path=/admin-api/interface/**
           filters:
-            - RewritePath=/admin-api/system/v3/api-docs, /v3/api-docs
+            - RewritePath=/admin-api/interface/v3/api-docs, /v3/api-docs
         - id: interfacer-app-api
           uri: lb://interfacer-server
           predicates:
             - Path=/app-api/interface/**
           filters:
-            - RewritePath=/app-api/system/v3/api-docs, /v3/api-docs
+            - RewritePath=/app-api/interface/v3/api-docs, /v3/api-docs
         - id: interfacer-provider
           uri: lb://interfacer-provider
           predicates:
