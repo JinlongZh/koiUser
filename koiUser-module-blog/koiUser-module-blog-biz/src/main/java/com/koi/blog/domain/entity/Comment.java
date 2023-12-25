@@ -4,12 +4,19 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
  * @TableName blog_comment
  */
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName(value ="blog_comment")
 @Data
 public class Comment implements Serializable {

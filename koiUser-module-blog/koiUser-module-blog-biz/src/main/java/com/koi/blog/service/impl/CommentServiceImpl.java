@@ -1,6 +1,8 @@
 package com.koi.blog.service.impl;
 
 import com.koi.blog.domain.dto.ReplyCountDTO;
+import com.koi.blog.domain.entity.Comment;
+import com.koi.blog.domain.vo.request.CommentAddReqVO;
 import com.koi.blog.domain.vo.request.CommentQueryReqVO;
 import com.koi.blog.domain.vo.response.CommentRespVO;
 import com.koi.blog.domain.vo.response.ReplyRespVO;
@@ -49,5 +51,18 @@ public class CommentServiceImpl implements CommentService {
             commentRespVO.setReplyList(replyMap.get(commentRespVO.getId()));
         }
         return new PageResult<>(commentRespVOList, count);
+    }
+
+    @Override
+    public void addComment(CommentAddReqVO req, Long userId) {
+        Comment comment = Comment.builder()
+                .userId(userId)
+                .commentContent(req.getCommentContent())
+                .parentId(req.getParentId())
+                .replyUserId(req.getReplyUserId())
+                .topicId(req.getTopicId())
+                .type(req.getType())
+                .build();
+        commentMapper.insert(comment);
     }
 }
