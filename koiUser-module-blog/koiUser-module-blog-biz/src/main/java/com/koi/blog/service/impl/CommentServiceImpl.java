@@ -4,6 +4,7 @@ import com.koi.blog.domain.dto.ReplyCountDTO;
 import com.koi.blog.domain.entity.Comment;
 import com.koi.blog.domain.vo.request.CommentAddReqVO;
 import com.koi.blog.domain.vo.request.CommentQueryReqVO;
+import com.koi.blog.domain.vo.request.ReplyQueryReqVO;
 import com.koi.blog.domain.vo.response.CommentRespVO;
 import com.koi.blog.domain.vo.response.ReplyRespVO;
 import com.koi.blog.mapper.CommentMapper;
@@ -16,6 +17,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.koi.framework.mybatis.utils.PageUtils.getStart;
 
 /**
  * @Author zjl
@@ -32,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
         // 查询评论数量
         Long count = commentMapper.countComment(req);
         // 分页查询评论
-        List<CommentRespVO> commentRespVOList = commentMapper.pageComment(req, PageUtils.getStart(req), req.getPageSize());
+        List<CommentRespVO> commentRespVOList = commentMapper.pageComment(req, getStart(req), req.getPageSize());
         // 查询所有父评论的ID
         List<Long> commentIdList = commentRespVOList.stream()
                 .map(CommentRespVO::getId)
@@ -64,5 +67,10 @@ public class CommentServiceImpl implements CommentService {
                 .type(req.getType())
                 .build();
         commentMapper.insert(comment);
+    }
+
+    @Override
+    public List<ReplyRespVO> pageCommentReply(ReplyQueryReqVO req) {
+        return commentMapper.pageCommentReply(req.getCommentId(), getStart(req), req.getPageSize());
     }
 }

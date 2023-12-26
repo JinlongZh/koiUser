@@ -2,7 +2,9 @@ package com.koi.blog.controller.app;
 
 import com.koi.blog.domain.vo.request.CommentAddReqVO;
 import com.koi.blog.domain.vo.request.CommentQueryReqVO;
+import com.koi.blog.domain.vo.request.ReplyQueryReqVO;
 import com.koi.blog.domain.vo.response.CommentRespVO;
+import com.koi.blog.domain.vo.response.ReplyRespVO;
 import com.koi.blog.service.CommentService;
 import com.koi.common.domain.CommonResult;
 import com.koi.common.domain.PageResult;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import java.util.List;
 
 /**
  * 评论API
@@ -44,6 +47,13 @@ public class CommentController {
     public CommonResult<String> addComment(CommentAddReqVO req) {
         commentService.addComment(req, SecurityFrameworkUtils.getLoginUserId());
         return CommonResult.success("添加成功");
+    }
+
+    @PermitAll
+    @Operation(summary = "查询评论下的回复")
+    @GetMapping("/reply/page")
+    public CommonResult<List<ReplyRespVO>> pageCommentReply(ReplyQueryReqVO req) {
+        return CommonResult.success(commentService.pageCommentReply(req));
     }
 
 }

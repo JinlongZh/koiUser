@@ -26,6 +26,8 @@ public interface CommentMapper extends BaseMapper<Comment> {
     List<ReplyRespVO> listReplies(List<Long> commentIdList);
 
     List<ReplyCountDTO> listReplyCountByCommentId(@Param("commentIdList") List<Long> commentIdList);
+
+    List<ReplyRespVO> pageCommentReply(@Param("commentId") Long commentId, @Param("current") Integer current, @Param("pageSize") Integer pageSize);
 }
 
 
