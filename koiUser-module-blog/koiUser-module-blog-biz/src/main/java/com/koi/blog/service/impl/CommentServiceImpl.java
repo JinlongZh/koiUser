@@ -10,6 +10,7 @@ import com.koi.blog.domain.vo.response.ReplyRespVO;
 import com.koi.blog.mapper.CommentMapper;
 import com.koi.blog.service.CommentService;
 import com.koi.common.domain.PageResult;
+import com.koi.common.exception.ServiceException;
 import com.koi.framework.mybatis.utils.PageUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 import static com.koi.framework.mybatis.utils.PageUtils.getStart;
 
 /**
@@ -58,6 +60,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void addComment(CommentAddReqVO req, Long userId) {
+        if (req.getParentId() == null && (req.getType() == null || req.getTopicId() == null)){
+            throw new ServiceException(BAD_REQUEST.getCode(), "父评论id和帖子id不能同时为空");
+        }
         Comment comment = Comment.builder()
                 .userId(userId)
                 .commentContent(req.getCommentContent())

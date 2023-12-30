@@ -20,11 +20,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class CommentAddReqVO {
 
-    @NotNull(message = "评论类型不能为空")
     @Schema(description = "评论类型")
     private Integer type;
 
-    @NotNull(message = "评论内容id不能为空")
     @Schema(description = "评论内容id")
     private Long topicId;
 

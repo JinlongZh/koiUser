@@ -11,13 +11,11 @@ import com.koi.common.domain.PageResult;
 import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -44,7 +42,7 @@ public class CommentController {
 
     @Operation(summary = "添加评论")
     @PostMapping("/add")
-    public CommonResult<String> addComment(CommentAddReqVO req) {
+    public CommonResult<String> addComment(@RequestBody @Valid CommentAddReqVO req) {
         commentService.addComment(req, SecurityFrameworkUtils.getLoginUserId());
         return CommonResult.success("添加成功");
     }
