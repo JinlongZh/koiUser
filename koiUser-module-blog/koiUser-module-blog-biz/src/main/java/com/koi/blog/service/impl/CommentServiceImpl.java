@@ -36,6 +36,9 @@ public class CommentServiceImpl implements CommentService {
     public PageResult<CommentRespVO> pageComment(CommentQueryReqVO req) {
         // 查询评论数量
         Long count = commentMapper.countComment(req);
+        if (count == 0) {
+            return new PageResult<>();
+        }
         // 分页查询评论
         List<CommentRespVO> commentRespVOList = commentMapper.pageComment(req, getStart(req), req.getPageSize());
         // 查询所有父评论的ID
