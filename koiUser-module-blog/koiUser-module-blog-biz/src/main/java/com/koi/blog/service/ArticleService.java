@@ -1,6 +1,10 @@
 package com.koi.blog.service;
 
+import com.koi.blog.domain.vo.request.ArticleAdminAddReqVO;
+import com.koi.blog.domain.vo.request.ArticleAdminQueryReqVO;
+import com.koi.blog.domain.vo.request.ArticleAdminUpdateReqVO;
 import com.koi.blog.domain.vo.request.ArticlePageQueryReqVO;
+import com.koi.blog.domain.vo.response.ArticleAdminRespVO;
 import com.koi.blog.domain.vo.response.ArticleRespVO;
 import com.koi.common.domain.PageResult;
 
@@ -35,4 +39,12 @@ public interface ArticleService {
      * @return {@link List}<{@link ArticleRespVO}>
      */
     List<ArticleRespVO> getArticleDetailByIdList(List<Long> idList);
+
+    PageResult<ArticleAdminRespVO> pageArticle(ArticleAdminQueryReqVO req);
+
+    void addArticle(ArticleAdminAddReqVO req);
+
+    void updateArticle(ArticleAdminUpdateReqVO req);
+
+    void deleteArticle(Long articleId);
 }

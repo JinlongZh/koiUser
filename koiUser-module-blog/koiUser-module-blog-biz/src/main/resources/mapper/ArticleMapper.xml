@@ -56,8 +56,6 @@
         count(1)
         FROM
         blog_article a
-        LEFT JOIN
-        blog_category c ON c.id = a.category_id
         <where>
             <if test="req.categoryId != null">
                 a.category_id = #{req.categoryId}
@@ -84,5 +82,56 @@
         </foreach>
         AND `status` = 0 AND deleted = 0) a
         LEFT JOIN blog_category c ON c.id = a.category_id
+    </select>
+
+    <select id="pageArticleAdmin" resultType="com.koi.blog.domain.vo.response.ArticleAdminRespVO">
+        SELECT
+        a.id,
+        a.article_title,
+        c.id as category_id,
+        c.category_name,
+        a.article_cover,
+        a.article_top,
+        a.status,
+        a.view_count,
+        a.create_time,
+        a.update_time
+        FROM
+        blog_article a
+        LEFT JOIN
+        blog_category c ON c.id = a.category_id
+        <where>
+            <if test="req.keywords != null">
+                and a.article_title like concat('%',#{req.keywords},'%')
+            </if>
+            <if test="req.status != null">
+                and a.status = #{req.status}
+            </if>
+            <if test="req.categoryId != null">
+                and a.category_id = #{req.categoryId}
+            </if>
+            AND a.deleted = 0
+        </where>
+        ORDER BY a.article_top Desc, a.id DESC
+        LIMIT #{current}, #{pageSize}
+    </select>
+
+    <select id="countArticleAdmin" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM
+        blog_article a
+        <where>
+            <if test="req.keywords != null">
+                and a.article_title like concat('%',#{req.keywords},'%')
+            </if>
+            <if test="req.status != null">
+                and a.status = #{req.status}
+            </if>
+            <if test="req.categoryId != null">
+                and a.category_id = #{req.categoryId}
+            </if>
+            AND a.deleted = 0
+        </where>
     </select>
 </mapper>

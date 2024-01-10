@@ -1,29 +1,27 @@
-package com.koi.blog.domain.entity;
-
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+package com.koi.blog.domain.vo.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
- * 
- * @TableName blog_article
+ * 后台文章resp-vo
+ *
+ * @Author zjl
+ * @Date 2024/1/10 17:59
  */
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value ="blog_article")
-@Data
-public class Article implements Serializable {
+public class ArticleAdminRespVO {
+
     /**
-     * 
+     * id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -37,14 +35,19 @@ public class Article implements Serializable {
     private Long categoryId;
 
     /**
+     * 分类id
+     */
+    private String categoryName;
+
+    /**
      * 文章缩略图
      */
     private String articleCover;
 
-    /**
-     * 内容
-     */
-    private String articleContent;
+//    /**
+//     * 内容
+//     */
+//    private String articleContent;
 
     /**
      * 是否置顶 0否 1是
@@ -64,21 +67,11 @@ public class Article implements Serializable {
     /**
      * 发表时间
      */
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    /**
-     * 是否删除
-     */
-    @TableLogic
-    private Boolean deleted;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

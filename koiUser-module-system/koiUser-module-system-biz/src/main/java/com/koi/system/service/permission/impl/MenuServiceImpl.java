@@ -44,11 +44,11 @@ public class MenuServiceImpl implements MenuService {
                     menuListRespVO.setChildren(childrenMenuListRespVO);
                     return menuListRespVO;
                 }).collect(Collectors.toList());
-        // 组装按钮
-        List<Menu> buttonList = menuList.stream()
-                .filter(menu -> Objects.equals(menu.getType(), MenuTypeEnum.BUTTON.getType()))
+        // 组装没有目录的菜单
+        List<Menu> singleMenu = menuList.stream()
+                .filter(menu -> Objects.equals(menu.getType(), MenuTypeEnum.MENU.getType()) && menu.getParentId() == null)
                 .collect(Collectors.toList());
-        menuListRespVOList.addAll(BeanCopyUtils.copyList(buttonList, MenuListRespVO.class));
+        menuListRespVOList.addAll(BeanCopyUtils.copyList(singleMenu, MenuListRespVO.class));
         // 排序
         return menuListRespVOList.stream().sorted(Comparator.comparingInt(MenuListRespVO::getOrderNum))
                 .collect(Collectors.toList());
