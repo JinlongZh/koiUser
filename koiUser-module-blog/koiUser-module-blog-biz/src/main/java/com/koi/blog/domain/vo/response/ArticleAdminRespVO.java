@@ -44,10 +44,10 @@ public class ArticleAdminRespVO {
      */
     private String articleCover;
 
-//    /**
-//     * 内容
-//     */
-//    private String articleContent;
+    /**
+     * 内容
+     */
+    private String articleContent;
 
     /**
      * 是否置顶 0否 1是

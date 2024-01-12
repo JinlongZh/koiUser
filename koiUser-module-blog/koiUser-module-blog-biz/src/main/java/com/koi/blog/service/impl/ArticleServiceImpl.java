@@ -3,10 +3,7 @@ package com.koi.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.koi.blog.domain.entity.Article;
 import com.koi.blog.domain.entity.Category;
-import com.koi.blog.domain.vo.request.ArticleAdminAddReqVO;
-import com.koi.blog.domain.vo.request.ArticleAdminQueryReqVO;
-import com.koi.blog.domain.vo.request.ArticleAdminUpdateReqVO;
-import com.koi.blog.domain.vo.request.ArticlePageQueryReqVO;
+import com.koi.blog.domain.vo.request.*;
 import com.koi.blog.domain.vo.response.ArticleAdminRespVO;
 import com.koi.blog.domain.vo.response.ArticleRespVO;
 import com.koi.blog.mapper.mysql.ArticleMapper;
@@ -111,6 +108,24 @@ public class ArticleServiceImpl implements ArticleService {
             throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "文章不存在");
         }
         articleMapper.deleteById(articleId);
+    }
+
+    @Override
+    public void updateArticleTop(ArticleTopReqVO req) {
+        Article article = articleMapper.selectById(req.getId());
+        if (article == null) {
+            throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "文章不存在");
+        }
+        Article articleUpdate = Article.builder()
+                .id(req.getId())
+                .articleTop(req.getTop())
+                .build();
+        articleMapper.updateById(articleUpdate);
+    }
+
+    @Override
+    public Article getArticleById(Long id) {
+        return articleMapper.selectById(id);
     }
 
     /**

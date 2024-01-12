@@ -91,6 +91,7 @@
         c.id as category_id,
         c.category_name,
         a.article_cover,
+        a.article_content,
         a.article_top,
         a.status,
         a.view_count,

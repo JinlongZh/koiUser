@@ -1,12 +1,18 @@
 package com.koi.blog.controller.admin;
 
+import com.koi.blog.domain.entity.Article;
+import com.koi.blog.domain.entity.Category;
 import com.koi.blog.domain.vo.request.ArticleAdminAddReqVO;
 import com.koi.blog.domain.vo.request.ArticleAdminQueryReqVO;
 import com.koi.blog.domain.vo.request.ArticleAdminUpdateReqVO;
+import com.koi.blog.domain.vo.request.ArticleTopReqVO;
 import com.koi.blog.domain.vo.response.ArticleAdminRespVO;
 import com.koi.blog.service.ArticleService;
+import com.koi.blog.service.CategoryService;
 import com.koi.common.domain.CommonResult;
 import com.koi.common.domain.PageResult;
+import com.koi.common.exception.ServiceException;
+import com.koi.common.utils.bean.BeanCopyUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
+
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 
 /**
  * -
@@ -28,6 +36,8 @@ public class AdminArticleController {
 
     @Resource
     private ArticleService articleService;
+    @Resource
+    private CategoryService categoryService;
 
     @PermitAll
     @Operation(summary = "分页获取文章列表")
@@ -58,5 +68,27 @@ public class AdminArticleController {
     public CommonResult<String> deleteArticle(@RequestParam("id") Long articleId) {
         articleService.deleteArticle(articleId);
         return CommonResult.success("删除成功");
+    }
+
+    @PermitAll
+    @Operation(summary = "更改文章置顶")
+    @PutMapping("/top")
+    public CommonResult<String> updateArticleTop(@RequestBody @Valid ArticleTopReqVO req) {
+        articleService.updateArticleTop(req);
+        return CommonResult.success("修改成功");
+    }
+
+    @PermitAll
+    @Operation(summary = "获取文章详情")
+    @GetMapping("/detail")
+    public CommonResult<ArticleAdminRespVO> getArticleAdminDetail(@RequestParam("id") Long articleId) {
+        Article article = articleService.getArticleById(articleId);
+        if (article == null) {
+            throw new ServiceException(BAD_REQUEST.getCode(), "文章不存在");
+        }
+        Category category = categoryService.getCategoryById(article.getCategoryId());
+        ArticleAdminRespVO articleAdminRespVO = BeanCopyUtils.copyObject(article, ArticleAdminRespVO.class);
+        articleAdminRespVO.setCategoryName(category.getCategoryName());
+        return CommonResult.success(articleAdminRespVO);
     }
 }
