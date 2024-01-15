@@ -1,13 +1,19 @@
 package com.koi.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.koi.blog.domain.entity.Category;
+import com.koi.blog.domain.vo.request.CategoryAdminQueryReqVO;
+import com.koi.blog.domain.vo.request.CategoryQueryReqVO;
+import com.koi.blog.domain.vo.response.CategoryAdminRespVO;
 import com.koi.blog.domain.vo.response.CategoryRespVO;
 import com.koi.blog.mapper.mysql.CategoryMapper;
 import com.koi.blog.service.CategoryService;
 import com.koi.common.domain.OptionRespVO;
 import com.koi.common.domain.PageResult;
 import com.koi.common.utils.bean.BeanCopyUtils;
+import com.koi.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.koi.framework.mybatis.utils.PageUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,8 +37,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<OptionRespVO> getCategoryOption() {
-        List<Category> categoryList = categoryMapper.selectList(null);
+    public List<OptionRespVO> getCategoryOption(CategoryQueryReqVO req) {
+        List<Category> categoryList = categoryMapper.selectList(new LambdaQueryWrapperX<Category>()
+                .likeIfPresent(Category::getCategoryName, req.getKeywords()));
         return categoryList.stream()
                 .map(item -> {
                     OptionRespVO optionRespVO = new OptionRespVO();
@@ -45,6 +52,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryById(Long id) {
         return categoryMapper.selectById(id);
+    }
+
+    @Override
+    public PageResult<CategoryAdminRespVO> getCategoryAdminPage(CategoryAdminQueryReqVO req) {
+        // 查询分类数量
+        Long count = categoryMapper.selectCount(new LambdaQueryWrapper<Category>()
+                .like(StringUtils.isNotBlank(req.getKeywords()), Category::getCategoryName, req.getKeywords()));
+        if (count == 0) {
+            return new PageResult<>();
+        }
+        // 分页查询分类信息
+        List<CategoryAdminRespVO> categoryAdminRespVOList = categoryMapper.getCategoryAdminPage(req, PageUtils.getStart(req), req.getPageSize());
+        return new PageResult<>(categoryAdminRespVOList, count);
     }
 }
 

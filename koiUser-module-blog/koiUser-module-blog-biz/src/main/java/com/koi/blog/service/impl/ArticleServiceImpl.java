@@ -14,12 +14,15 @@ import com.koi.common.exception.ServiceException;
 import com.koi.common.exception.enums.GlobalErrorCodeConstants;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.framework.mybatis.utils.PageUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
-import static com.koi.common.enums.CommonStatusEnum.ENABLE;
+import static com.koi.blog.constants.ArticleStatusEnum.DRAFT;
+import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 
 /**
  * @Author zjl
@@ -66,7 +69,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void addArticle(ArticleAdminAddReqVO req) {
-        vaildCategory(req.getCategoryId());
+        if (!Objects.equals(req.getArticleStatus(), DRAFT.getStatus())) {
+            if (req.getCategoryId() == null) {
+                throw new ServiceException(BAD_REQUEST.getCode(), "非草稿文章分类不能为空");
+            }
+            if (req.getArticleCover() == null || StringUtils.isBlank(req.getArticleCover())) {
+                throw new ServiceException(BAD_REQUEST.getCode(), "非草稿文章封面不能为空");
+            }
+            vaildCategory(req.getCategoryId());
+        }
 
         Article article = Article.builder()
                 .articleTitle(req.getArticleTitle())
@@ -74,7 +85,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .articleCover(req.getArticleCover())
                 .articleContent(req.getArticleContent())
                 .articleTop(req.getArticleTop())
-                .status(ENABLE.getStatus())
+                .status(req.getArticleStatus() == null ? DRAFT.getStatus(): req.getArticleStatus())
                 .viewCount(0)
                 .build();
         articleMapper.insert(article);
@@ -86,7 +97,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         Article article = articleMapper.selectById(req.getId());
         if (article == null) {
-            throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "文章不存在");
+            throw new ServiceException(BAD_REQUEST.getCode(), "文章不存在");
         }
 
         Article articleUpdate = Article.builder()
@@ -105,7 +116,7 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticle(Long articleId) {
         Article article = articleMapper.selectById(articleId);
         if (article == null) {
-            throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "文章不存在");
+            throw new ServiceException(BAD_REQUEST.getCode(), "文章不存在");
         }
         articleMapper.deleteById(articleId);
     }
@@ -114,7 +125,7 @@ public class ArticleServiceImpl implements ArticleService {
     public void updateArticleTop(ArticleTopReqVO req) {
         Article article = articleMapper.selectById(req.getId());
         if (article == null) {
-            throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "文章不存在");
+            throw new ServiceException(BAD_REQUEST.getCode(), "文章不存在");
         }
         Article articleUpdate = Article.builder()
                 .id(req.getId())
@@ -136,7 +147,7 @@ public class ArticleServiceImpl implements ArticleService {
     private void vaildCategory(Long categoryId) {
         Category category = categoryMapper.selectOne(new LambdaQueryWrapper<Category>().eq(Category::getId, categoryId));
         if (category == null) {
-            throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "分类不存在");
+            throw new ServiceException(BAD_REQUEST.getCode(), "分类不存在");
         }
     }
 }

@@ -1,8 +1,12 @@
 package com.koi.blog.controller.admin;
 
+import com.koi.blog.domain.vo.request.CategoryAdminQueryReqVO;
+import com.koi.blog.domain.vo.request.CategoryQueryReqVO;
+import com.koi.blog.domain.vo.response.CategoryAdminRespVO;
 import com.koi.blog.service.CategoryService;
 import com.koi.common.domain.CommonResult;
 import com.koi.common.domain.OptionRespVO;
+import com.koi.common.domain.PageResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +34,15 @@ public class AdminCategoryController {
     @PermitAll
     @Operation(summary = "获取选项分类")
     @GetMapping("/option")
-    public CommonResult<List<OptionRespVO>> getCategoryOption() {
-        return CommonResult.success(categoryService.getCategoryOption());
+    public CommonResult<List<OptionRespVO>> getCategoryOption(CategoryQueryReqVO req) {
+        return CommonResult.success(categoryService.getCategoryOption(req));
+    }
+
+    @PermitAll
+    @Operation(summary = "获取后台分类列表")
+    @GetMapping("/page")
+    public CommonResult<PageResult<CategoryAdminRespVO>> getCategoryList(CategoryAdminQueryReqVO req) {
+        return CommonResult.success(categoryService.getCategoryAdminPage(req));
     }
 
 }

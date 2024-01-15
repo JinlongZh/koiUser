@@ -86,9 +86,12 @@ public class AdminArticleController {
         if (article == null) {
             throw new ServiceException(BAD_REQUEST.getCode(), "文章不存在");
         }
-        Category category = categoryService.getCategoryById(article.getCategoryId());
         ArticleAdminRespVO articleAdminRespVO = BeanCopyUtils.copyObject(article, ArticleAdminRespVO.class);
-        articleAdminRespVO.setCategoryName(category.getCategoryName());
+        // 草稿可能没有分类
+        if (article.getCategoryId() != null){
+            Category category = categoryService.getCategoryById(article.getCategoryId());
+            articleAdminRespVO.setCategoryName(category.getCategoryName());
+        }
         return CommonResult.success(articleAdminRespVO);
     }
 }

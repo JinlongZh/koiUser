@@ -11,7 +11,6 @@ import com.koi.blog.mapper.CommentMapper;
 import com.koi.blog.service.CommentService;
 import com.koi.common.domain.PageResult;
 import com.koi.common.exception.ServiceException;
-import com.koi.framework.mybatis.utils.PageUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

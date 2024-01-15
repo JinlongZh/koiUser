@@ -1,6 +1,9 @@
 package com.koi.blog.service;
 
 import com.koi.blog.domain.entity.Category;
+import com.koi.blog.domain.vo.request.CategoryAdminQueryReqVO;
+import com.koi.blog.domain.vo.request.CategoryQueryReqVO;
+import com.koi.blog.domain.vo.response.CategoryAdminRespVO;
 import com.koi.blog.domain.vo.response.CategoryRespVO;
 import com.koi.common.domain.OptionRespVO;
 import com.koi.common.domain.PageResult;
@@ -15,7 +18,9 @@ public interface CategoryService {
 
     PageResult<CategoryRespVO> listCategories();
 
-    List<OptionRespVO> getCategoryOption();
+    List<OptionRespVO> getCategoryOption(CategoryQueryReqVO req);
 
     Category getCategoryById(Long id);
+
+    PageResult<CategoryAdminRespVO> getCategoryAdminPage(CategoryAdminQueryReqVO req);
 }

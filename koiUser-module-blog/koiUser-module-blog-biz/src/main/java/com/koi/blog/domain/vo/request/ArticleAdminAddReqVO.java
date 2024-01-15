@@ -23,13 +23,11 @@ public class ArticleAdminAddReqVO {
     /**
      * 分类id
      */
-    @NotNull(message = "文章分类id不能为空")
     private Long categoryId;
 
     /**
      * 文章缩略图
      */
-    @NotBlank(message = "文章缩略图不能为空")
     private String articleCover;
 
     /**
@@ -43,4 +41,9 @@ public class ArticleAdminAddReqVO {
      */
     @NotNull(message = "文章是否置顶不能为空")
     private Integer articleTop;
+
+    /**
+     * 文章状态
+     */
+    private Integer articleStatus;
 }

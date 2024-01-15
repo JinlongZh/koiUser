@@ -24,4 +24,47 @@
                  LEFT JOIN (SELECT * FROM blog_article WHERE `status` = 0 AND deleted = 0) a ON a.category_id = c.id
         GROUP BY c.id
     </select>
+
+    <select id="getCategoryAdminPage" resultType="com.koi.blog.domain.vo.response.CategoryAdminRespVO">
+        SELECT c.id,
+        c.category_name,
+        COUNT(article_public.id) AS public_article_count,
+        COUNT(article_secret.id) AS secret_article_count,
+        COUNT(article_draft.id) AS draft_article_count,
+        c.create_time,
+        c.update_time
+        FROM blog_category c
+        LEFT JOIN
+        (
+        SELECT *
+        FROM blog_article
+        WHERE deleted = 0
+        AND `status` = 0
+        )
+        article_public ON article_public.category_id = c.id
+        LEFT JOIN
+        (
+        SELECT *
+        FROM blog_article
+        WHERE deleted = 0
+        AND `status` = 1
+        )
+        article_secret ON article_secret.category_id = c.id
+        LEFT JOIN
+        (
+        SELECT *
+        FROM blog_article
+        WHERE deleted = 0
+        AND `status` = 2
+        )
+        article_draft ON article_draft.category_id = c.id
+        <where>
+            <if test="req.keywords != null">
+                category_name like concat('%',#{req.keywords},'%')
+            </if>
+        </where>
+        GROUP BY c.id
+        ORDER BY c.id DESC
+        LIMIT #{current},#{pageSize}
+    </select>
 </mapper>
