@@ -27,7 +27,7 @@ public enum HomeListTypeEnum {
     private final String description;
 
     public static HomeListTypeEnum valueOf(Integer value) {
-        return ArrayUtil.firstMatch(userType -> userType.getType().equals(value), HomeListTypeEnum.values());
+        return ArrayUtil.firstMatch(homeListTypeEnum -> homeListTypeEnum.getType().equals(value), HomeListTypeEnum.values());
     }
 
 }
