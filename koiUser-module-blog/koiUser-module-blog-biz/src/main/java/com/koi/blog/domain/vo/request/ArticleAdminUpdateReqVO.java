@@ -50,4 +50,10 @@ public class ArticleAdminUpdateReqVO {
     @NotNull(message = "文章是否置顶不能为空")
     private Integer articleTop;
 
+    /**
+     * 文章状态
+     */
+    @NotNull(message = "文章状态不能为空")
+    private Integer articleStatus;
+
 }

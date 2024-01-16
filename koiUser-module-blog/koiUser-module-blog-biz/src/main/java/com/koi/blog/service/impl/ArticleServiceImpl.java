@@ -107,6 +107,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .articleCover(req.getArticleCover())
                 .articleContent(req.getArticleContent())
                 .articleTop(req.getArticleTop())
+                .status(req.getArticleStatus())
                 .build();
         articleMapper.updateById(articleUpdate);
 

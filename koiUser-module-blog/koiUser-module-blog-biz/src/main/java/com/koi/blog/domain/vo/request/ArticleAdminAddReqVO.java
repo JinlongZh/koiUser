@@ -45,5 +45,6 @@ public class ArticleAdminAddReqVO {
     /**
      * 文章状态
      */
+    @NotNull(message = "文章状态不能为空")
     private Integer articleStatus;
 }
