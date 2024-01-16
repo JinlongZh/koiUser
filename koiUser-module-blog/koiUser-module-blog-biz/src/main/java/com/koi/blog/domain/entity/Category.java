@@ -36,6 +36,12 @@ public class Category implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    /**
+     * 是否删除
+     */
+    @TableLogic
+    private Boolean deleted;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
