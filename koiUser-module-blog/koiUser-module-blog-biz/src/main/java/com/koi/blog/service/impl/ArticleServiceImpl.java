@@ -58,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageResult<ArticleAdminRespVO> pageArticle(ArticleAdminQueryReqVO req) {
+    public PageResult<ArticleAdminRespVO> pageArticleAdmin(ArticleAdminQueryReqVO req) {
         Long count = articleMapper.countArticleAdmin(req);
         if (count == 0) {
             return new PageResult<>();

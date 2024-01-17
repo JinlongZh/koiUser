@@ -38,7 +38,7 @@ public interface ArticleService {
      */
     List<ArticleRespVO> getArticleDetailByIdList(List<Long> idList);
 
-    PageResult<ArticleAdminRespVO> pageArticle(ArticleAdminQueryReqVO req);
+    PageResult<ArticleAdminRespVO> pageArticleAdmin(ArticleAdminQueryReqVO req);
 
     void addArticle(ArticleAdminAddReqVO req);
 

@@ -43,7 +43,7 @@ public class AdminArticleController {
     @Operation(summary = "分页获取文章列表")
     @GetMapping("/page")
     public CommonResult<PageResult<ArticleAdminRespVO>> pageArticle(ArticleAdminQueryReqVO req) {
-        return CommonResult.success(articleService.pageArticle(req));
+        return CommonResult.success(articleService.pageArticleAdmin(req));
     }
 
     @PermitAll

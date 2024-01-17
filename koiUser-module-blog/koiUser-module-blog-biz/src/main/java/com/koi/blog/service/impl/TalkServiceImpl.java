@@ -2,7 +2,8 @@ package com.koi.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.koi.blog.domain.entity.Talk;
-import com.koi.blog.domain.vo.request.TalkPageQueryReqVO;
+import com.koi.blog.domain.vo.request.*;
+import com.koi.blog.domain.vo.response.TalkAdminRespVO;
 import com.koi.blog.domain.vo.response.TalkRespVO;
 import com.koi.blog.mapper.mysql.TalkMapper;
 import com.koi.blog.service.TalkService;
@@ -53,6 +54,62 @@ public class TalkServiceImpl implements TalkService {
             talkPictureConvert(item);
         }
         return new PageResult<>(talkRespVOList, talkPage.getTotal());
+    }
+
+    @Override
+    public PageResult<TalkAdminRespVO> pageTalkAdmin(TalkAdminQueryReqVO req) {
+        Page<Talk> talkPage = talkMapper.selectTalkAdminPage(req);
+        List<TalkAdminRespVO> talkAdminRespVOList = BeanCopyUtils.copyList(talkPage.getRecords(), TalkAdminRespVO.class);
+        for (TalkAdminRespVO item : talkAdminRespVOList) {
+            // 转化说说图片格式
+            if (Objects.nonNull(item.getImages())) {
+                item.setImageList(CollectionUtils.castList(JsonUtils.parseObject(item.getImages(), List.class), String.class));
+            }
+        }
+        return new PageResult<>(talkAdminRespVOList, talkPage.getTotal());
+    }
+
+    @Override
+    public void addTalk(TalkAdminAddReqVO req) {
+        Talk talk = Talk.builder()
+                .content(req.getContent())
+                .images(req.getImages())
+                .talkTop(req.getTalkTop())
+                .status(req.getStatus())
+                .viewCount(0)
+                .build();
+        talkMapper.insert(talk);
+    }
+
+    @Override
+    public void updateTalk(TalkAdminUpdateReqVO req) {
+        Talk talk = Talk.builder()
+                .id(req.getId())
+                .content(req.getContent())
+                .images(req.getImages())
+                .talkTop(req.getTalkTop())
+                .status(req.getStatus())
+                .build();
+        talkMapper.updateById(talk);
+    }
+
+    @Override
+    public void deleteTalk(Long talkId) {
+        talkMapper.deleteById(talkId);
+    }
+
+    @Override
+    public void updateTalkTop(TalkTopReqVO req) {
+        Talk talk = Talk.builder()
+                .id(req.getId())
+                .talkTop(req.getTop())
+                .build();
+        talkMapper.updateById(talk);
+    }
+
+    @Override
+    public Talk getTalkById(Long talkId) {
+        return talkMapper.selectById(talkId);
     }
 
     /**

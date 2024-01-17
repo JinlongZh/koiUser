@@ -1,6 +1,8 @@
 package com.koi.blog.service;
 
-import com.koi.blog.domain.vo.request.TalkPageQueryReqVO;
+import com.koi.blog.domain.entity.Talk;
+import com.koi.blog.domain.vo.request.*;
+import com.koi.blog.domain.vo.response.TalkAdminRespVO;
 import com.koi.blog.domain.vo.response.TalkRespVO;
 import com.koi.common.domain.PageResult;
 
@@ -35,4 +37,16 @@ public interface TalkService {
      * @return {@link PageResult}<{@link TalkRespVO}>
      */
     PageResult<TalkRespVO> pageTalk(TalkPageQueryReqVO req);
+
+    PageResult<TalkAdminRespVO> pageTalkAdmin(TalkAdminQueryReqVO req);
+
+    void addTalk(TalkAdminAddReqVO req);
+
+    void updateTalk(TalkAdminUpdateReqVO req);
+
+    void deleteTalk(Long talkId);
+
+    void updateTalkTop(TalkTopReqVO req);
+
+    Talk getTalkById(Long talkId);
 }

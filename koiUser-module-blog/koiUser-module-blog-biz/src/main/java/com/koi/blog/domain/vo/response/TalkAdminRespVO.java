@@ -1,29 +1,29 @@
-package com.koi.blog.domain.entity;
+package com.koi.blog.domain.vo.response;
 
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
- * 
- * @TableName blog_talk
+ * -
+ *
+ * @Author zjl
+ * @Date 2024/1/17 16:54
  */
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value ="blog_talk")
-@Data
-public class Talk implements Serializable {
+public class TalkAdminRespVO {
+
     /**
      * 说说id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -34,7 +34,13 @@ public class Talk implements Serializable {
     /**
      * 图片
      */
+    @JsonIgnore
     private String images;
+
+    /**
+     * 图片列表
+     */
+    private List<String> imageList;
 
     /**
      * 是否置顶
@@ -54,21 +60,11 @@ public class Talk implements Serializable {
     /**
      * 发表时间
      */
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    /**
-     * 是否删除
-     */
-    @TableLogic
-    private Boolean deleted;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }
