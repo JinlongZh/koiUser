@@ -22,6 +22,7 @@
                COUNT(a.id) AS article_count
         FROM blog_category c
                  LEFT JOIN (SELECT * FROM blog_article WHERE `status` = 0 AND deleted = 0) a ON a.category_id = c.id
+        WHERE c.deleted = 0
         GROUP BY c.id
     </select>
 
