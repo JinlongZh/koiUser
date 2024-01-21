@@ -6,6 +6,7 @@ import com.koi.common.utils.json.JsonUtils;
 import com.koi.framework.redis.core.utils.RedisUtils;
 import com.koi.system.constants.RedisKeyConstants;
 import com.koi.system.domain.oauth2.entity.Oauth2AccessToken;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -41,7 +42,8 @@ public class Oauth2AccessTokenRedisDAO {
 
     public Oauth2AccessToken getAccessToken(String accessToken) {
         String redisKey = formatAccessTokenKey(accessToken);
-        return JsonUtils.parseObject(RedisUtils.getStr(redisKey), Oauth2AccessToken.class);
+        String result = RedisUtils.getStr(redisKey);
+        return StringUtils.isNotEmpty(result) ? JsonUtils.parseObject(result, Oauth2AccessToken.class) : null;
     }
 
     public void deleteAccessToken(String accessToken) {

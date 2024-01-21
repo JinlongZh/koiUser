@@ -66,9 +66,6 @@ public class JsonUtils {
     }
 
     public static <T> T parseObject(String text, Class<T> clazz) {
-        if (StrUtil.isEmpty(text)) {
-            return null;
-        }
         try {
             return objectMapper.readValue(text, clazz);
         } catch (IOException e) {
