@@ -3,6 +3,7 @@ package com.koi.system.strategy.impl;
 import com.koi.common.exception.ServiceException;
 import com.koi.common.utils.file.FileUtils;
 import com.koi.system.strategy.UploadStrategy;
+import com.qiniu.common.QiniuException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,7 +70,7 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
      * @param filePath 文件路径
      * @return {@link Boolean}
      */
-    public abstract Boolean exists(String filePath);
+    public abstract Boolean exists(String filePath) throws QiniuException;
 
     /**
      * 上传
