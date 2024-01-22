@@ -12,10 +12,6 @@ spring:
     active: dev
 
   cloud:
-    nacos:
-      discovery:
-        server-addr: ${koiuser.nacos.addr}
-
     gateway:
       routes:
         ## system-server 服务
@@ -65,17 +61,3 @@ spring:
             - Path=/k/**
           filters:
             - name: Interfacer
-
-
-  redis:
-    host: ${koiuser.redis.host}
-    port: ${koiuser.redis.port}
-    database: 0
-    timeout: 1800000
-    password: ${koiuser.redis.password}
-    lettuce:
-      pool:
-        max-wait: -1
-        max-idle: 5
-        min-idle: 0
-        max-active: 20

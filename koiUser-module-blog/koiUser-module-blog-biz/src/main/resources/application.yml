@@ -11,34 +11,9 @@ spring:
   profiles:
     active: dev
 
-  # ?????
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${koiuser.mysql.ip}:${koiuser.mysql.port}/${koiuser.mysql.db}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: ${koiuser.mysql.username}
-    password: ${koiuser.mysql.password}
-    hikari:
-      minimum-idle: 3
-      maximum-pool-size: 10
-      max-lifetime: 30000   #????30????????1800?
-      connection-test-query: SELECT 1
-
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-
-  redis:
-    host: ${koiuser.redis.host}
-    port: ${koiuser.redis.port}
-    database: 0
-    timeout: 1800000
-    password: ${koiuser.redis.password}
-    lettuce:
-      pool:
-        max-wait: -1
-        max-idle: 5
-        min-idle: 0
-        max-active: 20
 
   jackson:
     serialization:
@@ -46,11 +21,6 @@ spring:
       write-date-timestamps-as-nanoseconds: false # ????? nanoseconds ??????? 1611460870.401????? 1611460870401
       write-durations-as-timestamps: true # ?? Duration ?????????
       fail-on-empty-beans: false # ????????? Bean
-
-  cloud:
-    nacos:
-      discovery:
-        server-addr: ${koiuser.nacos.addr}
 
 
 # springdoc-openapi????
