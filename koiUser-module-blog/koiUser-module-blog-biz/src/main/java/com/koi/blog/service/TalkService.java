@@ -40,6 +40,8 @@ public interface TalkService {
 
     PageResult<TalkAdminRespVO> pageTalkAdmin(TalkAdminQueryReqVO req);
 
+    Boolean addTalkViewCount(Long id);
+
     void addTalk(TalkAdminAddReqVO req);
 
     void updateTalk(TalkAdminUpdateReqVO req);

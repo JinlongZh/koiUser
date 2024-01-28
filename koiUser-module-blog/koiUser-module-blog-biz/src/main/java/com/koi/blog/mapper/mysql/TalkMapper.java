@@ -7,6 +7,7 @@ import com.koi.blog.domain.vo.request.TalkAdminQueryReqVO;
 import com.koi.blog.domain.vo.request.TalkPageQueryReqVO;
 import com.koi.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.koi.framework.mybatis.utils.MyBatisUtils;
+import org.apache.ibatis.annotations.Update;
 
 import static com.koi.common.enums.CommonStatusEnum.ENABLE;
 
@@ -26,6 +27,9 @@ public interface TalkMapper extends BaseMapper<Talk> {
                 .eqIfPresent(Talk::getStatus, req.getStatus())
         );
     }
+
+    @Update("UPDATE blog_talk SET view_count = view_count + 1 WHERE id = #{id}")
+    Boolean addTalkViewCount(Long id);
 }
 
 

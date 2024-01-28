@@ -7,6 +7,8 @@ import com.koi.system.domain.websiteConfig.vo.request.WebsiteConfigPageReqVO;
 import com.koi.system.domain.websiteConfig.vo.request.WebsiteConfigUpdateReqVO;
 import com.koi.system.domain.websiteConfig.vo.response.WebsiteConfigRespVO;
 
+import java.util.Map;
+
 /**
  * -
  *
@@ -22,4 +24,6 @@ public interface WebsiteConfigService {
     WebsiteConfig getWebsiteConfigById(Long id);
 
     PageResult<WebsiteConfigRespVO> getConfigPage(WebsiteConfigPageReqVO req);
+
+    Map<String, String> getWebsiteConfig();
 }

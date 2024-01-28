@@ -30,6 +30,8 @@ public interface ArticleService {
      */
     ArticleRespVO getArticleDetail(Long id);
 
+    Boolean addArticleViewCount(Long id);
+
     /**
      * 根据id列表获取文章详情
      *

@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 
@@ -82,5 +84,16 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
         List<WebsiteConfigRespVO> websiteConfigRespVOList = BeanCopyUtils.copyList(websiteConfigPage.getRecords(), WebsiteConfigRespVO.class);
 
         return new PageResult<>(websiteConfigRespVOList,  websiteConfigPage.getTotal());
+    }
+
+    @Override
+    public Map<String, String> getWebsiteConfig() {
+        List<WebsiteConfig> websiteConfigList = websiteConfigMapper.getWebsiteConfig();
+
+        Map<String, String> configMap = new HashMap<>();
+        for (WebsiteConfig config : websiteConfigList) {
+            configMap.put(config.getConfigKey(), config.getConfigValue());
+        }
+        return configMap;
     }
 }

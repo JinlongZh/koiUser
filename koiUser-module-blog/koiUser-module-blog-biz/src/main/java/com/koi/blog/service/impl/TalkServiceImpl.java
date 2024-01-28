@@ -11,6 +11,7 @@ import com.koi.common.domain.PageResult;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.common.utils.collection.CollectionUtils;
 import com.koi.common.utils.json.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import java.util.Objects;
  * @author zjl
  * @date 2023/12/16
  */
+@Slf4j
 @Service
 public class TalkServiceImpl implements TalkService {
 
@@ -32,6 +34,12 @@ public class TalkServiceImpl implements TalkService {
         Talk talk = talkMapper.selectById(id);
         TalkRespVO talkRespVO = BeanCopyUtils.copyObject(talk, TalkRespVO.class);
         talkPictureConvert(talkRespVO);
+
+        if (addTalkViewCount(id)) {
+            talkRespVO.setViewCount(talkRespVO.getViewCount() + 1);
+        } else {
+            log.error("增加说说浏览量失败 id = {}", id);
+        }
         return talkRespVO;
     }
 
@@ -67,6 +75,11 @@ public class TalkServiceImpl implements TalkService {
             }
         }
         return new PageResult<>(talkAdminRespVOList, talkPage.getTotal());
+    }
+
+    @Override
+    public Boolean addTalkViewCount(Long id) {
+        return talkMapper.addTalkViewCount(id);
     }
 
     @Override

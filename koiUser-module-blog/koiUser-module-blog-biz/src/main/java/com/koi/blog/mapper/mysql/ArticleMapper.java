@@ -8,6 +8,7 @@ import com.koi.blog.domain.vo.response.ArticleAdminRespVO;
 import com.koi.blog.domain.vo.response.ArticleRespVO;
 import com.koi.common.domain.PageResult;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -22,6 +23,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleAdminRespVO> pageArticleAdmin(@Param("req") ArticleAdminQueryReqVO req, @Param("current") Integer current, @Param("pageSize") Integer pageSize);
 
     Long countArticleAdmin(@Param("req") ArticleAdminQueryReqVO req);
+
+    @Update("update blog_article set view_count= view_count + 1 where id = #{id}")
+    Boolean addArticleViewCount(Long id);
 }
 
 

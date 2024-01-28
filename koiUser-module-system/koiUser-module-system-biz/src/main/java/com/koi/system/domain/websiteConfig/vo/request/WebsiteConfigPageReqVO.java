@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 public class WebsiteConfigPageReqVO extends PageParam {
 
     /**
-     * 参数键名
+     * 参数名
      */
     private String configName;
 

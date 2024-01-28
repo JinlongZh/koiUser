@@ -14,6 +14,7 @@ import com.koi.common.exception.ServiceException;
 import com.koi.common.exception.enums.GlobalErrorCodeConstants;
 import com.koi.common.utils.bean.BeanCopyUtils;
 import com.koi.framework.mybatis.utils.PageUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUES
  * @Author zjl
  * @Date 2023/12/16 21:43
  */
+@Slf4j
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -45,11 +47,25 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleRespVO getArticleDetail(Long id) {
         Article article = articleMapper.selectById(id);
+        if (article == null) {
+            throw new ServiceException(BAD_REQUEST.getCode(), "文章不存在");
+        }
         Category category = categoryMapper.selectById(article.getCategoryId());
 
         ArticleRespVO articleRespVO = BeanCopyUtils.copyObject(article, ArticleRespVO.class);
         articleRespVO.setCategoryName(category.getCategoryName());
+
+        if (addArticleViewCount(id)) {
+            articleRespVO.setViewCount(articleRespVO.getViewCount() + 1);
+        } else {
+            log.error("增加文章阅读数失败 id={}", id);
+        }
         return articleRespVO;
+    }
+
+    @Override
+    public Boolean addArticleViewCount(Long id) {
+        return articleMapper.addArticleViewCount(id);
     }
 
     @Override
