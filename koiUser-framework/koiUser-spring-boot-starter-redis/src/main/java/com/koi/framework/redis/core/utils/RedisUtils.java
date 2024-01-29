@@ -254,6 +254,9 @@ public class RedisUtils {
     }
 
     public static String objToStr(Object o) {
+        if (o.getClass() == String.class) {
+            return (String) o;
+        }
         return JSON.toJSONString(o);
     }
 

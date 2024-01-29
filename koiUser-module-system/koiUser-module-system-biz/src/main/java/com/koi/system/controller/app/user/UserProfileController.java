@@ -1,6 +1,7 @@
 package com.koi.system.controller.app.user;
 
 import com.koi.common.domain.CommonResult;
+import com.koi.framework.security.core.utils.SecurityFrameworkUtils;
 import com.koi.system.convert.user.UserConvert;
 import com.koi.system.domain.user.entity.User;
 import com.koi.system.domain.user.vo.response.UserInfoRespVO;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-
-import static com.koi.framework.web.core.utils.WebFrameworkUtils.getLoginUserId;
 
 /**
  * 用户个人中心
@@ -38,7 +37,7 @@ public class UserProfileController {
     @GetMapping("/get")
     @Operation(summary = "获得登录用户信息")
     public CommonResult<UserInfoRespVO> getUserInfo() {
-        User user = userService.getUserById(getLoginUserId());
+        User user = userService.getUserById(SecurityFrameworkUtils.getLoginUserId());
         return CommonResult.success(UserConvert.convertUserInfo(user));
     }
 

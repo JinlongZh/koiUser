@@ -25,6 +25,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.INTERNAL_SERVER_ERROR;
 
@@ -83,6 +85,8 @@ public class InterfacerGatewayFilter implements GatewayFilter, Ordered {
         String existNonce = RedisUtils.getStr(nonce);
         if (StringUtils.isNotBlank(existNonce)) {
             throw new ServiceException(BAD_REQUEST.getCode(), "请求重复");
+        } else {
+            RedisUtils.set(nonce, nonce, 5, TimeUnit.MINUTES);
         }
 
         // 时间戳 和 当前时间不能超过 5 分钟 (300000毫秒)

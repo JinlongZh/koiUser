@@ -1,6 +1,12 @@
 package com.koi.common.utils.http;
 
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.koi.common.utils.json.JsonUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -23,6 +29,19 @@ public class IpUtils {
     private static String localIp;
 
     /**
+     * 获得请求
+     *
+     * @return HttpServletRequest
+     */
+    public static HttpServletRequest getRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (!(requestAttributes instanceof ServletRequestAttributes)) {
+            return null;
+        }
+        return ((ServletRequestAttributes) requestAttributes).getRequest();
+    }
+
+    /**
      * 获取用户ip地址
      *
      * @param request 请求
@@ -40,7 +59,7 @@ public class IpUtils {
             }
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getRemoteAddr();
-                if ("127.0.0.1".equals(ipAddress)) {
+                if ("127.0.0.1".equals(ipAddress) || "0:0:0:0:0:0:0:1".equals(ipAddress)) {
                     // 根据网卡取本机配置的IP
                     InetAddress inet = null;
                     try {
@@ -86,6 +105,23 @@ public class IpUtils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    /**
+     * @param request 请求
+     * @return ua
+     */
+    public static UserAgent getUserAgent(HttpServletRequest request) {
+        String ua = request.getHeader("User-Agent");
+        return UserAgentUtil.parse(ua);
+    }
+
+    public static UserAgent getUserAgent() {
+        HttpServletRequest request = getRequest();
+        if (request == null) {
+            return null;
+        }
+        return getUserAgent(request);
     }
 
     /**

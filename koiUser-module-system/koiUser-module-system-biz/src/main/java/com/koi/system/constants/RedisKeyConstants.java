@@ -15,4 +15,14 @@ public class RedisKeyConstants {
         return String.format(OAUTH2_ACCESS_TOKEN, accessToken);
     }
 
+    /**
+     * 未知的
+     */
+    public static final String UNKNOWN = "未知";
+
+    /**
+     * 访客
+     */
+    public static final String UNIQUE_VISITOR = "unique_visitor";
+
 }
