@@ -81,7 +81,7 @@ public class AdminTalkController {
         Talk talk = talkService.getTalkById(talkId);
         TalkAdminRespVO talkAdminRespVO = BeanCopyUtils.copyObject(talk, TalkAdminRespVO.class);
         // 处理图片，将字符串转换为数组
-        talkAdminRespVO.setImageList(CollectionUtils.castList(JsonUtils.parseObject(talkAdminRespVO.getImages(), List.class), String.class));
+        talkAdminRespVO.setImageList(CollectionUtils.castList(JsonUtils.parseObject2(talkAdminRespVO.getImages(), List.class), String.class));
         return CommonResult.success(talkAdminRespVO);
     }
 

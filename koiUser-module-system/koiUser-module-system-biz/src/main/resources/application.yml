@@ -45,13 +45,5 @@ koiuser:
   security:
     mock-enable: true
 
-upload:
-  mode: qiniu
-  qiniu:
-    url: http://cdn.koicode.cn/
-    access-key: C9sX0jBml_9LT245OrS6Bxlb6uhp1DQeoshjGuuJ
-    secret-key: XA6U40SJrVI2nAqT_Ff9plPxFWWeMKdgxYFTWzjG
-    bucket: jinri-container
-    domain: cdn.koicode.cn
 
 

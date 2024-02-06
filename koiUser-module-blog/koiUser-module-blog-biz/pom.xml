@@ -11,7 +11,7 @@
 
     <groupId>com.koi</groupId>
     <artifactId>koiUser-module-blog-biz</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>koiUser-module-blog-biz</name>
     <description>koiUser-module-blog-biz</description>
 

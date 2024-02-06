@@ -118,7 +118,7 @@ public class JsonUtils {
         if (StrUtil.isEmpty(text)) {
             return null;
         }
-        return JSONUtil.toBean(text, clazz);
+        return parseObject(text, clazz);
     }
 
     public static <T> T parseObject(byte[] bytes, Class<T> clazz) {

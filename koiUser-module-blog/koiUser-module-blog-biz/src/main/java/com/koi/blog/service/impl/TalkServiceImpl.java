@@ -71,7 +71,7 @@ public class TalkServiceImpl implements TalkService {
         for (TalkAdminRespVO item : talkAdminRespVOList) {
             // 转化说说图片格式
             if (Objects.nonNull(item.getImages())) {
-                item.setImageList(CollectionUtils.castList(JsonUtils.parseObject(item.getImages(), List.class), String.class));
+                item.setImageList(CollectionUtils.castList(JsonUtils.parseObject2(item.getImages(), List.class), String.class));
             }
         }
         return new PageResult<>(talkAdminRespVOList, talkPage.getTotal());
@@ -132,7 +132,7 @@ public class TalkServiceImpl implements TalkService {
      */
     private void talkPictureConvert(TalkRespVO talkRespVO) {
         if (Objects.nonNull(talkRespVO.getImages())) {
-            talkRespVO.setImageList(CollectionUtils.castList(JsonUtils.parseObject(talkRespVO.getImages(), List.class), String.class));
+            talkRespVO.setImageList(CollectionUtils.castList(JsonUtils.parseObject2(talkRespVO.getImages(), List.class), String.class));
         }
     }
 }

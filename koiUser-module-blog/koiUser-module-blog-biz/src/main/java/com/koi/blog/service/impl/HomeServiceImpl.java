@@ -101,7 +101,8 @@ public class HomeServiceImpl implements HomeService {
                         .id(item.getId())
                         .articleCover(item.getCover())
                         .articleTitle(item.getTitle())
-                        .articleContent(item.getContent())
+                        // 主页展示字数限制
+                        .articleContent(item.getContent().substring(0, 500))
                         .articleTop(item.getTop())
                         .categoryId(item.getCategoryId())
                         .categoryName(item.getCategoryName())
@@ -123,7 +124,7 @@ public class HomeServiceImpl implements HomeService {
                         .build();
                 // 处理说说图片格式
                 if (Objects.nonNull(talkRespVO.getImages())) {
-                    talkRespVO.setImageList(CollectionUtils.castList(JsonUtils.parseObject(talkRespVO.getImages(), List.class), String.class));
+                    talkRespVO.setImageList(CollectionUtils.castList(JsonUtils.parseObject2(talkRespVO.getImages(), List.class), String.class));
                 }
                 homeListRespVO.setHomeListDTO(talkRespVO);
             }
