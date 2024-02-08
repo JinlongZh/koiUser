@@ -1,6 +1,11 @@
 package com.koi.system.service.permission;
 
+import com.koi.system.domain.permission.vo.request.MenuAddReqVO;
+import com.koi.system.domain.permission.vo.request.MenuQueryReqVO;
+import com.koi.system.domain.permission.vo.request.MenuStatusReqVO;
+import com.koi.system.domain.permission.vo.request.MenuUpdateReqVO;
 import com.koi.system.domain.permission.vo.response.MenuListRespVO;
+import com.koi.system.domain.permission.vo.response.MenuRespVO;
 
 import java.util.List;
 
@@ -13,4 +18,14 @@ import java.util.List;
 public interface MenuService {
 
     List<MenuListRespVO> listUserMenus();
+
+    List<MenuRespVO> listMenus(MenuQueryReqVO req);
+
+    void updateMenu(MenuUpdateReqVO req);
+
+    void addMenu(MenuAddReqVO req);
+
+    void deleteMenu(Long menuId);
+
+    void updateMenuStatus(MenuStatusReqVO req);
 }

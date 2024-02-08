@@ -1,29 +1,26 @@
-package com.koi.system.domain.permission.entity;
-
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+package com.koi.system.domain.permission.vo.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
- * 
- * @TableName system_menu
+ * 后台菜单管理 resp-vo
+ *
+ * @Author zjl
+ * @Date 2024/2/7 20:58
  */
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value ="system_menu")
-@Data
-public class Menu implements Serializable {
+public class MenuRespVO {
+
     /**
      * 主键
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -74,21 +71,16 @@ public class Menu implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**
-     * 是否删除
+     * 子菜单
      */
-    @TableLogic
-    private Boolean deleted;
+    private List<MenuRespVO> children;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }
