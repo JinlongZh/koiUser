@@ -19,7 +19,6 @@
     <modules>
         <module>koiAuth-spring-boot-starter</module>
         <module>koiUser-framework</module>
-        <module>koiUser-gateway</module>
         <module>koiUser-module-interfacer</module>
         <module>koiUser-module-blog</module>
         <module>koiUser-module-system</module>
@@ -27,10 +26,8 @@
 
     <properties>
         <!-- 统一依赖管理 -->
-        <spring.cloud.version>2021.0.5</spring.cloud.version>
-        <spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
         <!-- Web 相关 -->
-        <knife4j.version>4.3.0</knife4j.version>
+        <knife4j.version>4.4.0</knife4j.version>
         <springdoc.version>1.7.0</springdoc.version>
 
         <!-- DB 相关 -->
@@ -53,26 +50,13 @@
         <user-agent-utils-version>1.21</user-agent-utils-version>
 
         <!-- 三方云服务相关 -->
-        <qiniu.version>[7.13.0, 7.13.99]</qiniu.version>
+        <qiniu.version>7.13.1</qiniu.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- 统一依赖管理 -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring.cloud.alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+
             <!-- Web 相关 -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>

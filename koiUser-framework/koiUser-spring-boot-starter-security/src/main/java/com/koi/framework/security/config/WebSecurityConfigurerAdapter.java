@@ -56,8 +56,8 @@ public class WebSecurityConfigurerAdapter {
     /**
      * 注意：引入模块中一定要配置 authorizeRequestsCustomizer，否则会报错
      */
-    @Resource
-    private List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers;
+//    @Resource
+//    private List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -102,7 +102,7 @@ public class WebSecurityConfigurerAdapter {
                 // ①：全局共享规则
                 .authorizeRequests()
                 // 静态资源，可匿名访问
-                .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 // 设置 @PermitAll 无需认证
                 .antMatchers(HttpMethod.GET, permitAllUrls.get(HttpMethod.GET).toArray(new String[0])).permitAll()
                 .antMatchers(HttpMethod.POST, permitAllUrls.get(HttpMethod.POST).toArray(new String[0])).permitAll()
@@ -111,8 +111,9 @@ public class WebSecurityConfigurerAdapter {
                 // 基于配置的 permit-all-urls 无需认证
                 .antMatchers(securityProperties.getPermitAllUrls().toArray(new String[0])).permitAll()
                 // ②：每个项目的自定义规则
-                .and().authorizeRequests(registry -> // 下面，循环设置自定义规则
-                        authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
+                .and()
+//                .authorizeRequests(registry -> // 下面，循环设置自定义规则
+//                        authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
                 // ③：兜底规则，必须认证
                 .authorizeRequests()
                 .anyRequest().authenticated();
