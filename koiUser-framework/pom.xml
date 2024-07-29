@@ -30,7 +30,6 @@
         <module>koiUser-spring-boot-starter-database</module>
         <module>koiUser-spring-boot-starter-limitrate</module>
         <module>koiUser-spring-boot-starter-redis</module>
-        <module>koiUser-spring-boot-starter-rpc</module>
         <module>koiUser-spring-boot-starter-security</module>
         <module>koiUser-spring-boot-starter-web</module>
     </modules>

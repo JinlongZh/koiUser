@@ -24,8 +24,8 @@ public class UserKeyPairApiImpl implements UserKeyPairApi{
     private UserKeyPairService userKeyPairService;
 
     @Override
-    public CommonResult<UserKeyPairRespDTO> getUserKeyPairByAccessKey(String accessKey) {
+    public UserKeyPairRespDTO getUserKeyPairByAccessKey(String accessKey) {
         UserKeyPair userKeyPair = userKeyPairService.getUserKeyPairByAccessKey(accessKey);
-        return CommonResult.success(BeanCopyUtils.copyObject(userKeyPair, UserKeyPairRespDTO.class));
+        return BeanCopyUtils.copyObject(userKeyPair, UserKeyPairRespDTO.class);
     }
 }

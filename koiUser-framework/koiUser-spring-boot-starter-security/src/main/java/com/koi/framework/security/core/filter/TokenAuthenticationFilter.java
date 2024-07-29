@@ -43,33 +43,26 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @SuppressWarnings("NullableProblems")
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        // 情况一，基于 header[login-user] 获得用户，例如说来自 Gateway 或者其它服务透传
-        LoginUser loginUser = buildLoginUserByHeader(request);
-
-        // 情况二，基于 Token 获得用户
-        // 注意，这里主要满足直接使用 Nginx 直接转发到 Spring Cloud 服务的场景。
-        if (loginUser == null) {
-            String token = SecurityFrameworkUtils.obtainAuthorization(request, securityProperties.getTokenHeader());
-            if (StrUtil.isNotEmpty(token)) {
-                Integer userType = WebFrameworkUtils.getLoginUserType(request);
-                try {
-                    // 1.1 基于 token 构建登录用户
-                    loginUser = buildLoginUserByToken(token, userType);
-                    // 1.2 模拟 Login 功能，方便日常开发调试
-                    if (loginUser == null) {
-                        loginUser = mockLoginUser(request, token, userType);
-                    }
-                } catch (Throwable ex) {
-                    CommonResult<?> result = globalExceptionHandler.allExceptionHandler(request, ex);
-                    ServletUtils.writeJSON(response, result);
-                    return;
+        String token = SecurityFrameworkUtils.obtainAuthorization(request, securityProperties.getTokenHeader());
+        if (StrUtil.isNotEmpty(token)) {
+            Integer userType = WebFrameworkUtils.getLoginUserType(request);
+            try {
+                // 1.1 基于 token 构建登录用户
+                LoginUser loginUser = buildLoginUserByToken(token, userType);
+                // 1.2 模拟 Login 功能，方便日常开发调试
+                if (loginUser == null) {
+                    loginUser = mockLoginUser(request, token, userType);
                 }
-            }
-        }
 
-        // 设置当前用户
-        if (loginUser != null) {
-            SecurityFrameworkUtils.setLoginUser(loginUser, request);
+                // 2. 设置当前用户
+                if (loginUser != null) {
+                    SecurityFrameworkUtils.setLoginUser(loginUser, request);
+                }
+            } catch (Throwable ex) {
+                CommonResult<?> result = globalExceptionHandler.allExceptionHandler(request, ex);
+                ServletUtils.writeJSON(response, result);
+                return;
+            }
         }
         // 继续过滤链
         chain.doFilter(request, response);
@@ -77,7 +70,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private LoginUser buildLoginUserByToken(String token, Integer userType) {
         try {
-            OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token).getCheckedData();
+            OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token);
             if (accessToken == null) {
                 return null;
             }
