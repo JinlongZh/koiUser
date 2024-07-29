@@ -12,11 +12,11 @@ spring:
       connection-test-query: SELECT 1
 
   redis:
-    host: 192.168.245.100
+    host: 192.168.58.100
     port: 6379
     database: 0
     timeout: 1800000
-    password: abc123
+    password: 123
     lettuce:
       pool:
         max-wait: -1
