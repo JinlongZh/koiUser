@@ -30,33 +30,35 @@ public class FriendLink implements Serializable {
     private String linkName;
 
     /**
-     * 链接头像
+     * 友链头像
      */
     private String linkAvatar;
 
     /**
-     * 链接地址
+     * 友链地址
      */
     private String linkAddress;
 
     /**
-     * 链接介绍
+     * 友链介绍
      */
     private String linkIntro;
 
     /**
-     * 状态 0公开 1关闭 2审核中 3拒绝
+     * 友链状态 0公开 1关闭 2审核中 3拒绝
      */
     private Integer status;
 
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**

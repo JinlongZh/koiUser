@@ -1,16 +1,16 @@
 package com.koi.blog.controller.app;
 
+import com.koi.blog.domain.vo.request.FriendLinkAddReqVO;
 import com.koi.blog.domain.vo.response.FriendLinkRespVO;
 import com.koi.blog.service.FriendLinkService;
 import com.koi.common.domain.CommonResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -39,6 +39,20 @@ public class FriendLinkController {
     @GetMapping("/links")
     public CommonResult<List<FriendLinkRespVO>> listFriendLinks() {
         return CommonResult.success(friendLinkService.listFriendLinks());
+    }
+
+    /**
+     * 用户提交友链
+     *
+     * @param friendLinkAddReqVO
+     * @Return CommonResult<String>
+     */
+    @PermitAll
+    @Operation(summary = "用户提交友链")
+    @PostMapping("/submit")
+    public CommonResult<String> submitFriendLink(@Valid @RequestBody FriendLinkAddReqVO friendLinkAddReqVO) {
+        friendLinkService.submitFriendLink(friendLinkAddReqVO);
+        return CommonResult.success("提交成功");
     }
 
 }

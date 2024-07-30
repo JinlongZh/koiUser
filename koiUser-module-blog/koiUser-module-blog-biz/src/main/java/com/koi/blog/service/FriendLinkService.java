@@ -1,5 +1,6 @@
 package com.koi.blog.service;
 
+import com.koi.blog.domain.vo.request.FriendLinkAddReqVO;
 import com.koi.blog.domain.vo.response.FriendLinkRespVO;
 
 import java.util.List;
@@ -20,4 +21,11 @@ public interface FriendLinkService {
      */
     List<FriendLinkRespVO> listFriendLinks();
 
+    /**
+     * 用户提交友链
+     *
+     * @param friendLinkAddReqVO
+     * @Return void
+     */
+    void submitFriendLink(FriendLinkAddReqVO friendLinkAddReqVO);
 }
