@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * -
@@ -24,12 +24,12 @@ import javax.validation.constraints.NotEmpty;
 public class FrontAuthLoginReqVO {
 
     @Schema(description = "手机号", requiredMode = Schema.RequiredMode.REQUIRED, example = "18359321036")
-    @NotEmpty(message = "手机号不能为空")
+    @NotBlank(message = "手机号不能为空")
     @Mobile
     private String mobile;
 
     @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")
-    @NotEmpty(message = "密码不能为空")
+    @NotBlank(message = "密码不能为空")
     @Length(min = 4, max = 16, message = "密码长度为 4-16 位")
     private String password;
 
