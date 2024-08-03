@@ -19,7 +19,7 @@ public class LoginUser {
     /**
      * 用户编号
      */
-    private Long id;
+    private Long userId;
     /**
      * 用户类型
      *

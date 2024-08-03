@@ -80,7 +80,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             }
             // 构建登录用户
             return new LoginUser()
-                    .setId(accessToken.getUserId())
+                    .setUserId(accessToken.getUserId())
                     .setUserType(accessToken.getUserType())
                     .setScopes(accessToken.getScopes());
         } catch (ServiceException serviceException) {
@@ -110,7 +110,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // 构建模拟用户
         Long userId = Long.valueOf(token.substring(securityProperties.getMockSecret().length()));
         return new LoginUser()
-                .setId(userId)
+                .setUserId(userId)
                 .setUserType(userType);
     }
 

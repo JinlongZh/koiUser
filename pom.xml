@@ -22,6 +22,7 @@
         <module>koiUser-module-interfacer</module>
         <module>koiUser-module-blog</module>
         <module>koiUser-module-system</module>
+        <module>koiUser-module-chat</module>
     </modules>
 
     <properties>

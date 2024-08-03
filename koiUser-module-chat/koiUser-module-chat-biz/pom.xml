@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>koiUser-module-chat</artifactId>
+        <groupId>com.koi</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.koi</groupId>
+    <artifactId>koiUser-module-chat-biz</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>koiUser-module-chat-biz</name>
+    <description>koiUser-module-chat-biz</description>
+
+    <dependencies>
+        <!--自定义jar-->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-security</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <!-- 业务组件 -->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-module-chat-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-module-system-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-database</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.koi</groupId>
+            <artifactId>koiUser-spring-boot-starter-redis</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <!--工具-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
