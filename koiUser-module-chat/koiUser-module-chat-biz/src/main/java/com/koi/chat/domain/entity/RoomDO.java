@@ -7,12 +7,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 会话列表
- * @TableName contact
+ * 房间表
+ * @TableName room
  */
-@TableName(value ="contact")
+@TableName(value ="chat_room")
 @Data
-public class Contact implements Serializable {
+public class RoomDO implements Serializable {
     /**
      * id
      */
@@ -20,29 +20,24 @@ public class Contact implements Serializable {
     private Long id;
 
     /**
-     * uid
+     * 房间类型 1群聊 2单聊
      */
-    private Long userId;
+    private Integer type;
 
     /**
-     * 房间id
-     */
-    private Long roomId;
-
-    /**
-     * 阅读到的时间
-     */
-    private LocalDateTime readTime;
-
-    /**
-     * 会话内消息最后更新的时间(只有普通会话需要维护，全员会话不需要维护)
+     * 群最后消息的更新时间
      */
     private LocalDateTime activeTime;
 
     /**
-     * 会话最新消息id
+     * 会话中的最后一条消息id
      */
     private Long lastMsgId;
+
+    /**
+     * 额外信息（根据不同类型房间有不同存储的东西）
+     */
+    private Object extJson;
 
     /**
      * 创建时间

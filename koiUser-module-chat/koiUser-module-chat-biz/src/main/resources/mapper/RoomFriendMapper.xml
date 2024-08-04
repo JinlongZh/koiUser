@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koi.chat.mapper.mysql.RoomFriendMapper">
+
+    <resultMap id="BaseResultMap" type="com.koi.chat.domain.entity.RoomFriendDO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="roomId" column="room_id" jdbcType="BIGINT"/>
+            <result property="userIdOne" column="user_id_one" jdbcType="BIGINT"/>
+            <result property="userIdTwo" column="user_id_two" jdbcType="BIGINT"/>
+            <result property="roomKey" column="room_key" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="BIT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,room_id,user_id_one,
+        user_id_two,room_key,status,
+        create_time,update_time
+    </sql>
+</mapper>

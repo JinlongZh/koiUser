@@ -30,6 +30,11 @@ public class RedisKey {
      */
     public static final String USER_SUMMARY_STRING = "userSummary:uid_%d";
 
+    /**
+     * 在线用户列表
+     */
+    public static final String ONLINE_UID_ZET = "online";
+
     public static String getKey(String key, Object... objects) {
         return BASE_KEY + String.format(key, objects);
     }

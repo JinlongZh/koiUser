@@ -1,0 +1,2 @@
+com.koi.framework.rabbitmq.config.RabbitMqAutoConfiguration
+com.koi.framework.rabbitmq.core.producer.RabbitMqProducer

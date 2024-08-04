@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
  * 单聊房间表
  * @TableName room_friend
  */
-@TableName(value ="room_friend")
+@TableName(value ="chat_room_friend")
 @Data
-public class RoomFriend implements Serializable {
+public class RoomFriendDO implements Serializable {
     /**
      * id
      */

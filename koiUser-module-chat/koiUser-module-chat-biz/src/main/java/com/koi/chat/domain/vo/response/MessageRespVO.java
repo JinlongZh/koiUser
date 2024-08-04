@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatMessageRespVO {
+public class MessageRespVO {
 
     /**
      * 发送者信息

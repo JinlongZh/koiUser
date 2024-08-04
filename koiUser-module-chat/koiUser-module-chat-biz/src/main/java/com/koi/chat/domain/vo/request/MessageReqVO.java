@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatMessageReqVO {
+public class MessageReqVO {
 
     @Schema(description = "房间id")
     @NotNull(message = "房间id不能为空")

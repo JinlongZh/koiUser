@@ -1,18 +1,24 @@
 package com.koi.chat.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 聊天列表
- * @TableName chat_list
+ * 聊天信息
+ * @TableName chat_message
  */
-@TableName(value ="chat_list")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName(value ="chat_message")
 @Data
-public class ChatList implements Serializable {
+public class MessageDO implements Serializable {
     /**
      * id
      */
@@ -20,29 +26,39 @@ public class ChatList implements Serializable {
     private Long id;
 
     /**
-     * 用户id
+     * 房间id
      */
-    private Integer userId;
+    private Long roomId;
 
     /**
-     * 聊天对象id
+     * 发送方
      */
-    private Integer friendId;
+    private Long fromUserId;
 
     /**
-     * 消息未读数量
+     * 内容
      */
-    private Integer unReadNum;
+    private String content;
 
     /**
-     * 最后一条消息id
+     * 回复的消息id
      */
-    private Long lastMessageId;
+    private Long replyMessageId;
 
     /**
-     * 最后一条消息内容
+     * 类型
      */
-    private String lastMessageContent;
+    private Integer type;
+
+    /**
+     * 消息扩展字段
+     */
+    private String extra;
+
+    /**
+     * 消息状态 0正常 1删除
+     */
+    private Integer status;
 
     /**
      * 创建时间

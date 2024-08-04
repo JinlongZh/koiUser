@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koi.chat.mapper.mysql.MessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.koi.chat.domain.entity.MessageDO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="roomId" column="to_id" jdbcType="BIGINT"/>
+        <result property="fromUserId" column="from_user_id" jdbcType="BIGINT"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="replyMessageId" column="reply_message_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="BIT"/>
+        <result property="extra" column="extra" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="BIT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>
