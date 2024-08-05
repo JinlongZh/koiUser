@@ -41,6 +41,6 @@ public class RoomBaseInfoDTO {
     /**
      * 最后一条消息id
      */
-    private Long lastMsgId;
+    private Long lastMessageId;
 
 }

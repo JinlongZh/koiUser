@@ -102,11 +102,15 @@ public class ContactServiceImpl implements ContactService {
         Map<Long, RoomBaseInfoDTO> roomBaseInfoMap = getRoomBaseInfoMap(userId, roomIdList);
         // 最后一条消息
         List<Long> messageId = roomBaseInfoMap.values().stream()
-                .map(RoomBaseInfoDTO::getLastMsgId)
+                .map(RoomBaseInfoDTO::getLastMessageId)
                 .collect(Collectors.toList());
         List<MessageDO> messageDOList = messageMapper.selectBatchIds(messageId);
         Map<Long, MessageDO> messageMap = messageDOList.stream().
                 collect(Collectors.toMap(MessageDO::getId, Function.identity()));
+
+        // 用户信息
+        Set<Long> userIdList = messageDOList.stream().map(MessageDO::getFromUserId).collect(Collectors.toSet());
+        Map<Long, UserInfoRespDTO> userInfoMap = userInfoApi.getUserInfoByUserIds(userIdList);
 
         // 消息未读数
         Map<Long, Integer> unReadCountMap = getUnReadCountMap(userId, roomIdList);
@@ -121,11 +125,19 @@ public class ContactServiceImpl implements ContactService {
                     resp.setType(roomBaseInfo.getType());
                     resp.setName(roomBaseInfo.getName());
 
-                    MessageDO messageDO = messageMap.get(roomBaseInfoDTO.getLastMsgId());
+                    MessageDO messageDO = messageMap.get(roomBaseInfoDTO.getLastMessageId());
                     if (Objects.nonNull(messageDO)) {
-                        AbstractMessageHandler strategyNoNull = MessageHandlerFactory.getStrategyNoNull(messageDO.getType());
-                        // TODO 群聊加上 “ 用户名称：”
-                        resp.setText(strategyNoNull.showContactMessage(messageDO));
+                        AbstractMessageHandler abstractMessageHandler = MessageHandlerFactory.getStrategyNoNull(messageDO.getType());
+                        String lastMessageNickName = userInfoMap.get(messageDO.getFromUserId()).getNickname();
+                        resp.setLastMessageNickName(lastMessageNickName);
+                        // 群聊加上 “ 用户名称：”
+                        if (Objects.equals(roomBaseInfoDTO.getType(), RoomTypeEnum.GROUP.getType())) {
+                            resp.setText(lastMessageNickName + ": " + abstractMessageHandler.showContactMessage(messageDO));
+                        }
+                        // 单聊不加
+                        else if (Objects.equals(roomBaseInfoDTO.getType(), RoomTypeEnum.FRIEND.getType())) {
+                            resp.setText(abstractMessageHandler.showContactMessage(messageDO));
+                        }
                     }
                     resp.setUnreadCount(unReadCountMap.getOrDefault(roomBaseInfoDTO.getRoomId(), 0));
                     return resp;
@@ -159,14 +171,14 @@ public class ContactServiceImpl implements ContactService {
                 Collectors.mapping(RoomDO::getId, Collectors.toList())));
         // 获取好友信息
         List<Long> RoomIdListInFriend = groupRoomIdMap.get(RoomTypeEnum.FRIEND.getType());
-        Map<Long, UserInfoRespDTO> friendRoomMap = getFriendRoomMap(RoomIdListInFriend, userId);
+        Map<Long, UserInfoRespDTO> friendRoomMap = getUserInfoByFriendRoomIdList(RoomIdListInFriend, userId);
 
         return roomDOList.stream()
                 .map(room -> {
                     RoomBaseInfoDTO roomBaseInfo = new RoomBaseInfoDTO();
                     roomBaseInfo.setRoomId(room.getId());
                     roomBaseInfo.setType(room.getType());
-                    roomBaseInfo.setLastMsgId(room.getLastMsgId());
+                    roomBaseInfo.setLastMessageId(room.getLastMessageId());
                     roomBaseInfo.setActiveTime(room.getActiveTime());
 
                     if (RoomTypeEnum.of(room.getType()) == RoomTypeEnum.GROUP) {
@@ -181,7 +193,14 @@ public class ContactServiceImpl implements ContactService {
                 .collect(Collectors.toMap(RoomBaseInfoDTO::getRoomId, Function.identity()));
     }
 
-    private Map<Long, UserInfoRespDTO> getFriendRoomMap(List<Long> RoomIdListInFriend, Long userId) {
+    /**
+     * 根据单聊房间号列表获取用户信息
+     *
+     * @param RoomIdListInFriend
+     * @param userId
+     * @Return Map<Long, UserInfoRespDTO>
+     */
+    private Map<Long, UserInfoRespDTO> getUserInfoByFriendRoomIdList(List<Long> RoomIdListInFriend, Long userId) {
         if (CollectionUtil.isEmpty(RoomIdListInFriend)) {
             return new HashMap<>();
         }

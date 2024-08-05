@@ -37,6 +37,11 @@ public class ContactRoomRespVO {
     private String text;
 
     /**
+     * 最新消息发送人昵称
+     */
+    private String lastMessageNickName;
+
+    /**
      * 会话名称
      */
     private String name;

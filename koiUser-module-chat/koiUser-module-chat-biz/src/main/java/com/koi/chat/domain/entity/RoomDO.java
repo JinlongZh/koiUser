@@ -32,7 +32,7 @@ public class RoomDO implements Serializable {
     /**
      * 会话中的最后一条消息id
      */
-    private Long lastMsgId;
+    private Long lastMessageId;
 
     /**
      * 额外信息（根据不同类型房间有不同存储的东西）

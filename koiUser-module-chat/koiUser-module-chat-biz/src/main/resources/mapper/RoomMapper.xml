@@ -8,7 +8,7 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="type" column="type" jdbcType="INTEGER"/>
             <result property="activeTime" column="active_time" jdbcType="TIMESTAMP"/>
-            <result property="lastMsgId" column="last_msg_id" jdbcType="BIGINT"/>
+            <result property="lastMessageId" column="last_message_id" jdbcType="BIGINT"/>
             <result property="extJson" column="ext_json" jdbcType="OTHER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>

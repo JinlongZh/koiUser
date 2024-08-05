@@ -17,7 +17,7 @@ public interface RoomMapper extends BaseMapper<RoomDO> {
     default void refreshActiveTime(Long roomId, Long chatMessageId, LocalDateTime createTime) {
         update(null, new LambdaUpdateWrapper<RoomDO>()
                 .eq(RoomDO::getId, roomId)
-                .set(RoomDO::getLastMsgId, chatMessageId)
+                .set(RoomDO::getLastMessageId, chatMessageId)
                 .set(RoomDO::getActiveTime, createTime));
     }
 }
