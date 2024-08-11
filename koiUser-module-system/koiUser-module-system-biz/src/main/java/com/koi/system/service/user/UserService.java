@@ -1,6 +1,9 @@
 package com.koi.system.service.user;
 
 import com.koi.system.domain.user.entity.User;
+import com.koi.system.domain.user.vo.response.UserInfoRespVO;
+
+import java.util.List;
 
 /**
  * 后台用户 Service 接口
@@ -42,4 +45,12 @@ public interface UserService {
      * @Return User 用户对象
      */
     User getUserById(Long userId);
+
+    /***
+     * 获取用户信息列表
+     *
+     * @param userIdList 用户id列表
+     * @Return List<UserInfoRespVO> 用户信息列表
+     */
+    List<UserInfoRespVO> getUserInfoList(List<Long> userIdList);
 }
