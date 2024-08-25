@@ -38,9 +38,9 @@ public interface WebSocketService {
      * 推动消息给所有在线的人
      *
      * @param wsBaseResp 发送的消息体
-     * @param skipUid    需要跳过的人
+     * @param skipUserId 需要跳过的人
      */
-    void sendToAllOnline(WSBaseRespDTO<?> wsBaseResp, Long skipUid);
+    void sendToAllOnline(WSBaseRespDTO<?> wsBaseResp, Long skipUserId);
 
     /**
      * 推动消息给所有在线的人

@@ -7,6 +7,7 @@ import com.koi.chat.domain.vo.response.MessageRespVO;
 import com.koi.chat.strategy.msg.AbstractMessageHandler;
 import com.koi.chat.strategy.msg.factory.MessageHandlerFactory;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -39,8 +40,7 @@ public interface MessageConvert {
                     return resp;
                 })
                 // 根据前端排好序，更方便它展示
-                // .sorted(Comparator.comparing(a -> a.getMessage().getCreateTime()))
-                .sorted((a, b) -> b.getMessage().getCreateTime().compareTo(a.getMessage().getCreateTime()))
+                .sorted(Comparator.comparing(a -> a.getMessage().getCreateTime()))
                 .collect(Collectors.toList());
     }
 

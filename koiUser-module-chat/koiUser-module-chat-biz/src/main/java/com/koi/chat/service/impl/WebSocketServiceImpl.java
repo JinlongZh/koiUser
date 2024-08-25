@@ -19,6 +19,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -44,7 +46,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     /**
      * 所有在线的用户和对应的socket
      */
-    private static final ConcurrentHashMap<Long, CopyOnWriteArrayList<Channel>> ONLINE_UID_MAP = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Long, CopyOnWriteArrayList<Channel>> ONLINE_USERID_MAP = new ConcurrentHashMap<>();
 
     @Override
     public void connect(Channel channel) {
@@ -53,12 +55,31 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     public void removed(Channel channel) {
+        WSChannelExtraDTO wsChannelExtraDTO = ONLINE_WS_MAP.get(channel);
+        Optional<Long> uidOptional = Optional.ofNullable(wsChannelExtraDTO)
+                .map(WSChannelExtraDTO::getUserId);
+        offline(channel, uidOptional);
+    }
 
+    /**
+     * 用户下线
+     * return 是否全下线成功
+     */
+    private boolean offline(Channel channel, Optional<Long> userIdOptional) {
+        ONLINE_WS_MAP.remove(channel);
+        if (userIdOptional.isPresent()) {
+            CopyOnWriteArrayList<Channel> channels = ONLINE_USERID_MAP.get(userIdOptional.get());
+            if (CollectionUtil.isNotEmpty(channels)) {
+                channels.removeIf(ch -> Objects.equals(ch, channel));
+            }
+            return CollectionUtil.isEmpty(ONLINE_USERID_MAP.get(userIdOptional.get()));
+        }
+        return true;
     }
 
     @Override
     public void sendToUserId(WSBaseRespDTO<?> wsBaseResp, Long uid) {
-        CopyOnWriteArrayList<Channel> channels = ONLINE_UID_MAP.get(uid);
+        CopyOnWriteArrayList<Channel> channels = ONLINE_USERID_MAP.get(uid);
         if (CollectionUtil.isEmpty(channels)) {
             log.info("用户：{}不在线", uid);
             return;
@@ -69,13 +90,18 @@ public class WebSocketServiceImpl implements WebSocketService {
     }
 
     @Override
-    public void sendToAllOnline(WSBaseRespDTO<?> wsBaseResp, Long skipUid) {
-
+    public void sendToAllOnline(WSBaseRespDTO<?> wsBaseResp, Long skipUserId) {
+        ONLINE_WS_MAP.forEach((channel, ext) -> {
+            if (Objects.nonNull(skipUserId) && Objects.equals(ext.getUserId(), skipUserId)) {
+                return;
+            }
+            threadPoolTaskExecutor.execute(() -> sendMsg(channel, wsBaseResp));
+        });
     }
 
     @Override
     public void sendToAllOnline(WSBaseRespDTO<?> wsBaseResp) {
-
+        sendToAllOnline(wsBaseResp, null);
     }
 
     @Override
@@ -105,8 +131,8 @@ public class WebSocketServiceImpl implements WebSocketService {
         // 给已连接的websocket设置额外信息
         getOrInitChannelExt(channel).setUserId(userId);
         // 设置在线的用户和对应的socket
-        ONLINE_UID_MAP.putIfAbsent(userId, new CopyOnWriteArrayList<>());
-        ONLINE_UID_MAP.get(userId).add(channel);
+        ONLINE_USERID_MAP.putIfAbsent(userId, new CopyOnWriteArrayList<>());
+        ONLINE_USERID_MAP.get(userId).add(channel);
         NettyUtil.setAttr(channel, NettyUtil.USER_ID, userId);
     }
 
