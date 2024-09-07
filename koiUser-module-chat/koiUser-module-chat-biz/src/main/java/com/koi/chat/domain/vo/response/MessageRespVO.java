@@ -48,6 +48,11 @@ public class MessageRespVO {
         private Long id;
 
         /**
+         * 房间id
+         */
+        private Long roomId;
+
+        /**
          * 消息类型
          */
         private Integer type;

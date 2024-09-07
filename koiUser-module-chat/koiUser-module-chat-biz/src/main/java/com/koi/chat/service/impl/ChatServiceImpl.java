@@ -105,7 +105,14 @@ public class ChatServiceImpl implements ChatService {
     }
 
 
-    public List<MessageRespVO> getMessageRespBatch(List<MessageDO> chatMessageListDO, Long receiveUserId) {
+    /**
+     * 批量获取消息
+     *
+     * @param chatMessageListDO
+     * @param receiveUserId
+     * @Return List<MessageRespVO>
+     */
+    private List<MessageRespVO> getMessageRespBatch(List<MessageDO> chatMessageListDO, Long receiveUserId) {
         if (CollectionUtil.isEmpty(chatMessageListDO)) {
             return new ArrayList<>();
         }
@@ -119,6 +126,13 @@ public class ChatServiceImpl implements ChatService {
         return MessageConvert.buildMsgResp(chatMessageListDO, replyMap, receiveUserId);
     }
 
+    /**
+     * 检查room状态
+     *
+     * @param chatMessageReqVO
+     * @param userId
+     * @Return void
+     */
     private void checkRoom(MessageReqVO chatMessageReqVO, Long userId) {
         RoomDO roomDO = roomMapper.selectById(chatMessageReqVO.getRoomId());
         if (Objects.isNull(roomDO)) {
