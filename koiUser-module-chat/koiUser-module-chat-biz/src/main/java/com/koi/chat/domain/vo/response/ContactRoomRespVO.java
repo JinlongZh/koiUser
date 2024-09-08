@@ -39,7 +39,7 @@ public class ContactRoomRespVO {
     /**
      * 最新消息发送人昵称
      */
-    private String lastMessageNickName;
+    private String lastMessageNickname;
 
     /**
      * 会话名称

@@ -129,7 +129,7 @@ public class ContactServiceImpl implements ContactService {
                     if (Objects.nonNull(messageDO)) {
                         AbstractMessageHandler abstractMessageHandler = MessageHandlerFactory.getStrategyNoNull(messageDO.getType());
                         String lastMessageNickName = userInfoMap.get(messageDO.getFromUserId()).getNickname();
-                        resp.setLastMessageNickName(lastMessageNickName);
+                        resp.setLastMessageNickname(lastMessageNickName);
                         // 群聊加上 “ 用户名称：”
                         if (Objects.equals(roomBaseInfoDTO.getType(), RoomTypeEnum.GROUP.getType())) {
                             resp.setText(lastMessageNickName + ": " + abstractMessageHandler.showContactMessage(messageDO));
