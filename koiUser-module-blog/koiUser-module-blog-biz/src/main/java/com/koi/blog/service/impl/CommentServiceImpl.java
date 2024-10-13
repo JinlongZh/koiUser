@@ -7,7 +7,7 @@ import com.koi.blog.domain.vo.request.CommentQueryReqVO;
 import com.koi.blog.domain.vo.request.ReplyQueryReqVO;
 import com.koi.blog.domain.vo.response.CommentRespVO;
 import com.koi.blog.domain.vo.response.ReplyRespVO;
-import com.koi.blog.mapper.CommentMapper;
+import com.koi.blog.mapper.mysql.CommentMapper;
 import com.koi.blog.service.CommentService;
 import com.koi.common.domain.PageResult;
 import com.koi.common.exception.ServiceException;

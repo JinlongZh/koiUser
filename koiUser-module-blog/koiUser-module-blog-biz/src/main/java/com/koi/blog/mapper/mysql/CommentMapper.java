@@ -1,4 +1,4 @@
-package com.koi.blog.mapper;
+package com.koi.blog.mapper.mysql;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
