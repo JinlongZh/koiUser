@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * 文本消息 request vo
@@ -28,6 +29,10 @@ public class TextMessageReqVO {
 
     @Schema(description = "回复的消息id,如果没有别传就好")
     private Long replyMessageId;
+
+    @Schema(description = "艾特的userId")
+    @Size(max = 10, message = "一次别艾特这么多人")
+    private List<Long> atUserIdList;
 
 }
 

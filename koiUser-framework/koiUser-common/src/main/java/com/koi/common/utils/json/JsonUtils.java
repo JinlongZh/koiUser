@@ -106,6 +106,24 @@ public class JsonUtils {
     }
 
     /**
+     * 将 JSON 转为 Map<String,Object>
+     *
+     * @param json
+     * @Return Map<String,Boolean>
+     */
+    public static Map<String, Object> convertToMap2(String json) {
+        if (StrUtil.isEmpty(json)) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(json, new TypeReference<Map<String, Object>>() {});
+        } catch (IOException e) {
+            log.error("JSON parse error. JSON: {}", json, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * 将字符串解析成指定类型的对象
      * 使用 {@link #parseObject(String, Class)} 时，在@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS) 的场景下，
      * 如果 text 没有 class 属性，则会报错。此时，使用这个方法，可以解决。
