@@ -20,12 +20,13 @@ import com.koi.chat.strategy.msg.factory.MessageHandlerFactory;
 import com.koi.common.domain.PageResult;
 import com.koi.common.exception.ServiceException;
 import com.koi.framework.rabbitmq.core.producer.RabbitMqProducer;
+import com.koi.system.api.oauth2.dto.response.UserInfoRespDTO;
+import com.koi.system.api.user.UserInfoApi;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.koi.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST;
@@ -50,6 +51,8 @@ public class ChatServiceImpl implements ChatService {
     private ContactMapper contactMapper;
     @Resource
     private RoomMapper roomMapper;
+    @Resource
+    private UserInfoApi userInfoApi;
 
 
     @Override
@@ -116,14 +119,18 @@ public class ChatServiceImpl implements ChatService {
         if (CollectionUtil.isEmpty(chatMessageListDO)) {
             return new ArrayList<>();
         }
-        Map<Long, MessageDO> replyMap = new HashMap<>();
-        //批量查出回复的消息
-        List<Long> replyIds = chatMessageListDO.stream().map(MessageDO::getReplyMessageId).filter(Objects::nonNull).distinct().collect(Collectors.toList());
-        if (CollectionUtil.isNotEmpty(replyIds)) {
-            replyMap = messageMapper.selectBatchIds(replyIds).stream().collect(Collectors.toMap(MessageDO::getId, Function.identity()));
-        }
+//        Map<Long, MessageDO> replyMap = new HashMap<>();
+//        //批量查出回复的消息
+//        List<Long> replyIds = chatMessageListDO.stream().map(MessageDO::getReplyMessageId).filter(Objects::nonNull).distinct().collect(Collectors.toList());
+//        if (CollectionUtil.isNotEmpty(replyIds)) {
+//            replyMap = messageMapper.selectBatchIds(replyIds).stream().collect(Collectors.toMap(MessageDO::getId, Function.identity()));
+//        }
 
-        return MessageConvert.buildMsgResp(chatMessageListDO, replyMap, receiveUserId);
+        // 查询用户信息
+        Set<Long> userIdSet = chatMessageListDO.stream().map(MessageDO::getFromUserId).collect(Collectors.toSet());
+        Map<Long, UserInfoRespDTO> userInfoMap = userInfoApi.getUserInfoByUserIds(userIdSet);
+
+        return MessageConvert.buildMsgResp(chatMessageListDO, receiveUserId, userInfoMap);
     }
 
     /**

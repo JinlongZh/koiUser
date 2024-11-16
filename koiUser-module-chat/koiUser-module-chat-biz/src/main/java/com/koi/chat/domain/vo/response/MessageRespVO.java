@@ -37,6 +37,27 @@ public class MessageRespVO {
          * 用户id
          */
         private Long userId;
+
+        /**
+         * 昵称
+         */
+        private String nickname;
+
+        /**
+         * 头像
+         */
+        private String avatar;
+
+        /***
+         * ip地址
+         */
+        private String ipAddress;
+
+        /**
+         * ip来源
+         */
+        private String ipSource;
+
     }
 
     @Data
